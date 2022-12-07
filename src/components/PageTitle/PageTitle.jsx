@@ -1,7 +1,26 @@
-const PageTitle = () => {
+import styles from "./PageTitle.module.scss";
+
+const PageTitle = ({ title, count }) => {
   return (
-    <div>
-      <h1>PageTitle</h1>
+    <div className={`${styles["title"]}`}>
+      <button className={`${styles["svg"]}`}>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 11H7.41399L11.707 6.707C12.097 6.317 12.097 5.684 11.707 5.293C11.317 4.902 10.684 4.903 10.293 5.293L4.29299 11.293C3.90299 11.683 3.90299 12.316 4.29299 12.707L10.293 18.707C10.488 18.902 10.743 19 11 19C11.257 19 11.512 18.902 11.707 18.707C12.097 18.317 12.097 17.684 11.707 17.293L7.41399 13H20C20.553 13 21 12.553 21 12C21 11.447 20.553 11 20 11Z"
+            fill="black"
+          />
+        </svg>
+      </button>
+      <div>
+        <h1>{title || "沒有設置title props"}</h1>
+        <p>{count || "沒有設置 count props"} 推文</p>
+      </div>
     </div>
   );
 };
