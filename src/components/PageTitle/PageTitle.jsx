@@ -18,15 +18,23 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const PageTitle = ({ title, count }) => {
+/*
+title => 主題
+tweetQuantity => 推文數量(string)
+*/
+
+const PageTitle = ({ title, tweetQuantity }) => {
   return (
     <div className={`${styles["title"]}`}>
       <button className={`${styles["svg"]}`}>
         <ArrowLeftIcon />
       </button>
       <div>
-        <h1>{title || "沒有設置title props"}</h1>
-        <p>{count || "沒有設置 count props"} 推文</p>
+        <h1 className={`${title && !tweetQuantity && styles["page-title"]}`}>
+          {title || "沒有設置title props"}
+        </h1>
+
+        {title && tweetQuantity && <p>{tweetQuantity} 推文</p>}
       </div>
     </div>
   );
