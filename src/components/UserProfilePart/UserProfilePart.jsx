@@ -168,12 +168,14 @@ const UserProfilePart = ({
 
   return (
     <div className={`${styles["profile"]} border-start border-end`}>
+      {/* 使用者背景 */}
       <img
         className={`${styles["bg"]}`}
         src={userImage || "https://fakeimg.pl/639x200/"}
         alt="use-background"
       />
       <div className={`${styles["user-avatar"]} p-3`}>
+        {/* 使用者頭像 */}
         <img
           src={
             bgImage || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
@@ -183,8 +185,10 @@ const UserProfilePart = ({
           height={140}
         />
         <div className="mb-3">
+          {/* 是否為本人樣式切換 */}
           {isOtherUser ? (
             <div className="d-flex gap-3 justify-content-end">
+              {/* 是否啟用小鈴鐺 */}
               <button
                 className={`${
                   isNotin ? styles["btn-circle__active"] : styles["btn-circle"]
@@ -192,10 +196,11 @@ const UserProfilePart = ({
               >
                 {isNotin ? <ActiveBallIcon /> : <BallIcon />}
               </button>
-
+              {/* 是否啟用信箱通知 */}
               <button className={`${styles["btn-circle"]} btn`}>
                 <EmailIcon />
               </button>
+              {/* 是否開啟追隨 */}
               <FollowButton isFollow={isFollow} />
             </div>
           ) : (
@@ -292,10 +297,12 @@ const UserProfilePart = ({
               <p className="text-secondary mb-2">@{userId || "無讀取資料"}</p>
               <p className="mb-2">{userIntroduction || "請設置自我介紹"}</p>
               <div className="d-flex gap-4">
+                {/* 點擊 跟隨中 Link to follower 頁面 */}
                 <p>
                   {followerQuantity || 0} 個
                   <span className="text-secondary">跟隨中</span>
                 </p>
+                {/*點擊 跟隨中 Link to following 頁面  */}
                 <p>
                   {followingQuantity || 0} 位
                   <span className="text-secondary">跟隨者</span>
