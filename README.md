@@ -2,9 +2,9 @@
 
 - [x] PageTitle
 - [ ] UserProfilePart
-- [ ] UserProfileTabs
+- [x] UserProfileTabs
 - [ ] EditModal
 - [ ] ProfileMain
 - [ ] ProfileReply
 - [ ] ProfileLike
-- [ ] OtherUserNotin
+- [x] OtherUserNotin
