@@ -167,7 +167,7 @@ const UserProfilePart = ({
   /*Modal Setting*/
 
   return (
-    <div className={`${styles["profile"]}`}>
+    <div className={`${styles["profile"]} border-start border-end`}>
       <img
         className={`${styles["bg"]}`}
         src={userImage || "https://fakeimg.pl/639x200/"}

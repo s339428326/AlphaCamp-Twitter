@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 import styles from "./UserProfileTabs.module.scss";
 
+//Tweet
+export const Tweet = ({
+  userName,
+  userId,
+  createTime,
+  tweetId,
+  tweetContent,
+  replyQuantity,
+  likeQuantity,
+}) => {
+  return <div className="border-start border-end border-bottom">Tweet</div>;
+};
+
 const UserProfileTabs = () => {
   //get Location to change active
   //這裡暫時使用useState代替
@@ -41,7 +54,7 @@ const UserProfileTabs = () => {
 
   return (
     <div>
-      <ul className="list-unstyled d-flex flex-wrap">
+      <ul className="list-unstyled d-flex flex-wrap mb-0 border-start border-end border-bottom">
         <li>
           <button
             className={`${styles["btn"]} ${
@@ -73,6 +86,7 @@ const UserProfileTabs = () => {
           </button>
         </li>
       </ul>
+      <Tweet />
     </div>
   );
 };
