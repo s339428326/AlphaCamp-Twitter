@@ -4,7 +4,7 @@
 - [ ] UserProfilePart
 - [x] UserProfileTabs
 - [ ] EditModal
-- [ ] ProfileMain
-- [ ] ProfileReply
-- [ ] ProfileLike
+- [ ] Tweet
+- [ ] TweetReply
+<!-- - [ ] ProfileLike -->
 - [x] OtherUserNotin
