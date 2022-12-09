@@ -148,7 +148,7 @@ const UserProfilePart = ({
   userName,
   userId,
   userIntroduction,
-  userImage,
+  userAvatar,
   bgImage,
   followerQuantity,
   followingQuantity,
@@ -171,7 +171,7 @@ const UserProfilePart = ({
       {/* 使用者背景 */}
       <img
         className={`${styles["bg"]}`}
-        src={userImage || "https://fakeimg.pl/639x200/"}
+        src={userAvatar || "https://fakeimg.pl/639x200/"}
         alt="use-background"
       />
       <div className={`${styles["user-avatar"]} p-3`}>
