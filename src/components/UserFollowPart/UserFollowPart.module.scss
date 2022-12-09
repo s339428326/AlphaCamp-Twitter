@@ -1,0 +1,34 @@
+.btn:hover {
+    color: #ffffff;
+  }
+
+.followItem {
+ padding: 16px 24px;
+ border: 1px solid #E6ECF0;
+ position: relative;
+
+  .followInfo {
+    padding-top: 12px;
+    padding-left: 8px;
+
+      .followName {
+        font-weight: 700;
+        padding-bottom: 15px;
+      }
+
+      .followAccount {
+        color: #657786;
+      }
+
+    .followDescription {
+      padding-bottom: 18px;
+    }
+    
+  }
+  .followBtn {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+  }
+
+}
