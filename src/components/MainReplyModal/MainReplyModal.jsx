@@ -1,32 +1,18 @@
-import React, { useState } from "react";
+import styles from "./MainReplyModal.module.scss";
 import Modal from "react-bootstrap/Modal";
-import style from "./MainReplyModal.module.scss";
+import CloseButton from "react-bootstrap/CloseButton";
 
-//import { Link } from "react-router-dom";
-
-const CrossIcon = () => {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M13.414 12L19.207 6.207C19.597 5.817 19.597 5.184 19.207 4.793C18.817 4.402 18.184 4.403 17.793 4.793L12 10.586L6.207 4.793C5.817 4.403 5.184 4.403 4.793 4.793C4.402 5.183 4.403 5.816 4.793 6.207L10.586 12L4.793 17.793C4.403 18.183 4.403 18.816 4.793 19.207C4.988 19.402 5.243 19.5 5.5 19.5C5.757 19.5 6.012 19.402 6.207 19.207L12 13.414L17.793 19.207C17.988 19.402 18.243 19.5 18.5 19.5C18.757 19.5 19.012 19.402 19.207 19.207C19.597 18.817 19.597 18.184 19.207 17.793L13.414 12Z"
-        fill="#ff6600"
-      />
-    </svg>
-  );
-};
+import React, { useState } from "react";
+// 1 要改 回覆按鈕的功能
+// 2 串 api
+// 3 提交成功後要有 alert
 
 const MessageIcon = () => {
   return (
-    <div className={style.messageIcon}>
+    <div className={styles.messageIcon}>
       <svg
-        width="26"
-        height="26"
+        width="16"
+        height="16"
         viewBox="0 0 30 30"
         fill="white"
         xmlns="http://www.w3.org/2000/svg"
@@ -40,47 +26,68 @@ const MessageIcon = () => {
   );
 };
 
+export const ArrowLeftIcon = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20 11H7.41399L11.707 6.707C12.097 6.317 12.097 5.684 11.707 5.293C11.317 4.902 10.684 4.903 10.293 5.293L4.29299 11.293C3.90299 11.683 3.90299 12.316 4.29299 12.707L10.293 18.707C10.488 18.902 10.743 19 11 19C11.257 19 11.512 18.902 11.707 18.707C12.097 18.317 12.097 17.684 11.707 17.293L7.41399 13H20C20.553 13 21 12.553 21 12C21 11.447 20.553 11 20 11Z"
+        fill="black"
+      />
+    </svg>
+  );
+};
+
 const MainReplyModal = ({ avatarImg, inputValue }) => {
   const [show, setShow] = useState(false);
+  const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setFullscreen("sm-down");
+    setShow(true);
+  };
   const showText = (e) => {
     setWordCount(e.target.value.length);
   };
 
-  // if (wordCount === 0) {
-  //   console.log('chec1', wordCount);
-  // } else if (wordCount > 140) {
-  //   console.log('chec2', wordCount);
-  // } else {
-  //   console.log('chec3', wordCount);
-  // }
-  
-
   return (
     <>
-      <button onClick={handleShow} className={style.messageBtn}>
-        <MessageIcon />
+      <button onClick={handleShow} className={styles.messageBtn}>
+        <MessageIcon /> 
       </button>
-
       <Modal
+        size="lg"
         show={show}
+        fullscreen={fullscreen}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
       >
-        <div className={style.replyModalContainer}>
-          <Modal.Header className={style.header}>
-            <button className={style.closeBtn} onClick={handleClose}>
-              <CrossIcon />
+        <div className={styles.replyModalContainer}>
+          <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
+            <button
+              className="btn me-3 d-sm-none"
+              onClick={() => setShow(false)}
+            >
+              <ArrowLeftIcon />
             </button>
+            <CloseButton
+              className="d-none d-sm-block"
+              onClick={() => setShow(false)}
+              aria-label="Close"
+            />
           </Modal.Header>
-          <Modal.Body className={style.body}>
+          <Modal.Body className={styles.body}>
             {/* 推文 */}
-            <div className={style.replyModalTweet}>
+            <div className={styles.replyModalTweet}>
               {/* 圖片 */}
-              <div className={style.replyModalAvatarContainer}>
+              <div className={styles.replyModalAvatarContainer}>
                 <img
                   src={
                     avatarImg ||
@@ -90,39 +97,31 @@ const MainReplyModal = ({ avatarImg, inputValue }) => {
                   width={50}
                   height={50}
                 />
-                <span className={style.dash}></span>
+                <span className={styles.dash}></span>
               </div>
               {/* 內容 */}
-              <div className={style.tweetInfo}>
-                <div className={style.infoTop}>
-                  <span className={style.infoTopPrime}>username</span>
-                  <span className={style.infoTopSec}>@test</span>
-                  <span className={style.infoTopSec}>．test</span>
+              <div className={styles.tweetInfo}>
+                <div className={styles.infoTop}>
+                  <span className={styles.infoTopPrime}>username</span>
+                  <span className={styles.infoTopSec}>@test</span>
+                  <span className={styles.infoTopSec}>．test</span>
                 </div>
-                <div className={style.infoContent}>
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test test test test test test test test test
-                  test test test test
+                <div className={styles.infoContent}>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. In,
+                  ullam laboriosam! Libero eos aut nostrum. Tempora, quidem
+                  reiciendis! Expedita, ea. Nisi impedit voluptates incidunt
+                  molestias, soluta modi deleniti magnam asperiores?
                 </div>
-                <div className={style.tweetReplyTo}>
-                  <span className={style.tweetReplyToSec}>回覆給 </span>
-                  <span className={style.tweetReplyToPrime}>@testother</span>
+                <div className={styles.tweetReplyTo}>
+                  <span className={styles.tweetReplyToSec}>回覆給 </span>
+                  <span className={styles.tweetReplyToPrime}>@testother</span>
                 </div>
               </div>
             </div>
             {/* 回覆推文 */}
-            <form className={style.tweetInput}>
-              <div className={style.inputContainer}>
-                <div className={style.inputAvatar}>
+            <form className={styles.tweetInput}>
+              <div className={styles.inputContainer}>
+                <div className={styles.inputAvatar}>
                   <img
                     src={
                       avatarImg ||
@@ -133,26 +132,27 @@ const MainReplyModal = ({ avatarImg, inputValue }) => {
                     height={50}
                   />
                 </div>
+                {/* 這裡沒有label 留下id作用 */}
                 <textarea
                   maxLength="140"
                   rows={4}
-                  cols={60}
+                  cols={10}
                   id="tweetContent"
-                  className={style.inputContent}
+                  className={styles.inputContent}
                   name="description"
                   type="text"
                   onChange={showText}
                   placeholder="推你的回覆"
                 ></textarea>
               </div>
-              <div className={style.tweetInputBtnContainer}>
-                <div className={style.inputWarning}>
-                  {wordCount === 0 && <span>內容不可空白</span>}
-                  {wordCount === 140 && <span>字數不可以超過140字</span>}
-                  {wordCount < 140  && wordCount!== 0 && <span></span>}
-                </div>
+              <div
+                className={`${styles.inputWarning} d-flex align-items-center justify-content-end gap-4`}
+              >
+                {wordCount === 0 && <span>內容不可空白</span>}
+                {wordCount === 140 && <span>字數不可以超過140字</span>}
+                {wordCount < 140 && wordCount !== 0 && <span></span>}
                 <button
-                  className={style.replyBtn}
+                  className="btn btn-primary text-white rounded-pill"
                   disabled={wordCount === 0 ? true : false}
                 >
                   回覆
