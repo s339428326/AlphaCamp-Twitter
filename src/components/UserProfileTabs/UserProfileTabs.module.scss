@@ -1,0 +1,14 @@
+.btn {
+  background: none;
+  border: none;
+  padding: 15px 0 13px 0;
+  border-bottom: 2px solid transparent;
+  color: #657786;
+  font-weight: bold;
+  min-width: 130px;
+}
+
+.active {
+  border-bottom: 2px solid #ff6600;
+  color: #ff6600;
+}

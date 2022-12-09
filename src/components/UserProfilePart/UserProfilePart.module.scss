@@ -1,0 +1,172 @@
+.profile {
+  p {
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+}
+
+img {
+  object-fit: cover;
+}
+
+.bg {
+  width: 100%;
+  height: 200px;
+}
+
+.bg-edit {
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    display: block;
+    background-color: #171725;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+  }
+}
+
+.bg-edit:hover {
+  &::after {
+    transition: all 0.25s ease-in;
+    background-color: #171725;
+    opacity: 0.5;
+  }
+  .bg-edit-button {
+    display: block;
+  }
+}
+
+.bg-edit-button {
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.user-avatar {
+  position: relative;
+  img {
+    position: absolute;
+    top: -70px;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: #fff;
+  }
+}
+
+.user-avatar-edit {
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    display: block;
+    background-color: #171725;
+    opacity: 0;
+    top: -70px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+  }
+}
+
+.user-avatar-edit:hover {
+  &::after {
+    transition: all 0.25s ease-in;
+    opacity: 0.5;
+  }
+  .avatar-edit-icon {
+    opacity: 1;
+  }
+}
+
+.avatar-edit-icon {
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  top: -10px;
+  left: 72px;
+  z-index: 20;
+}
+
+.info {
+  &-content {
+    p {
+      margin-bottom: 6px;
+    }
+    strong {
+      font-size: 18px;
+    }
+  }
+}
+
+.btn-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ff6600;
+  border-radius: 50%;
+  padding: 8px;
+  max-width: 40px;
+  max-height: 40px;
+  background: transparent;
+  path {
+    fill: #ff6600;
+  }
+}
+
+.btn-circle:hover {
+  background-color: #ff6600;
+  path {
+    fill: #fff;
+  }
+}
+
+.btn-circle__active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  max-width: 40px;
+  max-height: 40px;
+  background: #ff6600;
+}
+
+.btn-circle__active:hover {
+  background: #fff;
+  border: 1px solid #ff6600;
+  path {
+    fill: #ff6600;
+  }
+}
+
+.btn:hover {
+  color: #fff;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e6ecf0;
+  h5 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+}
+
+.btn-close {
+  margin-right: 32px;
+}
+
+.modal-body {
+  padding: 0;
+}
