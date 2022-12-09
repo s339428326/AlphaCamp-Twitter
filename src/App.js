@@ -1,6 +1,5 @@
 // import './App.css';
 import "./styles/main.scss";
-
 //test components
 import PageTitle from "./components/PageTitle/PageTitle";
 
