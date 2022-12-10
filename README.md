@@ -2,7 +2,8 @@
 
 - [x] PageTitle
 - [x] UserProfilePart(追隨按鈕未用 Evan 提供)
+- [x] ProfileReply(放在 UserProfilePart 元件裡)
 - [x] UserProfileTabs
-- [ ] EditModal(缺少 Evan input 樣式)
+- [x] EditModal(缺少 Evan input 樣式)
 - [x] Tweet
 - [x] OtherUserNotin
