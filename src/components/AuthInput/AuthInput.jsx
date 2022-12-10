@@ -9,6 +9,7 @@ placeholder (string)
 defaultValue (string)
 onChange(function)
 maxChar(Number or String) => 設定最多輸入文字數量
+autocomplete => 爬蟲建議擺放
 error(string) => 輸入字串長度大於0會啟用錯誤樣式
 */
 
@@ -27,14 +28,12 @@ error(string) => 輸入字串長度大於0會啟用錯誤樣式
     });
   };
 
-
   const handleInput = (keyName) => (currentValue) => {
     setAdminLogin({
       ...adminLogin,
       [keyName]: currentValue,
     });
   };
-
    return(
     <>
     <AuthInput value={adminLogin.adminId} onChange={handleInput("adminId")} />
@@ -50,6 +49,7 @@ const AuthInput = ({
   defaultValue,
   onChange,
   maxChar,
+  autoComplete,
   error,
 }) => {
   const [textCount, setTextCount] = useState(0);
@@ -69,6 +69,7 @@ const AuthInput = ({
             setTextCount(e.target.value.length);
             return onChange?.(e.target.value);
           }}
+          autoComplete={autoComplete}
           required
         />
         <div className={`${styles["footer"]}`}>
