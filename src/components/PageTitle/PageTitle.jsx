@@ -26,15 +26,18 @@ tweetQuantity => 推文數量(string)
 const PageTitle = ({ title, tweetQuantity }) => {
   return (
     <div className={`${styles["title"]}`}>
-      <button className={`${styles["svg"]}`}>
-        <ArrowLeftIcon />
-      </button>
+      {title !== "首頁" && (
+        <button className={`${styles["svg"]}`}>
+          <ArrowLeftIcon />
+        </button>
+      )}
       <div>
         <h1 className={`${title && !tweetQuantity && styles["page-title"]}`}>
           {title || "沒有設置title props"}
         </h1>
-
-        {title && tweetQuantity && <p>{tweetQuantity} 推文</p>}
+        {title !== "首頁" && title && tweetQuantity && (
+          <p>{tweetQuantity} 推文</p>
+        )}
       </div>
     </div>
   );

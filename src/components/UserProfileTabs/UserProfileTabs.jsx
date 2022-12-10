@@ -1,18 +1,6 @@
 import React, { useState } from "react";
 import styles from "./UserProfileTabs.module.scss";
-
-//Tweet
-export const Tweet = ({
-  userName,
-  userId,
-  createTime,
-  tweetId,
-  tweetContent,
-  replyQuantity,
-  likeQuantity,
-}) => {
-  return <div className="border-start border-end border-bottom">Tweet</div>;
-};
+import Tweet from "../Tweet/Tweet";
 
 const UserProfileTabs = () => {
   //get Location to change active

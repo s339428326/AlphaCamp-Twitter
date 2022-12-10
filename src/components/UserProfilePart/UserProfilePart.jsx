@@ -148,7 +148,7 @@ const UserProfilePart = ({
   userName,
   userId,
   userIntroduction,
-  userImage,
+  userAvatar,
   bgImage,
   followerQuantity,
   followingQuantity,
@@ -159,10 +159,17 @@ const UserProfilePart = ({
   /*Modal Setting*/
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
+  const [nameCount, setNameCount] = useState(userName ? userName.length : 0);
+  const [count, setCount] = useState(
+    userIntroduction ? userIntroduction.length : 0
+  );
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setFullscreen("sm-down");
     setShow(true);
+  };
+  const handleCount = (e) => {
+    setCount(e.target.value.length);
   };
   /*Modal Setting*/
 
@@ -171,7 +178,7 @@ const UserProfilePart = ({
       {/* 使用者背景 */}
       <img
         className={`${styles["bg"]}`}
-        src={userImage || "https://fakeimg.pl/639x200/"}
+        src={userAvatar || "https://fakeimg.pl/639x200/"}
         alt="use-background"
       />
       <div className={`${styles["user-avatar"]} p-3`}>
@@ -188,6 +195,10 @@ const UserProfilePart = ({
           {/* 是否為本人樣式切換 */}
           {isOtherUser ? (
             <div className="d-flex gap-3 justify-content-end">
+              {/* 是否啟用信箱通知 */}
+              <button className={`${styles["btn-circle"]} btn`}>
+                <EmailIcon />
+              </button>
               {/* 是否啟用小鈴鐺 */}
               <button
                 className={`${
@@ -196,10 +207,7 @@ const UserProfilePart = ({
               >
                 {isNotin ? <ActiveBallIcon /> : <BallIcon />}
               </button>
-              {/* 是否啟用信箱通知 */}
-              <button className={`${styles["btn-circle"]} btn`}>
-                <EmailIcon />
-              </button>
+
               {/* 是否開啟追隨 */}
               <FollowButton isFollow={isFollow} />
             </div>
@@ -281,9 +289,37 @@ const UserProfilePart = ({
                     />
                   </label>
                   <div className="p-3 mt-5">
-                    <input type="text" />
-                    <br />
-                    <input type="text" />
+                    <div
+                      className={`${styles["input-style"]} d-flex flex-column`}
+                    >
+                      <label htmlFor="">名稱</label>
+                      <input
+                        onChange={(e) => setNameCount(e.target.value.length)}
+                        defaultValue={userName}
+                        type="text"
+                        maxLength={50}
+                      />
+                      <p className={styles["count"]}>{nameCount}/50</p>
+                    </div>
+                    <div
+                      className={`${styles["input-style"]} d-flex flex-column`}
+                    >
+                      <label htmlFor="userIntroduction">自我介紹</label>
+                      <textarea
+                        onChange={handleCount}
+                        style={{
+                          resize: "none",
+                          outline: "none",
+                        }}
+                        maxLength={160}
+                        name="userIntroduction"
+                        id="userIntroduction"
+                        defaultValue={userIntroduction}
+                        cols="30"
+                        rows="5"
+                      ></textarea>
+                      <p className={styles["count"]}>{count}/160</p>
+                    </div>
                   </div>
                 </Modal.Body>
               </Modal>
