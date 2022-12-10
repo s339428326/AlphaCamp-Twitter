@@ -20,7 +20,7 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainTweetModal = ({ avatarImg, inputValue, onClick}) => {
+const MainTweetModal = ({ avatarImg, inputValue}) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
