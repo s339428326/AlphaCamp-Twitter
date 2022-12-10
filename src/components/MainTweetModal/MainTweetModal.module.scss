@@ -5,7 +5,9 @@
     display: flex;
 
     .inputContent {
-      all: unset;
+      outline: none;
+      border: none;
+      resize: none;
       width: 100%;
       padding-left: 10px;
       padding-top: 12px;
