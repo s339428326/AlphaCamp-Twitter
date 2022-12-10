@@ -20,7 +20,7 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainTweetModal = ({ avatarImg, inputValue }) => {
+const MainTweetModal = ({ avatarImg, inputValue, onClick}) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
@@ -98,7 +98,7 @@ const MainTweetModal = ({ avatarImg, inputValue }) => {
                   className="btn btn-primary text-white rounded-pill"
                   disabled={wordCount === 0 ? true : false}
                 >
-                  回覆
+                  推文
                 </button>
               </div>
             </form>

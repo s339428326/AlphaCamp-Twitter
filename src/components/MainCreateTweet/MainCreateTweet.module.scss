@@ -1,0 +1,27 @@
+.tweetInput {
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  border-bottom: 10px solid #E6ECF0;
+  height: 136px;
+  position: relative;
+
+  .inputContainer {
+      padding: 16px 25px 16px 27.5px;
+      display: flex;
+  
+      .inputContent {
+        outline: none;
+        border: none;
+        resize: none;
+        width: 100%;
+        padding-left: 10px;
+        font-weight: 700;
+        font-size: 18px;
+      }
+    }
+  .modalBtn {
+    position: absolute;
+    right: 26px;
+    bottom: 16px;
+  }
+}
