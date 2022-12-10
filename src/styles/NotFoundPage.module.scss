@@ -1,0 +1,13 @@
+.notFoundPageContainer {
+  text-align: center;
+  
+  p {
+    font-size: 24px;
+  }
+  .focus {
+    color: red;
+    &:hover {
+      font-size: 40px;
+    }
+  }
+}
