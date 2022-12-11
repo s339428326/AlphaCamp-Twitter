@@ -1,0 +1,64 @@
+.container {
+  padding: 16px 21px 16px 16px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+
+  .avatarContainer {
+    padding-right: 8px;
+  }
+  .userName {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .userAccount {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #6c757d;
+  }
+  .infoContent {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 36px;
+    padding-right: 24px;
+    padding-bottom: 8px;
+  }
+  .time {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    color: #6c757d;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e6ecf0;
+  }
+  .count {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e6ecf0;
+  }
+  .countNum {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 23px;
+    padding-right: 4px;
+  }
+  .countTitle {
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 28px;
+    color: #6c757d;
+    padding-right: 36px;
+  }
+  button {
+    border: none;
+    background-color: transparent;
+    padding-top: 20px;
+  }
+  .msgIcon {
+    padding-right: 14%;
+  }
+}

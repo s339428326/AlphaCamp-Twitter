@@ -1,12 +1,12 @@
-import styles from "./MainTweet.module.scss";
+import styles from "./MainReplyTweet.module.scss";
 import MainReplyModal from "../MainReplyModal/MainReplyModal";
 import { useState } from "react";
 export const HeartIcon = () => {
   return (
     <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
+      width="26"
+      height="26"
+      viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -21,9 +21,9 @@ export const HeartIcon = () => {
 export const HeartedIcon = () => {
   return (
     <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
+      width="26"
+      height="26"
+      viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -34,44 +34,48 @@ export const HeartedIcon = () => {
     </svg>
   );
 };
-
-const MainTweet = ({ avatarImg }) => {
+const MainReplyTweet = ({ user }) => {
   const [like, setLike] = useState(false);
   const handleLike = () => {
-    setLike((current)=>!current)
-  }
+    setLike((current) => !current);
+  };
   return (
-    <div className={styles.mainTweet}>
-      {/* 圖片 */}
-      <div className={styles.replyModalAvatarContainer}>
+    <div className={styles.container}>
+      <div className="d-flex pb-2">
+      <div className={styles.avatarContainer}>
         <img
-          src={
-            avatarImg || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-          }
+          src={user || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
           alt="user-avatar"
           width={50}
           height={50}
         />
       </div>
-      {/* 內容 */}
       <div className={styles.tweetInfo}>
-        <div className={styles.infoTop}>
-          <span className={styles.infoTopPrime}>username</span>
-          <span className={styles.infoTopSec}>@test</span>
-          <span className={styles.infoTopSec}>．test</span>
-        </div>
-        <div className={styles.infoContent}>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ullam
-          laboriosam! Libero eos aut nostrum. Tempora, quidem reiciendis!
-          Expedita, ea. Nisi impedit voluptates incidunt molestias, soluta modi
-          deleniti magnam asperiores?
-        </div>
-        <div className={styles.quantity}>
-          <div><MainReplyModal width={16} height={16}/></div><span>??</span>
-          <button onClick={handleLike}>{like? <HeartedIcon/> : <HeartIcon/>}</button><span>??</span>
-        </div>
+        <div className={styles.userName}>Apple</div>
+        <div className={styles.userAccount}>@apple</div>
+      </div>
+      </div>
+      <div className={styles.infoContent}>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ullam
+        laboriosam! Libero eos aut nostrum. Tempora, quidem reiciendis!
+        Expedita, ea. Nisi impedit voluptates incidunt molestias, soluta modi
+        deleniti magnam asperiores?
+      </div>
+      <div className={styles.time}>上午 10:05 ．2021年11月10日</div>
+      <div className={styles.count}>
+        <span className={styles.countNum}>34</span>
+        <span className={styles.countTitle}>回覆</span>
+        <span className={styles.countNum}>808</span>
+        <span className={styles.countTitle}>喜歡次數</span>
+      </div>
+      <div className="d-flex">
+        <div className={styles.msgIcon}><MainReplyModal width={26} height={26}/></div>
+        <span><button onClick={handleLike}>
+          {like ? <HeartedIcon /> : <HeartIcon />}
+        </button></span>
       </div>
     </div>
   );
 };
-export default MainTweet;
+
+export default MainReplyTweet;

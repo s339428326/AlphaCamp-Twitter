@@ -1,0 +1,39 @@
+.replyModalTweet {
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
+  padding: 16px 24px 16px 24px;
+  display: flex;
+}
+
+.tweetInfo {
+  padding-left: 10px;
+
+  .infoTop {
+    padding-bottom: 8px;
+    line-height: 22px;
+
+    .infoTopPrime {
+      font-weight: 700;
+      padding-right: 5px;
+    }
+
+    .infoTopSec {
+      color: #657786;
+    }
+  }
+ .tweetReplyTo {
+      padding-bottom: 8px;
+ }
+  .infoContent {
+    padding-bottom: 18px;
+  }
+
+  .tweetReplyToSec {
+    color: #657786;
+  }
+
+  .tweetReplyToPrime {
+    color: #ff6600;
+  }
+}

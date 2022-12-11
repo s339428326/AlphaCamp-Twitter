@@ -8,7 +8,8 @@ import {
   AdminPage,
   NotFoundPage,
   UserFollowPage,
-  UserMainPage
+  UserMainPage,
+  UserMainReplyPage
 } from "./pages";
 import UserFollowPart from "./components/UserFollowPart/UserFollowPart";
 function App() {
@@ -22,7 +23,7 @@ function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/user" element={<UserMainPage />} />
-
+          <Route path="/user/reply" element={<UserMainReplyPage />} />
           <Route path="/userfollow" element={<UserFollowPage />}>
             <Route index element={<UserFollowPart />} />
             <Route path="follower" element={<UserFollowPart />} />
