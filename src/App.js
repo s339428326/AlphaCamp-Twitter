@@ -2,7 +2,7 @@
 import "./styles/main.scss";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserLoginPage, RegisterPage, AdminPage } from "./pages";
+import { UserLoginPage, RegisterPage, AdminPage, NotFoundPage } from "./pages";
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
           <Route path="/login" element={<UserLoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </div>
