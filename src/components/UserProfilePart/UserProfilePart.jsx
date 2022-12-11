@@ -160,7 +160,6 @@ const UserProfilePart = ({
   /*Modal Setting*/
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
-  const [nameCount, setNameCount] = useState(userName ? userName.length : 0);
   const [count, setCount] = useState(
     userIntroduction ? userIntroduction.length : 0
   );
