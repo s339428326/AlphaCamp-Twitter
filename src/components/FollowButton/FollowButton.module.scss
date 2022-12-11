@@ -1,0 +1,31 @@
+.btn:hover {
+  color: #fff;
+}
+
+.btn-readyOnly {
+  cursor: none;
+  &:hover {
+    background: transparent;
+    color: #ff6600;
+  }
+}
+
+.hover1 {
+  &:hover,
+  &:active,
+  &:focus {
+    cursor: not-allowed;
+    background-color: #ff6600;
+    color: #fff;
+  }
+}
+
+.hover2 {
+  &:hover,
+  &:active,
+  &:focus {
+    cursor: not-allowed;
+    background-color: transparent;
+    color: #ff6600;
+  }
+}
