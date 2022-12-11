@@ -34,17 +34,20 @@ const RegisterPage = () => {
             <AuthInput
               value={register.account}
               onChange={handleInput("account")}
+              placeholder="請輸入帳號"
             />
             <AuthInput
               label="名稱"
               value={register.name}
               onChange={handleInput("name")}
+              placeholder="請輸入使用者名稱"
             />
             <AuthInput
               label="Email"
               type="email"
               value={register.email}
               onChange={handleInput("email")}
+              placeholder="請輸入Email"
             />
             <AuthInput
               label="密碼"
@@ -52,6 +55,7 @@ const RegisterPage = () => {
               autoComplete="new-password"
               value={register.password}
               onChange={handleInput("password")}
+              placeholder="請輸入密碼"
             />
             <AuthInput
               label="密碼確認"
@@ -59,6 +63,7 @@ const RegisterPage = () => {
               autoComplete="new-password"
               value={register.checkPassword}
               onChange={handleInput("checkPassword")}
+              placeholder="請輸入密碼再次輸入密碼"
             />
             <div className="mb-3">
               <button className="btn btn-primary w-100 text-white rounded-pill">
