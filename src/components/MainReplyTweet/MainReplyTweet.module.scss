@@ -1,5 +1,5 @@
 .container {
-  padding: 16px 21px 16px 16px;
+  padding: 16px 21px 0px 16px;
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
   border-bottom: 1px solid #E6ECF0;
@@ -53,12 +53,18 @@
     color: #6c757d;
     padding-right: 36px;
   }
-  button {
-    border: none;
-    background-color: transparent;
-    padding-top: 20px;
+  .iconContainer {
+    display: flex;
+    margin-bottom: 0;
+    button {
+        border: none;
+        background-color: transparent;
+        padding-top: 20px;
+      }
+    
+      .msgIcon {
+        padding-right: 14%;
+      }
   }
-  .msgIcon {
-    padding-right: 14%;
-  }
+  
 }

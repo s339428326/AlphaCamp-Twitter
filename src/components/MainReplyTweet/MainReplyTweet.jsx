@@ -1,12 +1,12 @@
 import styles from "./MainReplyTweet.module.scss";
 import MainReplyModal from "../MainReplyModal/MainReplyModal";
 import { useState } from "react";
-export const HeartIcon = () => {
+export const HeartIcon = ({size}) => {
   return (
     <svg
-      width="26"
-      height="26"
-      viewBox="0 0 28 28"
+      width={size}
+      height={size}
+      viewBox="0 0 26 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -18,12 +18,12 @@ export const HeartIcon = () => {
   );
 };
 
-export const HeartedIcon = () => {
+export const HeartedIcon = ({size}) => {
   return (
     <svg
-      width="26"
-      height="26"
-      viewBox="0 0 28 28"
+      width={size}
+      height={size}
+      viewBox="0 0 26 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -34,6 +34,7 @@ export const HeartedIcon = () => {
     </svg>
   );
 };
+
 const MainReplyTweet = ({ user }) => {
   const [like, setLike] = useState(false);
   const handleLike = () => {
@@ -68,10 +69,10 @@ const MainReplyTweet = ({ user }) => {
         <span className={styles.countNum}>808</span>
         <span className={styles.countTitle}>喜歡次數</span>
       </div>
-      <div className="d-flex">
+      <div className={styles.iconContainer}>
         <div className={styles.msgIcon}><MainReplyModal width={26} height={26}/></div>
         <span><button onClick={handleLike}>
-          {like ? <HeartedIcon /> : <HeartIcon />}
+          {like ? <HeartedIcon size={40} /> : <HeartIcon size={40}/>}
         </button></span>
       </div>
     </div>
