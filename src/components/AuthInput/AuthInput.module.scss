@@ -16,7 +16,7 @@
     background-color: #f5f8fa;
     padding: 5px 10px 0 10px;
     font-size: 15px;
-    color: #657786;
+    color: #696974;
   }
   input {
     border: none;
@@ -26,6 +26,10 @@
     background-color: #f5f8fa;
     padding: 0 10px 0 10px;
     border-bottom: 2px solid #657786;
+    &::placeholder {
+      color: #b5b5be;
+      line-height: 26px;
+    }
   }
 }
 
