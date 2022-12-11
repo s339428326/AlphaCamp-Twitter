@@ -74,9 +74,9 @@ const AuthInput = ({
         />
         <div className={`${styles["footer"]}`}>
           <p className="mb-0">{error ? error : " "}</p>
-          <p className="mb-0">
+          <small className="mb-0 text-light">
             {textCount}/ {maxChar ? maxChar : 50}
-          </p>
+          </small>
         </div>
       </div>
     </div>

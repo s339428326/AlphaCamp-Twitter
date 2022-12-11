@@ -40,12 +40,12 @@
   .footer {
     display: flex;
     justify-content: space-between;
-    p:last-child {
+    small:last-child {
       opacity: 0;
       color: #657786;
     }
   }
-  input:focus ~ .footer > p:last-child {
+  input:focus ~ .footer > small:last-child {
     opacity: 1;
   }
 }
