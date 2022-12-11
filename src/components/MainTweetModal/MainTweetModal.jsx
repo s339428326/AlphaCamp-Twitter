@@ -20,7 +20,7 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainTweetModal = ({ avatarImg, inputValue}) => {
+const TestTweetModal = ({ user, element }) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
@@ -35,9 +35,7 @@ const MainTweetModal = ({ avatarImg, inputValue}) => {
 
   return (
     <>
-      <button className="btn btn-primary text-white rounded-pill" onClick={handleShow}>
-          推文
-      </button>
+      {React.cloneElement(element, { onClick: handleShow })}
       <Modal
         size="lg"
         show={show}
@@ -67,7 +65,7 @@ const MainTweetModal = ({ avatarImg, inputValue}) => {
                 <div className={styles.inputAvatar}>
                   <img
                     src={
-                      avatarImg ||
+                      user ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"
@@ -109,4 +107,4 @@ const MainTweetModal = ({ avatarImg, inputValue}) => {
   );
 };
 
-export default MainTweetModal;
+export default TestTweetModal;
