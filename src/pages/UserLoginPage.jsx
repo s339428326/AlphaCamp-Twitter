@@ -33,6 +33,7 @@ const UserLoginPage = () => {
               value={login.account}
               autoComplete="username"
               onChange={handleInput("account")}
+              placeholder="請輸入帳號"
             />
             <AuthInput
               label="密碼"
@@ -40,6 +41,7 @@ const UserLoginPage = () => {
               autoComplete="current-password"
               value={login.password}
               onChange={handleInput("password")}
+              placeholder="請輸入密碼"
             />
             <div className="mb-3">
               <button className="btn btn-primary w-100 text-white rounded-pill">

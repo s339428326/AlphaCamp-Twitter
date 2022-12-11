@@ -1,6 +1,7 @@
 import styles from "./UserProfilePart.module.scss";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
+import AuthInput from "../AuthInput/AuthInput";
 import { useEffect, useState } from "react";
 
 //icons
@@ -159,7 +160,6 @@ const UserProfilePart = ({
   /*Modal Setting*/
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
-  const [nameCount, setNameCount] = useState(userName ? userName.length : 0);
   const [count, setCount] = useState(
     userIntroduction ? userIntroduction.length : 0
   );
@@ -289,18 +289,7 @@ const UserProfilePart = ({
                     />
                   </label>
                   <div className="p-3 mt-5">
-                    <div
-                      className={`${styles["input-style"]} d-flex flex-column`}
-                    >
-                      <label htmlFor="">名稱</label>
-                      <input
-                        onChange={(e) => setNameCount(e.target.value.length)}
-                        defaultValue={userName}
-                        type="text"
-                        maxLength={50}
-                      />
-                      <p className={styles["count"]}>{nameCount}/50</p>
-                    </div>
+                    <AuthInput label="名稱" placeholder="請輸入名稱" />
                     <div
                       className={`${styles["input-style"]} d-flex flex-column`}
                     >
