@@ -5,6 +5,7 @@ import NotFoundPage from "./NotFoundPage";
 import UserFollowPage from "./UserFollowPage";
 import UserMainPage from "./UserMainPage";
 import UserMainReplyPage from "./UserMainReplyPage";
+import UserProfilePage from "./UserProfilePage";
 
 export {
   UserLoginPage,
@@ -13,5 +14,6 @@ export {
   NotFoundPage,
   UserFollowPage,
   UserMainPage,
-  UserMainReplyPage
+  UserMainReplyPage,
+  UserProfilePage,
 };
