@@ -1,27 +1,7 @@
-.container {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  
-
-  .left {
-    margin-left: 9%;
-    width: 12%;
-    margin-right: 2%;
-  }
 
   .middle {
-    width: 44%;
-    margin-right: 2%;
     max-height: 100vh;
     overflow-y: scroll;
   }
 
-  .right {
-    width: 19%;
-    margin-right: 9%;
-  }
-  .followList {
-    margin: 0;
-  }
-}
+  

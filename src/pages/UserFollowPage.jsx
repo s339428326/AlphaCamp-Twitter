@@ -31,7 +31,7 @@ const UserFollowPage = ({ user }) => {
             <UserFollowTabs navigate={navigate} />
             {/*先用 followItem，followpart要等功能實作 然後要設定條件，如果沒有追蹤者就顯示提示，有的話再render出來*/}
             <div className={styles.followList}>
-              <FollowItem />
+              <FollowItem />              
             </div>
             {/*<div><OutletContainer /></div>*/}
           </div>
