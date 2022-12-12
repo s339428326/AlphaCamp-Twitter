@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import UserSidebar from "../components/UserSidebar/UserSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import UserFollowTabs from "../components/UserFollowTabs/UserFollowTabs";
+import TopUser from "../components/TopUser/TopUser"
 //import UserFollowPart from "../components/UserFollowPart/UserFollowPart"
 import { FollowItem } from "../components/UserFollowPart/UserFollowPart";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +38,7 @@ const UserFollowPage = ({ user }) => {
           </div>
         </Col>
         <Col xs={4} md={3}>
-          <div className={styles.right}>TopUser</div>
+          <div className={styles.right}><TopUser /></div>
         </Col>
       </Row>
     </Container>
