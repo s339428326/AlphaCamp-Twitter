@@ -20,7 +20,7 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const TestTweetModal = ({ user, element }) => {
+const MainTweetModal = ({ user, element }) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
@@ -107,4 +107,4 @@ const TestTweetModal = ({ user, element }) => {
   );
 };
 
-export default TestTweetModal;
+export default MainTweetModal;
