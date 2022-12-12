@@ -1,12 +1,13 @@
-//import { Link } from "react-router-dom";
-import styles from "../styles/NotFoundPage.module.scss"
+import { Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
 
 const NotFoundPage = () => {
   return (
-    <div className={styles.notFoundPageContainer}>
+    <Container className="text-center">
       <h1> Sorry, the page is not exist!</h1>
-      <p>Please <b className={styles.focus}>login </b>to continue!</p>
-    </div>
+      <h2>Please <b><Link to="/login">login </Link></b>to continue!</h2>
+      <h2>Or go to <b><Link to="/user">Main </Link></b>to continue!</h2>
+    </Container>
   )
 }
 
