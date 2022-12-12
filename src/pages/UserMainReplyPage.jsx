@@ -3,6 +3,8 @@ import UserSidebar from "../components/UserSidebar/UserSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import MainReply from "../components/MainReply/MainReply";
 import MainReplyTweet from "../components/MainReplyTweet/MainReplyTweet";
+import TopUser from "../components/TopUser/TopUser"
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -19,7 +21,7 @@ const UserMainReplyPage = ({ user }) => {
           <MainReply />
         </Col>
         <Col xs={4} md={3}>
-          <div>TopUsers</div>
+          <div><TopUser/></div>
         </Col>
       </Row>
     </Container>
