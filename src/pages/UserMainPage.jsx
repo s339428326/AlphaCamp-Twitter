@@ -13,12 +13,12 @@ const UserMainPage = ({ user }) => {
         <Col xs={1} md={2}>
           <UserSidebar />
         </Col>
-        <Col xs={7} className={styles.middle}>
+        <Col xs md={7} className={styles.middle}>
           <PageTitle title={"首頁"} tweetQuantity={user} />
           <MainCreateTweet />
           <MainTweet />
         </Col>
-        <Col xs={3}>
+        <Col xs={4} md={3}>
           <div className="border">TopUser</div>
         </Col>
       </Row>
