@@ -1,27 +1,29 @@
 import styles from "./UserFollowTabs.module.scss"
-import { useState} from "react";
-
-const UserFollowTabs = () => {
+import { useState } from "react";
+const UserFollowTabs = ({navigate}) => {
   const [active, setActive] = useState ({
   follower: true,
   following: false,
 });
   const handleActive = (e) => {
     const buttonName = e.target.innerText;
-
+    
     switch (buttonName) {
       case "跟隨者":
         setActive({
           follower: true,
           following: false,
         });
+        navigate("/userfollow/follower");
+
         break;
       case "正在跟隨":
         setActive({
           follower: false,
           following: true,
         });
-        break;
+      navigate("/userfollow/following");
+      break;
 
       default:
         setActive({

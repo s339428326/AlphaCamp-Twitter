@@ -7,12 +7,12 @@ import React, { useState } from "react";
 // 2 串 api
 // 3 提交成功後要有 alert
 
-const MessageIcon = () => {
+const MessageIcon = ({height, width}) => {
   return (
     <div className={styles.messageIcon}>
       <svg
-        width="16"
-        height="16"
+        width={width}
+        height={height}
         viewBox="0 0 30 30"
         fill="white"
         xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +43,7 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainReplyModal = ({ avatarImg, inputValue }) => {
+const MainReplyModal = ({ avatarImg, inputValue, width, height }) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
@@ -59,7 +59,7 @@ const MainReplyModal = ({ avatarImg, inputValue }) => {
   return (
     <>
       <button onClick={handleShow} className={styles.messageBtn}>
-        <MessageIcon /> 
+        <MessageIcon width={width} height={height}/> 
       </button>
       <Modal
         size="lg"
