@@ -6,11 +6,15 @@ import UserFollowPage from "./UserFollowPage";
 import UserMainPage from "./UserMainPage";
 import UserMainReplyPage from "./UserMainReplyPage";
 import UserProfilePage from "./UserProfilePage";
+import AdminMainPage from "./AdminMainPage";
+import AdminUserPage from "./AdminUserPage";
 
 export {
   UserLoginPage,
   RegisterPage,
   AdminPage,
+  AdminMainPage,
+  AdminUserPage,
   NotFoundPage,
   UserFollowPage,
   UserMainPage,

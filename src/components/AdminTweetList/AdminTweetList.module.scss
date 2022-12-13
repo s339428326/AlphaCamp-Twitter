@@ -1,0 +1,51 @@
+.mainTweet {
+  padding: 16px 24px 18px 24px;
+  display: flex;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
+}
+
+.tweetInfo {
+  padding-left: 10px;
+
+  .infoTop {
+    padding-bottom: 6px;
+    line-height: 22px;
+
+    .infoTopPrime {
+      font-weight: 700;
+      padding-right: 5px;
+    }
+
+    .infoTopSec {
+      color: #657786;
+    }
+    .crossIcon {
+      margin-left: 750px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .infoContent {
+    padding-bottom: 10px;
+  }
+  .quantity {
+    display: flex;
+  }
+  button {
+    all: unset;
+    cursor: pointer;
+  }
+  .quantity {
+    font-weight: 600;
+    font-size: 14px;
+    color: #6c757d;
+    span {
+      padding-left: 10px;
+      padding-right: 42px;
+    }
+  }
+}

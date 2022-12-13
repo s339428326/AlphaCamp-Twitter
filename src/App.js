@@ -6,12 +6,15 @@ import {
   UserLoginPage,
   RegisterPage,
   AdminPage,
+  AdminMainPage,
+  AdminUserPage,
   NotFoundPage,
   UserFollowPage,
   UserMainPage,
-  UserMainReplyPage
+  UserMainReplyPage,
 } from "./pages";
 import UserFollowPart from "./components/UserFollowPart/UserFollowPart";
+
 function App() {
   return (
     <div className="App">
@@ -21,6 +24,8 @@ function App() {
           <Route path="/login" element={<UserLoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin_main" element={<AdminMainPage />} />
+          <Route path="/admin_users" element={<AdminUserPage />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/user" element={<UserMainPage />} />
           <Route path="/user/reply" element={<UserMainReplyPage />} />

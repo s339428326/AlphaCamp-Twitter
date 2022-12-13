@@ -1,0 +1,35 @@
+.adminSidebar {
+  height: 100vh;
+}
+
+.logo {
+  margin: 20px 0 55px 0;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.navItem {
+  display: flex;
+  background-color: white;
+  border: none;
+  margin-bottom: 30px;
+}
+
+.navItem:last-child {
+  margin-top: 520px;
+}
+
+.navIcon {
+  margin-right: 20px;
+}
+
+
+
+.logout {
+  position: absolute;
+  bottom: 0;
+}
