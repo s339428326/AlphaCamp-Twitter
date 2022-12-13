@@ -18,10 +18,12 @@ import {
 import UserFollowPart from "./components/UserFollowPart/UserFollowPart";
 import UserProfileTweet from "./components/UserProfileTweet/UserProfileTweet";
 
+const basename = process.env.PUBLIC_URL;
+
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route path="/" element={<UserLoginPage />} />
           <Route path="/login" element={<UserLoginPage />} />
