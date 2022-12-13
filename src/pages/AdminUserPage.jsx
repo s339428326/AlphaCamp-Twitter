@@ -1,4 +1,3 @@
-import styles from "../styles/UserMainPage.module.scss";
 import AdminSidebar from "../components/AdminSidebar/AdminSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import Container from "react-bootstrap/Container";
@@ -10,10 +9,14 @@ const AdminUserPage = ({ user }) => {
     <Container>
       <Row>
         <Col xs={1} md={2}>
-          <AdminSidebar />
+          <div className="sticky-top">
+            <AdminSidebar />
+          </div>
         </Col>
-        <Col xs md={10} className={styles.middle}>
-          <PageTitle title={"使用者列表"} tweetQuantity={user} />
+        <Col xs md={10}>
+          <div className="sticky-top">
+            <PageTitle title={"使用者列表"} tweetQuantity={user} />
+          </div>
           <AdminUserList />
         </Col>
       </Row>
