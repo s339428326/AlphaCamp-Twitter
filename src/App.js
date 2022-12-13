@@ -9,9 +9,11 @@ import {
   NotFoundPage,
   UserFollowPage,
   UserMainPage,
-  UserMainReplyPage
+  UserMainReplyPage,
+  UserProfilePage,
 } from "./pages";
 import UserFollowPart from "./components/UserFollowPart/UserFollowPart";
+import UserProfileTweet from "./components/UserProfileTweet/UserProfileTweet";
 function App() {
   return (
     <div className="App">
@@ -22,12 +24,17 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="/user" element={<UserMainPage />} />
-          <Route path="/user/reply" element={<UserMainReplyPage />} />
-          <Route path="/userfollow" element={<UserFollowPage />}>
+          <Route path="/:userId" element={<UserMainPage />} />
+          <Route path="/:userId/reply" element={<UserMainReplyPage />} />
+          <Route path="/:userId/follow" element={<UserFollowPage />}>
             <Route index element={<UserFollowPart />} />
             <Route path="follower" element={<UserFollowPart />} />
             <Route path="following" element={<UserFollowPart />} />
+          </Route>
+          <Route path="/:userId/profile" element={<UserProfilePage />}>
+            <Route index element={<UserProfileTweet router="" />} />
+            <Route path="reply" element={<UserProfileTweet router="reply" />} />
+            <Route path="like" element={<UserProfileTweet router="like" />} />
           </Route>
         </Routes>
       </BrowserRouter>
