@@ -6,14 +6,18 @@ import {
   UserLoginPage,
   RegisterPage,
   AdminPage,
+  AdminMainPage,
+  AdminUserPage,
   NotFoundPage,
   UserFollowPage,
   UserMainPage,
   UserMainReplyPage,
   UserProfilePage,
 } from "./pages";
+
 import UserFollowPart from "./components/UserFollowPart/UserFollowPart";
 import UserProfileTweet from "./components/UserProfileTweet/UserProfileTweet";
+
 function App() {
   return (
     <div className="App">
@@ -23,6 +27,8 @@ function App() {
           <Route path="/login" element={<UserLoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin_main" element={<AdminMainPage />} />
+          <Route path="/admin_users" element={<AdminUserPage />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/:userId" element={<UserMainPage />} />
           <Route path="/:userId/reply" element={<UserMainReplyPage />} />

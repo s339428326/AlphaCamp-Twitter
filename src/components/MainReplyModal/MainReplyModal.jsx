@@ -7,7 +7,7 @@ import React, { useState } from "react";
 // 2 串 api
 // 3 提交成功後要有 alert
 
-const MessageIcon = ({height, width}) => {
+export const MessageIcon = ({ height, width }) => {
   return (
     <div className={styles.messageIcon}>
       <svg
@@ -59,7 +59,7 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height }) => {
   return (
     <>
       <button onClick={handleShow} className={styles.messageBtn}>
-        <MessageIcon width={width} height={height}/> 
+        <MessageIcon width={width} height={height} />
       </button>
       <Modal
         size="lg"
