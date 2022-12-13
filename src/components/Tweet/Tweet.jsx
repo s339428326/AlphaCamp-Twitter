@@ -93,7 +93,7 @@ const Tweet = ({
         </p>
         <div className={`${styles["tweet-footer"]} d-flex`}>
           <div className="d-flex gap-2">
-            <MainReplyModal />
+            <MainReplyModal width={16} height={16} />
             <span className="font-monospace text-light me-4">
               {replyQuantity || "無讀取資料"}
             </span>
