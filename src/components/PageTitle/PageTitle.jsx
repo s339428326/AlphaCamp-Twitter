@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./PageTitle.module.scss";
+//react-router-dom
 
 //icons
 export const ArrowLeftIcon = () => {
@@ -24,10 +26,11 @@ tweetQuantity => 推文數量(string)
 */
 
 const PageTitle = ({ title, tweetQuantity }) => {
+  const navigate = useNavigate();
   return (
     <div className={`${styles["title"]}`}>
       {title !== "首頁" && (
-        <button className={`${styles["svg"]}`}>
+        <button onClick={() => navigate(-1)} className={`${styles["svg"]}`}>
           <ArrowLeftIcon />
         </button>
       )}
