@@ -4,7 +4,6 @@ import TopUser from "../components/TopUser/TopUser";
 import PageTitle from "../components/PageTitle/PageTitle";
 import UserProfilePart from "../components/UserProfilePart/UserProfilePart";
 import UserProfileTabs from "../components/UserProfileTabs/UserProfileTabs";
-import Tweet from "../components/Tweet/Tweet";
 
 //react-bootstrap
 import Container from "react-bootstrap/Container";
@@ -12,12 +11,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 //react-router-dom
-// import { useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const UserProfilePage = () => {
   //用來對造是否為本人
   //假設取得帳號自己的userId
-  //   const myself = "master";
   return (
     <Container>
       <Row>
@@ -32,7 +30,7 @@ const UserProfilePage = () => {
           </div>
           <UserProfilePart />
           <UserProfileTabs />
-          <Tweet />
+          <Outlet />
         </Col>
         <Col xs={3}>
           <TopUser />

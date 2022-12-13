@@ -1,54 +1,27 @@
-import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./UserProfileTabs.module.scss";
-import Tweet from "../Tweet/Tweet";
 
 const UserProfileTabs = () => {
+  //use router navigate
+  const navigate = useNavigate();
+  //url path
+  const url = useLocation();
+  const routerName = url.pathname.split("/");
+  const userId = routerName[1];
+  const item = routerName[3];
+
   //get Location to change active
   //這裡暫時使用useState代替
-  const [activeList, setActiveList] = useState({
-    tweet: true,
-    reply: false,
-    like: false,
-  });
-
-  const handleActive = (e) => {
-    const buttonName = e.target.innerText;
-
-    switch (buttonName) {
-      case "回覆":
-        setActiveList({
-          tweet: false,
-          reply: true,
-          like: false,
-        });
-        break;
-      case "喜歡的內容":
-        setActiveList({
-          tweet: false,
-          reply: false,
-          like: true,
-        });
-        break;
-
-      default:
-        setActiveList({
-          tweet: true,
-          reply: false,
-          like: false,
-        });
-        break;
-    }
-  };
 
   return (
     <div>
       <ul className="list-unstyled d-flex flex-wrap mb-0 border-start border-end border-bottom">
         <li>
           <button
-            className={`${styles["btn"]} ${
-              activeList.tweet && styles["active"]
-            }`}
-            onClick={handleActive}
+            className={`${styles["btn"]} ${item === "" && styles["active"]}`}
+            onClick={() => {
+              navigate(`/${userId}/profile/`);
+            }}
           >
             推文
           </button>
@@ -56,9 +29,11 @@ const UserProfileTabs = () => {
         <li>
           <button
             className={`${styles["btn"]} ${
-              activeList.reply && styles["active"]
+              item === "reply" && styles["active"]
             }`}
-            onClick={handleActive}
+            onClick={() => {
+              navigate(`/${userId}/profile/reply`);
+            }}
           >
             回覆
           </button>
@@ -66,15 +41,16 @@ const UserProfileTabs = () => {
         <li>
           <button
             className={`${styles["btn"]} ${
-              activeList.like && styles["active"]
+              item === "like" && styles["active"]
             }`}
-            onClick={handleActive}
+            onClick={() => {
+              navigate(`/${userId}/profile/like`);
+            }}
           >
             喜歡的內容
           </button>
         </li>
       </ul>
-      <Tweet />
     </div>
   );
 };
