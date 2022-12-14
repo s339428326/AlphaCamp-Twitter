@@ -27,6 +27,10 @@
   margin-right: 20px;
 }
 
+.activeText {
+  color: #ff751a;
+}
+
 .tweetButton {
   width: 210px;
   height: 45px;
@@ -40,7 +44,40 @@
   color: #fff;
 }
 
+.tweetBtnRwd {
+  display: none;
+  width: 24px;
+  position: absolute;
+  top: 8px;
+  right: 6px;
+}
+
+.tweetBtnContainer {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  background-color: #ff6600;
+  border-radius: 50%;
+  display: none;
+}
+
 .logout {
   position: absolute;
   bottom: 0;
+}
+
+@media (max-width: 1200px) {
+  .navItem p {
+    display: none;
+  }
+
+  .tweetBtn {
+    display: none;
+  }
+  .tweetBtnRwd {
+    display: block;
+  }
+  .tweetBtnContainer {
+    display: block;
+  }
 }

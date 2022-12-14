@@ -3,7 +3,7 @@ import UserSidebar from "../components/UserSidebar/UserSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import MainCreateTweet from "../components/MainCreateTweet/MainCreateTweet";
 import MainTweet from "../components/MainTweet/MainTweet";
-import TopUser from "../components/TopUser/TopUser"
+import TopUser from "../components/TopUser/TopUser";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -20,7 +20,9 @@ const UserMainPage = ({ user }) => {
           <MainTweet />
         </Col>
         <Col xs={4} md={3}>
-          <div className="border"><TopUser /></div>
+          <div className="border">
+            <TopUser />
+          </div>
         </Col>
       </Row>
     </Container>
