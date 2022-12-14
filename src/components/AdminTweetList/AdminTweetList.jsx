@@ -1,36 +1,46 @@
 import styles from "./AdminTweetList.module.scss";
-import crossUrl from "../../components/assets/icons/cross.png";
+import CloseButton from "react-bootstrap/CloseButton";
 
-const AdminTweetList = ({ avatarImg }) => {
+const AdminTweetList = ({
+  userName,
+  userId,
+  userAvatar,
+  createTime,
+  tweetId,
+  isLike,
+  tweetContent = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo in ipsum, omnis mollitia aliquam quaerat ducimus. Repudiandae ea blanditiis dolorum delectuasdasdasdasdasdass aspernatur eius reprehenderit distinctio nostrum e",
+}) => {
   return (
-    <div className={styles.mainTweet}>
-      {/* 圖片 */}
-      <div className={styles.replyModalAvatarContainer}>
+    <section className="border-start border-end border-bottom px-4 py-3 d-flex gap-2">
+      <div>
         <img
+          className="rounded"
           src={
-            avatarImg || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            userAvatar ||
+            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
           }
           alt="user-avatar"
           width={50}
           height={50}
         />
       </div>
-      {/* 內容 */}
-      <div className={styles.tweetInfo}>
-        <div className={styles.infoTop}>
-          <span className={styles.infoTopPrime}>username</span>
-          <span className={styles.infoTopSec}>@test</span>
-          <span className={styles.infoTopSec}>．test</span>
-          <img src={crossUrl} alt="cross url" className={styles.crossIcon} />
+      <div>
+        <div
+          className={`${styles["tweet-header"]} d-flex align-items-center gap-2`}
+        >
+          <strong>{userName || "無讀取資料"}</strong>
+          <small className="text-light mb-0">
+            @{userId || "無讀取資料"}・{createTime || "無讀取資料"}
+          </small>
+          <div className="ms-auto">
+            <CloseButton />
+          </div>
         </div>
-        <div className={styles.infoContent}>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ullam
-          laboriosam! Libero eos aut nostrum. Tempora, quidem reiciendis!
-          Expedita, ea. Nisi impedit voluptates incidunt molestias, soluta modi
-          deleniti magnam asperiores?
-        </div>
+        <p className={`${styles["tweet-content"]} mb-0`}>
+          {tweetContent || "無讀取資料"}
+        </p>
       </div>
-    </div>
+    </section>
   );
 };
 export default AdminTweetList;

@@ -1,4 +1,3 @@
-import styles from "../styles/UserMainPage.module.scss";
 import UserSidebar from "../components/UserSidebar/UserSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import MainReply from "../components/MainReply/MainReply";
@@ -13,15 +12,19 @@ const UserMainReplyPage = ({ user }) => {
     <Container>
       <Row>
         <Col xs={1} md={2}>
-          <UserSidebar />
+          <div className="sticky-top">
+            <UserSidebar />
+          </div>
         </Col>
-        <Col xs md={7} className={styles.middle}>
-          <PageTitle title={"推文"} tweetQuantity={user} />
+        <Col xs md={7}>
+          <div className="sticky-top">
+            <PageTitle title={"推文"} tweetQuantity={user} />
+          </div>
           <MainReplyTweet />
-          <MainReply />
+          <MainReply />      
         </Col>
         <Col xs={4} md={3}>
-          <div>
+          <div className="sticky-top">
             <TopUser />
           </div>
         </Col>

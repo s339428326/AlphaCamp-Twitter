@@ -9,6 +9,7 @@ const UserProfileTabs = () => {
   const routerName = url.pathname.split("/");
   const userId = routerName[1];
   const item = routerName[3];
+  console.log();
 
   //get Location to change active
   //這裡暫時使用useState代替
@@ -18,7 +19,9 @@ const UserProfileTabs = () => {
       <ul className="list-unstyled d-flex flex-wrap mb-0 border-start border-end border-bottom">
         <li>
           <button
-            className={`${styles["btn"]} ${item === "" && styles["active"]}`}
+            className={`${styles["btn"]} ${
+              (item === "" || item === undefined) && styles["active"]
+            }`}
             onClick={() => {
               navigate(`/${userId}/profile/`);
             }}

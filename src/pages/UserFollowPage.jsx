@@ -1,9 +1,8 @@
-import styles from "../styles/UserFollowPage.module.scss";
 import { Outlet } from "react-router-dom";
 import UserSidebar from "../components/UserSidebar/UserSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import UserFollowTabs from "../components/UserFollowTabs/UserFollowTabs";
-import TopUser from "../components/TopUser/TopUser"
+import TopUser from "../components/TopUser/TopUser";
 //import UserFollowPart from "../components/UserFollowPart/UserFollowPart"
 import { FollowItem } from "../components/UserFollowPart/UserFollowPart";
 import { useNavigate } from "react-router-dom";
@@ -24,21 +23,28 @@ const UserFollowPage = ({ user }) => {
     <Container>
       <Row>
         <Col xs={1} md={2}>
-          <UserSidebar />
+          <div className="sticky-top">
+            {" "}
+            <UserSidebar />
+          </div>
         </Col>
         <Col xs md={7}>
-          <div className={styles.middle}>
-            <PageTitle title={user} tweetQuantity={user} />
+          <div>
+            <div className="sticky-top">
+              <PageTitle title={user} tweetQuantity={user} />
+            </div>
             <UserFollowTabs navigate={navigate} />
             {/*先用 followItem，followpart要等功能實作 然後要設定條件，如果沒有追蹤者就顯示提示，有的話再render出來*/}
-            <div className={styles.followList}>
-              <FollowItem />              
+            <div>
+              <FollowItem />
             </div>
             {/*<div><OutletContainer /></div>*/}
           </div>
         </Col>
         <Col xs={4} md={3}>
-          <div className={styles.right}><TopUser /></div>
+          <div className="sticky-top">
+            <TopUser />
+          </div>
         </Col>
       </Row>
     </Container>
