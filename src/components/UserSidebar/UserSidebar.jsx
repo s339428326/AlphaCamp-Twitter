@@ -79,11 +79,11 @@ export default function UserSidebar() {
         </button>
         <MainTweetModal
           element={
-            <>
+            <div>
               <button
                 className={`${styles.tweetBtn} btn btn-primary text-white rounded-pill`}
               >
-                推文
+                <p>推文</p>
               </button>
               <div className={styles.tweetBtnContainer}>
                 <img
@@ -92,7 +92,7 @@ export default function UserSidebar() {
                   className={styles.tweetBtnRwd}
                 />
               </div>
-            </>
+            </div>
           }
         />
         <button className={`${styles.navItem} ${styles.logout}`}>
