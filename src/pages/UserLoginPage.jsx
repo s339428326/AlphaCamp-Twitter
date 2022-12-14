@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
 
 const UserLoginPage = () => {
   const navigate = useNavigate();
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, currentMember } = useAuth();
 
   const [loginPage, setLoginPage] = useState({
     account: "",
@@ -45,6 +45,7 @@ const UserLoginPage = () => {
     //呼叫sweetAlert
     if (success) {
       // 登入成功訊息
+      // navigate("")
       Swal.fire({
         position: "top",
         title: "登入成功！",
@@ -54,6 +55,7 @@ const UserLoginPage = () => {
       });
       return;
     }
+
     Swal.fire({
       position: "top",
       title: "登入失敗！",
@@ -64,10 +66,11 @@ const UserLoginPage = () => {
   };
 
   useEffect(() => {
+    console.log("[LoginPage useEffect] isAuthenticated:", isAuthenticated);
     if (isAuthenticated === true) {
-      navigate("/admin");
+      navigate(`/${currentMember.id}`);
     }
-  }, [navigate, isAuthenticated]);
+  }, [navigate, isAuthenticated, currentMember.id]);
 
   return (
     <Container>
