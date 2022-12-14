@@ -1,6 +1,5 @@
 //Component
 import UserSidebar from "../components/UserSidebar/UserSidebar";
-import styles from "../styles/UserMainPage.module.scss";
 import PageTitle from "../components/PageTitle/PageTitle";
 import Setting from "../components/Setting/Setting";
 //react-bootstrap
@@ -16,7 +15,7 @@ const UserSettingPage = () => {
         <Col xs={1} md={2}>
           <UserSidebar />
         </Col>
-        <Col xs md={7} className={styles.middle}>
+        <Col xs md={7}>
           <PageTitle title={"帳戶設定"} />
           <Setting />
         </Col>
