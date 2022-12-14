@@ -1,4 +1,4 @@
-//Component
+//component
 import AuthInput from "../components/AuthInput/AuthInput";
 import Logo from "../components/Logo/Logo";
 //react-bootstrap
@@ -6,22 +6,68 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-//React
-import { useState } from "react";
-import { Link } from "react-router-dom";
+//react
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+//context
+import { useAuth } from "../contexts/AuthContext";
+
+//plugin
+import Swal from "sweetalert2";
 
 const UserLoginPage = () => {
-  const [login, setLogin] = useState({
+  const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuth();
+
+  const [loginPage, setLoginPage] = useState({
     account: "",
     password: "",
   });
 
   const handleInput = (keyName) => (currentValue) => {
-    setLogin({
-      ...login,
+    setLoginPage({
+      ...loginPage,
       [keyName]: currentValue,
     });
   };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    // console
+    //空白阻擋
+    if (!(loginPage.account && loginPage.password)) return;
+    //請求Login api
+    const success = await login({
+      account: loginPage["account"],
+      password: loginPage["password"],
+    });
+    //呼叫sweetAlert
+    if (success) {
+      // 登入成功訊息
+      Swal.fire({
+        position: "top",
+        title: "登入成功！",
+        timer: 1000,
+        icon: "success",
+        showConfirmButton: false,
+      });
+      return;
+    }
+    Swal.fire({
+      position: "top",
+      title: "登入失敗！",
+      timer: 1000,
+      icon: "error",
+      showConfirmButton: false,
+    });
+  };
+
+  useEffect(() => {
+    if (isAuthenticated === true) {
+      navigate("/admin");
+    }
+  }, [navigate, isAuthenticated]);
 
   return (
     <Container>
@@ -44,7 +90,10 @@ const UserLoginPage = () => {
               placeholder="請輸入密碼"
             />
             <div className="mb-3">
-              <button className="btn btn-primary w-100 text-white rounded-pill">
+              <button
+                onClick={handleLogin}
+                className="btn btn-primary w-100 text-white rounded-pill"
+              >
                 登入
               </button>
             </div>
