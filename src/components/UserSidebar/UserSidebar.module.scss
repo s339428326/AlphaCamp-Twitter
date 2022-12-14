@@ -31,17 +31,16 @@
   color: #ff751a;
 }
 
-.tweetButton {
+.tweetBtn {
   width: 210px;
   height: 45px;
   border-radius: 100px;
   background-color: #ff6600;
   border: none;
   line-height: 40px;
-}
-
-.tweetButton p {
-  color: #fff;
+  & p {
+    line-height: 30px;
+  }
 }
 
 .tweetBtnRwd {
