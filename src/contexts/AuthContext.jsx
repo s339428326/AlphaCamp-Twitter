@@ -66,6 +66,8 @@ export const AuthProvider = ({ children }) => {
           return success;
         },
       }}
-    ></AuthContext.Provider>
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };

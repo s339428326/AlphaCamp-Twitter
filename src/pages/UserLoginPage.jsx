@@ -16,8 +16,7 @@ import { useAuth } from "../contexts/AuthContext";
 //plugin
 import Swal from "sweetalert2";
 
-const UserLoginPage = (e) => {
-  e.preventdefault();
+const UserLoginPage = () => {
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
 
@@ -33,7 +32,9 @@ const UserLoginPage = (e) => {
     });
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    // console
     //空白阻擋
     if (!(loginPage.account && loginPage.password)) return;
     //請求Login api
@@ -61,6 +62,7 @@ const UserLoginPage = (e) => {
       showConfirmButton: false,
     });
   };
+
   useEffect(() => {
     if (isAuthenticated === true) {
       navigate("/admin");
