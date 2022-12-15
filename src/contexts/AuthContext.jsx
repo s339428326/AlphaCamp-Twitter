@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { login } from "../apis/.auth";
 import jwt_decode from "jwt-decode";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const defaultAuthContext = {
   isAuthenticated: false,
@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [payload, setPayload] = useState(null);
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -28,12 +27,8 @@ export const AuthProvider = ({ children }) => {
       if (!token) {
         setIsAuthenticated(false);
         setPayload(null);
-        //這個邏輯要寫在login裡面
-        navigate("/login");
         return;
       }
-      //確認
-
       //checkPremisses
       const isValid = token;
       //   console.log("Token驗證", Boolean(isValid));
@@ -47,7 +42,7 @@ export const AuthProvider = ({ children }) => {
       }
     };
     checkTokenIsValid();
-  }, [pathname, navigate]);
+  }, [pathname]);
 
   return (
     <AuthContext.Provider
@@ -81,7 +76,6 @@ export const AuthProvider = ({ children }) => {
           localStorage.removeItem("token");
           setPayload(null);
           setIsAuthenticated(false);
-          navigator("/login");
         },
       }}
     >

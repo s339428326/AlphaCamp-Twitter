@@ -205,8 +205,6 @@ const UserSidebar = () => {
   const { pathname } = useLocation();
   const userId = pathname.split("/")[1];
   const item = pathname.split("/")[2];
-  //測試完要刪除
-  console.log("測試Github page useLocation:", userId, item);
   //判斷是否為首頁
   const isHome = item !== "profile" && item !== "setting";
   //
