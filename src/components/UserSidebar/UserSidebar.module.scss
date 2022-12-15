@@ -1,82 +1,32 @@
-.userSidebar {
+nav {
+  position: relative;
   height: 100vh;
 }
 
-.logo {
-  margin: 20px 0 55px 0;
-}
-
-.navList {
+.list-item {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.navItem {
-  display: flex;
-  background-color: white;
-  border: none;
-  margin-bottom: 30px;
-}
-
-.navItem:last-child {
-  margin-top: 520px;
-}
-
-.navIcon {
-  margin-right: 20px;
-}
-
-.activeText {
-  color: #ff751a;
-}
-
-.tweetBtn {
-  width: 210px;
-  height: 45px;
-  border-radius: 100px;
-  background-color: #ff6600;
-  border: none;
-  line-height: 40px;
-  & p {
-    line-height: 30px;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  a {
+    text-decoration: none;
   }
-}
-
-.tweetBtnRwd {
-  display: none;
-  width: 24px;
-  position: absolute;
-  top: 8px;
-  right: 6px;
-}
-
-.tweetBtnContainer {
-  position: relative;
-  width: 36px;
-  height: 36px;
-  background-color: #ff6600;
-  border-radius: 50%;
-  display: none;
+  p {
+    color: #44444f;
+    margin-bottom: 0;
+  }
 }
 
 .logout {
+  cursor: pointer;
   position: absolute;
   bottom: 0;
-}
+  right: 0;
+  left: 0;
+  p {
+    color: #44444f;
 
-@media (max-width: 1200px) {
-  .navItem p {
-    display: none;
-  }
-
-  .tweetBtn {
-    display: none;
-  }
-  .tweetBtnRwd {
-    display: block;
-  }
-  .tweetBtnContainer {
-    display: block;
+    font-weight: bold;
+    margin-bottom: 0;
   }
 }
