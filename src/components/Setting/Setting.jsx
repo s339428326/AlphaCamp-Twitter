@@ -20,7 +20,10 @@ export default function Setting() {
     });
   };
   return (
-    <form action="" className={styles.settingForm}>
+    <form
+      action=""
+      className={`${styles["vh-100"]} p-4 border-start border-end`}
+    >
       <AuthInput
         value={setting.account}
         autoComplete="username"
