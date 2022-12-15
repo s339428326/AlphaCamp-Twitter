@@ -12,13 +12,13 @@ import Col from "react-bootstrap/Col";
 
 const UserFollowPage = ({ user }) => {
   const navigate = useNavigate();
-  const OutletContainer = () => {
-    return (
-      <div>
-        <Outlet />
-      </div>
-    );
-  };
+  // const OutletContainer = () => {
+  //   return (
+  //     <div>
+  //       <Outlet />
+  //     </div>
+  //   );
+  // };
   return (
     <Container>
       <Row>
