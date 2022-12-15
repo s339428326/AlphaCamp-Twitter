@@ -10,12 +10,14 @@ export const login = async ({ account, password }) => {
       password,
     });
 
-    const { token } = data;
-    console.log("[成功]", data, token);
+    const { token } = data.data;
+    console.log("[成功]", data);
     if (token) return { success: true, ...data };
     return data;
   } catch (error) {
     console.error(error);
+    console.log("[登入失敗]", error.response.data.message);
+    return { status: false };
   }
 };
 
