@@ -9,9 +9,8 @@ export const login = async ({ account, password }) => {
       account,
       password,
     });
-
     const { token } = data.data;
-    console.log("[成功]", data);
+    console.log("[登入成功]", data);
     if (token) return { success: true, ...data };
     return data;
   } catch (error) {
