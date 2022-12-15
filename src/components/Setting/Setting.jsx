@@ -57,10 +57,8 @@ export default function Setting() {
         onChange={handleInput("passwordCheck")}
         placeholder="請再次輸入密碼"
       />
-      <div className="mt-3">
-        <button
-          className={`btn btn-primary w-25 text-white rounded-pill ${styles.saveButton}`}
-        >
+      <div className="mt-3 d-flex justify-content-end">
+        <button className="btn btn-primary text-white rounded-pill">
           儲存
         </button>
       </div>
