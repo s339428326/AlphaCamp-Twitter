@@ -19,7 +19,7 @@ const UserProfilePage = () => {
   return (
     <Container>
       <Row>
-        <Col xs={1} md={2}>
+        <Col xs={1} lg={2}>
           <div className="sticky-top">
             <UserSidebar />
           </div>
