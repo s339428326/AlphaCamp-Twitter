@@ -70,7 +70,7 @@ const UserLoginPage = () => {
     if (isAuthenticated === true) {
       navigate(`/${currentMember.id}`);
     }
-  }, [navigate, isAuthenticated, currentMember.id]);
+  }, [navigate, isAuthenticated, currentMember]);
 
   return (
     <Container>
