@@ -10,20 +10,20 @@ const UserMainPage = ({ user }) => {
   return (
     <Container>
       <Row>
-        <Col xs={1} md={2}>
+        <Col xs={1} lg={2}>
           <div className="sticky-top">
             <UserSidebar />
           </div>
         </Col>
-        <Col xs md={7}>
+        <Col xs={7}>
           <div className="sticky-top">
             <PageTitle title={"首頁"} tweetQuantity={user} />
           </div>
           <MainCreateTweet />
           <Tweet />
         </Col>
-        <Col xs={4} md={3}>
-          <div className="sticky-top">
+        <Col xs={4} lg={3}>
+          <div className="sticky-top ">
             <TopUser />
           </div>
         </Col>

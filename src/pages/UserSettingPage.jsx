@@ -12,11 +12,15 @@ const UserSettingPage = () => {
   return (
     <Container>
       <Row>
-        <Col xs={1} md={2}>
-          <UserSidebar />
+        <Col xs={1} lg={2}>
+          <div className="sticky-top">
+            <UserSidebar />
+          </div>
         </Col>
-        <Col xs md={7}>
-          <PageTitle title={"帳戶設定"} />
+        <Col xs={7}>
+          <div className="sticky-top">
+            <PageTitle title={"帳戶設定"} />
+          </div>
           <Setting />
         </Col>
       </Row>
