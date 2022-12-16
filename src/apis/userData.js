@@ -24,17 +24,17 @@ axiosInstance.interceptors.request.use(
 
 //[U_03] get-user-profile 取得指定使用者
 //profile GET /api/users/:id
-export const getUserData = async ({ id }) => {
+export const getUserData = async (id) => {
+  console.log("[API URL:] :", BASE_URL + `users/${id}`);
   if (!id) {
     console.log("[使用getUserData錯誤]：請帶入使用者id");
     return;
   }
   try {
-    const res = await axiosInstance.post(BASE_URL + `users/${id}`);
-    console.log("[取得使用者資料成功]", res);
-    return res;
+    const res = await axiosInstance.get(BASE_URL + `users/${id}`);
+    console.log("[取得使用者資料成功]", res.data);
+    return res.data;
   } catch (error) {
-    console.error(error);
-    console.log("[取得使用者資料失敗]", error.response.data.message);
+    console.error("[取得使用者資料失敗]", error);
   }
 };

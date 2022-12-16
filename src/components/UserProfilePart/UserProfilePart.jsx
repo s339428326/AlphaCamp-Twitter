@@ -1,8 +1,14 @@
-import styles from "./UserProfilePart.module.scss";
+//components
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import AuthInput from "../AuthInput/AuthInput";
-import { useEffect, useState } from "react";
+import FollowButton from "../FollowButton/FollowButton";
+
+//css style
+import styles from "./UserProfilePart.module.scss";
+
+//react
+import { useState } from "react";
 
 //icons
 export const BallIcon = () => {
@@ -111,29 +117,6 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-//這裡我先偷做跟隨按鈕(Evan 負責項目)
-export const FollowButton = ({ onClick, isFollow }) => {
-  const [follow, setFollow] = useState(false);
-  useEffect(() => {
-    if (isFollow) {
-      setFollow(true);
-    } else {
-      setFollow(false);
-    }
-  }, [isFollow]);
-
-  return (
-    <button
-      onClick={() => setFollow((currentValue) => !currentValue)}
-      className={`${styles["btn"]} btn ${
-        follow ? "btn-primary text-white" : "btn-outline-primary"
-      } rounded-pill`}
-    >
-      {follow ? "正在跟隨" : "跟隨"}
-    </button>
-  );
-};
-
 /*
 props
 userName => 使用者姓名
@@ -146,11 +129,7 @@ isNotion => 有沒有開啟小鈴鐺
 */
 
 const UserProfilePart = ({
-  userName,
-  userId,
-  userIntroduction,
-  userAvatar,
-  bgImage,
+  userData,
   followerQuantity,
   followingQuantity,
   isOtherUser,
@@ -161,7 +140,7 @@ const UserProfilePart = ({
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
   const [count, setCount] = useState(
-    userIntroduction ? userIntroduction.length : 0
+    userData?.introduction ? userData?.introduction.length : 0
   );
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -173,24 +152,59 @@ const UserProfilePart = ({
   };
   /*Modal Setting*/
 
+  //////AuthInput嘗試實作錯誤訊息//////////
+  const [errorMessage, setErrorMassage] = useState({
+    userName: "",
+  });
+
+  const handleName = (value) => {
+    if (!value.length) {
+      setErrorMassage({ ...errorMessage, userName: "請勿空白" });
+    } else {
+      setErrorMassage({ ...errorMessage, userName: "" });
+    }
+  };
+
   return (
     <div className={`${styles["profile"]} border-start border-end`}>
       {/* 使用者背景 */}
-      <img
-        className={`${styles["bg"]}`}
-        src={userAvatar || "https://fakeimg.pl/639x200/"}
-        alt="use-background"
-      />
+      {userData?.cover ? (
+        <img
+          className={`${styles["bg"]}`}
+          src={userData?.cover || "https://fakeimg.pl/639x200/"}
+          alt="use-background"
+        />
+      ) : (
+        <div className={`${styles["bg-loading"]}`}>
+          <div className="spinner-border text-secondary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )}
+
       <div className={`${styles["user-avatar"]} p-3`}>
         {/* 使用者頭像 */}
-        <img
-          src={
-            bgImage || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-          }
-          alt="user-avatar"
-          width={140}
-          height={140}
-        />
+        {userData?.avatar ? (
+          <img
+            className={`${styles["avatar"]}`}
+            src={
+              userData?.avatar ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="user-avatar"
+            width={140}
+            height={140}
+          />
+        ) : (
+          <div className={`${styles["avatar"]}`}>
+            <div
+              className={`${styles["avatar-loading"]} spinner-border text-secondary`}
+              role="status"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
         <div className="mb-3">
           {/* 是否為本人樣式切換 */}
           {isOtherUser ? (
@@ -209,7 +223,7 @@ const UserProfilePart = ({
               </button>
 
               {/* 是否開啟追隨 */}
-              <FollowButton isFollow={isFollow} />
+              <FollowButton isFollow={userData?.isFollowed} />
             </div>
           ) : (
             <div className="d-flex justify-content-end">
@@ -228,89 +242,113 @@ const UserProfilePart = ({
                 onHide={handleClose}
                 backdrop="static"
               >
-                <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
-                  <button className="btn me-3 d-sm-none" onClick={handleClose}>
-                    <ArrowLeftIcon />
-                  </button>
-                  <CloseButton
-                    className={`${styles["btn-close"]} d-none d-sm-block`}
-                    onClick={handleClose}
-                    aria-label="Close"
-                  />
-
-                  <h5>編輯個人資料</h5>
-                  <button className="btn btn-primary text-white rounded-pill ms-auto">
-                    儲存
-                  </button>
-                </Modal.Header>
-                <Modal.Body className={`${styles["modal-body"]}`}>
-                  <div className={`${styles["bg-edit"]}`}>
-                    <img
-                      className={`${styles["bg"]}`}
-                      src={bgImage || "https://fakeimg.pl/639x200/"}
-                      alt="user-edit-bg"
+                <form action="">
+                  <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
+                    <button
+                      className="btn me-3 d-sm-none"
+                      onClick={handleClose}
+                    >
+                      <ArrowLeftIcon />
+                    </button>
+                    <CloseButton
+                      className={`${styles["btn-close"]} d-none d-sm-block`}
+                      onClick={handleClose}
+                      aria-label="Close"
                     />
-                    <div className={`${styles["bg-edit-button"]}`}>
-                      <label htmlFor="bg-edit" className="btn">
+
+                    <h5>編輯個人資料</h5>
+                    <button className="btn btn-primary text-white rounded-pill ms-auto">
+                      儲存
+                    </button>
+                  </Modal.Header>
+                  <Modal.Body className={`${styles["modal-body"]}`}>
+                    <div className={`${styles["bg-edit"]}`}>
+                      {userData?.cover ? (
+                        <img
+                          className={`${styles["bg"]}`}
+                          src={userData?.cover || "https://fakeimg.pl/639x200/"}
+                          alt="user-edit-bg"
+                        />
+                      ) : (
+                        <div className={`${styles["bg-loading"]}`}>
+                          <div
+                            className="spinner-border text-secondary"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className={`${styles["bg-edit-button"]}`}>
+                        <label htmlFor="bg-edit" className="btn">
+                          <CameraIcon />
+                        </label>
+                        <input
+                          className="d-none"
+                          type="file"
+                          name="bg-edit"
+                          id="bg-edit"
+                        />
+                        <button className="btn">
+                          <CrossIcon />
+                        </button>
+                      </div>
+                    </div>
+                    <label
+                      htmlFor="avatar"
+                      className={`${styles["user-avatar"]} ${styles["user-avatar-edit"]} p-3`}
+                    >
+                      <img
+                        className={`${styles["avatar"]}`}
+                        src={
+                          userData?.avatar ||
+                          "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                        }
+                        alt="user-avatar"
+                        width={140}
+                        height={140}
+                      />
+                      <div className={`${styles["avatar-edit-icon"]}`}>
                         <CameraIcon />
-                      </label>
+                      </div>
                       <input
                         className="d-none"
                         type="file"
-                        name="bg-edit"
-                        id="bg-edit"
+                        name="avatar"
+                        id="avatar"
                       />
-                      <button className="btn">
-                        <CrossIcon />
-                      </button>
+                    </label>
+                    <div className="p-3 mt-5">
+                      <AuthInput
+                        onChange={handleName}
+                        defaultValue={userData?.name}
+                        label="名稱"
+                        placeholder="請輸入名稱"
+                        error={errorMessage.userName}
+                      />
+                      <div
+                        className={`${styles["input-style"]} d-flex flex-column`}
+                      >
+                        <label htmlFor="userIntroduction">自我介紹</label>
+                        <textarea
+                          onChange={handleCount}
+                          style={{
+                            resize: "none",
+                            outline: "none",
+                          }}
+                          maxLength={160}
+                          name="userIntroduction"
+                          id="userIntroduction"
+                          defaultValue={userData?.introduction}
+                          cols="30"
+                          rows="5"
+                        ></textarea>
+                        <p className={styles["count"]}>{count}/160</p>
+                      </div>
                     </div>
-                  </div>
-                  <label
-                    htmlFor="avatar"
-                    className={`${styles["user-avatar"]} ${styles["user-avatar-edit"]} p-3`}
-                  >
-                    <img
-                      src={
-                        bgImage ||
-                        "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                      }
-                      alt="user-avatar"
-                      width={140}
-                      height={140}
-                    />
-                    <div className={`${styles["avatar-edit-icon"]}`}>
-                      <CameraIcon />
-                    </div>
-                    <input
-                      className="d-none"
-                      type="file"
-                      name="avatar"
-                      id="avatar"
-                    />
-                  </label>
-                  <div className="p-3 mt-5">
-                    <AuthInput label="名稱" placeholder="請輸入名稱" />
-                    <div
-                      className={`${styles["input-style"]} d-flex flex-column`}
-                    >
-                      <label htmlFor="userIntroduction">自我介紹</label>
-                      <textarea
-                        onChange={handleCount}
-                        style={{
-                          resize: "none",
-                          outline: "none",
-                        }}
-                        maxLength={160}
-                        name="userIntroduction"
-                        id="userIntroduction"
-                        defaultValue={userIntroduction}
-                        cols="30"
-                        rows="5"
-                      ></textarea>
-                      <p className={styles["count"]}>{count}/160</p>
-                    </div>
-                  </div>
-                </Modal.Body>
+                  </Modal.Body>
+                </form>
               </Modal>
             </div>
           )}
@@ -318,18 +356,23 @@ const UserProfilePart = ({
         <div className={`${styles["info"]}`}>
           <div className={`${styles["info-content"]}`}>
             <div>
-              <strong>{userName || "無讀取資料"}</strong>
-              <p className="text-secondary mb-2">@{userId || "無讀取資料"}</p>
-              <p className="mb-2">{userIntroduction || "請設置自我介紹"}</p>
+              <strong>{userData?.name || "無讀取資料"}</strong>
+              <p className="text-secondary mb-2">
+                {userData?.account ? `@${userData?.account}` : "無讀取資料"}
+              </p>
+
+              <p className="mb-2">
+                {userData?.introduction || "請設置自我介紹"}
+              </p>
               <div className="d-flex gap-4">
                 {/* 點擊 跟隨中 Link to follower 頁面 */}
                 <p>
-                  {followerQuantity || 0} 個
+                  {userData?.followingCount || 0} 個
                   <span className="text-secondary">跟隨中</span>
                 </p>
                 {/*點擊 跟隨中 Link to following 頁面  */}
                 <p>
-                  {followingQuantity || 0} 位
+                  {userData?.followerCount || 0} 位
                   <span className="text-secondary">跟隨者</span>
                 </p>
               </div>
