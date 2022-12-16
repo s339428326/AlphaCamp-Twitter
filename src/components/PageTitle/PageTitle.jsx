@@ -27,16 +27,16 @@ tweetQuantity => 推文數量(string)
 
 const PageTitle = ({ title, tweetQuantity }) => {
   const navigate = useNavigate();
+  const normalTitleLsit = ["首頁", "推文清單", "帳戶設定", "使用者列表"];
+  const isNormalTitle = normalTitleLsit.find((item) => item === title);
+  console.log(title, isNormalTitle);
   return (
     <div className={`${styles["title"]}`}>
-      {title !== "首頁" ||
-        title !== "推文清單" ||
-        title !== "帳戶設定" ||
-        (title !== "使用者列表" && (
-          <button onClick={() => navigate(-1)} className={`${styles["svg"]}`}>
-            <ArrowLeftIcon />
-          </button>
-        ))}
+      {!isNormalTitle && (
+        <button onClick={() => navigate(-1)} className={`${styles["svg"]}`}>
+          <ArrowLeftIcon />
+        </button>
+      )}
 
       <div>
         <h1 className={`${title && !tweetQuantity && styles["page-title"]}`}>
