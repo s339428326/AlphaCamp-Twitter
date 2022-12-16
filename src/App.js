@@ -45,6 +45,10 @@ function App() {
             <Route path="/:userId/profile" element={<UserProfilePage />}>
               <Route index element={<UserProfileTweet router="" />} />
               <Route
+                path="tweet"
+                element={<UserProfileTweet router="tweet" />}
+              />
+              <Route
                 path="reply"
                 element={<UserProfileTweet router="reply" />}
               />
