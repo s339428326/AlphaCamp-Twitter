@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { login } from "../apis/auth";
+import { login, checkPermission, adminLogin } from "../apis/auth";
 import jwt_decode from "jwt-decode";
 import { useLocation } from "react-router-dom";
 
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
       //checkPremisses
-      const isValid = token;
+      const isValid = await checkPermission(token);
       //   console.log("Token驗證", Boolean(isValid));
       if (isValid) {
         setIsAuthenticated(true);
@@ -76,6 +76,26 @@ export const AuthProvider = ({ children }) => {
           localStorage.removeItem("token");
           setPayload(null);
           setIsAuthenticated(false);
+        },
+
+        adminLogin: async (loginData) => {
+          const { status, data } = await adminLogin({
+            account: loginData.account,
+            password: loginData.password,
+          });
+          if (data) {
+            const tempPayload = jwt_decode(data.token);
+            if (tempPayload) {
+              setPayload(tempPayload);
+              setIsAuthenticated(true);
+              localStorage.setItem("token", data.token);
+            } else {
+              setPayload(null);
+              setIsAuthenticated(false);
+            }
+          }
+
+          return status;
         },
       }}
     >
