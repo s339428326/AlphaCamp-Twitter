@@ -20,10 +20,10 @@ const UserProfileTabs = () => {
         <li>
           <button
             className={`${styles["btn"]} ${
-              (item === "" || item === undefined) && styles["active"]
+              (item === "tweet" || item === undefined) && styles["active"]
             }`}
             onClick={() => {
-              navigate(`/${userId}/profile/`);
+              navigate(`/${userId}/profile/tweet`);
             }}
           >
             推文

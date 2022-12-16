@@ -128,14 +128,7 @@ isFollow => 有沒有追隨
 isNotion => 有沒有開啟小鈴鐺
 */
 
-const UserProfilePart = ({
-  userData,
-  followerQuantity,
-  followingQuantity,
-  isOtherUser,
-  isFollow,
-  isNotin,
-}) => {
+const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   /*Modal Setting*/
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
@@ -164,47 +157,86 @@ const UserProfilePart = ({
       setErrorMassage({ ...errorMessage, userName: "" });
     }
   };
+  //////AuthInput嘗試實作錯誤訊息//////////
 
-  return (
-    <div className={`${styles["profile"]} border-start border-end`}>
-      {/* 使用者背景 */}
-      {userData?.cover ? (
+  //User Cover 顯示邏輯
+  const UserCover = () => {
+    if (userData?.cover === null) {
+      return (
         <img
           className={`${styles["bg"]}`}
-          src={userData?.cover || "https://fakeimg.pl/639x200/"}
+          src="https://fakeimg.pl/639x200/"
           alt="use-background"
         />
-      ) : (
+      );
+    }
+    if (userData?.cover) {
+      return (
+        <img
+          className={`${styles["bg"]}`}
+          src={userData?.cover}
+          alt="use-background"
+        />
+      );
+    } else {
+      return (
         <div className={`${styles["bg-loading"]}`}>
           <div className="spinner-border text-secondary" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
         </div>
-      )}
+      );
+    }
+  };
 
+  //User Avatar
+  const UserAvatar = () => {
+    if (userData?.cover === null) {
+      return (
+        <img
+          className={`${styles["avatar"]}`}
+          src={
+            userData?.avatar ||
+            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+          }
+          alt="user-avatar"
+          width={140}
+          height={140}
+        />
+      );
+    }
+
+    if (userData?.cover) {
+      return (
+        <img
+          className={`${styles["avatar"]}`}
+          src={userData?.avatar}
+          alt="user-avatar"
+          width={140}
+          height={140}
+        />
+      );
+    } else {
+      return (
+        <div className={`${styles["avatar"]}`}>
+          <div
+            className={`${styles["avatar-loading"]} spinner-border text-secondary`}
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  return (
+    <div className={`${styles["profile"]} border-start border-end`}>
+      {/* 使用者背景 */}
+      {UserCover()}
       <div className={`${styles["user-avatar"]} p-3`}>
         {/* 使用者頭像 */}
-        {userData?.avatar ? (
-          <img
-            className={`${styles["avatar"]}`}
-            src={
-              userData?.avatar ||
-              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-            }
-            alt="user-avatar"
-            width={140}
-            height={140}
-          />
-        ) : (
-          <div className={`${styles["avatar"]}`}>
-            <div
-              className={`${styles["avatar-loading"]} spinner-border text-secondary`}
-              role="status"
-            >
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        )}
+        {UserAvatar()}
         <div className="mb-3">
           {/* 是否為本人樣式切換 */}
           {isOtherUser ? (
@@ -263,22 +295,11 @@ const UserProfilePart = ({
                   </Modal.Header>
                   <Modal.Body className={`${styles["modal-body"]}`}>
                     <div className={`${styles["bg-edit"]}`}>
-                      {userData?.cover ? (
-                        <img
-                          className={`${styles["bg"]}`}
-                          src={userData?.cover || "https://fakeimg.pl/639x200/"}
-                          alt="user-edit-bg"
-                        />
-                      ) : (
-                        <div className={`${styles["bg-loading"]}`}>
-                          <div
-                            className="spinner-border text-secondary"
-                            role="status"
-                          >
-                            <span className="visually-hidden">Loading...</span>
-                          </div>
-                        </div>
-                      )}
+                      <img
+                        className={`${styles["bg"]}`}
+                        src={userData?.cover || "https://fakeimg.pl/639x200/"}
+                        alt="user-edit-bg"
+                      />
 
                       <div className={`${styles["bg-edit-button"]}`}>
                         <label htmlFor="bg-edit" className="btn">

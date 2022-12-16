@@ -11,7 +11,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 //react-router-dom
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 //react
 import { useState, useEffect } from "react";
@@ -23,31 +23,41 @@ import jwt_decode from "jwt-decode";
 import { getUserData } from "../apis/userData";
 
 const UserProfilePage = () => {
-  //用來對造是否為本人
-  //假設取得帳號自己的userId
-
   ///////////update userData////////////
+  //userData狀態
   const [userData, setUserData] = useState();
 
-  //decode userId
+  //分析路由
+  const navigate = useNavigate();
+  const url = useLocation().pathname.split("/");
+  const urlUserId = url[1];
+
+  //解碼(decode) userId
   const token = localStorage.getItem("token");
   const decodeData = jwt_decode(token);
 
-  //get userData
   useEffect(() => {
     const userInfo = async () => {
+      //decodeData.id
       try {
-        const data = await getUserData(decodeData.id);
-        setUserData({ ...data });
+        const data = await getUserData(urlUserId);
+        //如果為undefined 跳轉首頁
+        if (data === undefined) navigate(`/${decodeData.id}`);
+        //添加是否訪問別人頁面判斷
+        setUserData({
+          ...data,
+          isVisitOthers: decodeData.id !== Number(urlUserId),
+        });
       } catch (error) {
         console.log(error);
       }
     };
-    ///是否為本人
     userInfo();
   }, [decodeData.id]);
-
+  console.log(userData?.isVisitOthers);
   console.log("get Data", userData);
+  ///////////update userData////////////
+
   return (
     <Container>
       <Row>
@@ -60,7 +70,7 @@ const UserProfilePage = () => {
           <div className="sticky-top">
             <PageTitle
               title={userData?.name || "讀取中..."}
-              tweetQuantity={userData?.replyCount || "讀取中..."}
+              tweetQuantity={userData?.replyCount}
             />
           </div>
           <UserProfilePart userData={userData} />
