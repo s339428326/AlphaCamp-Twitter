@@ -51,13 +51,21 @@ img {
 
 .user-avatar {
   position: relative;
-  img {
+  .avatar {
+    width: 140px;
+    height: 140px;
     position: absolute;
     top: -70px;
     border-radius: 50%;
     padding: 5px;
     background-color: #fff;
   }
+}
+
+.avatar-loading {
+  position: absolute;
+  top: 40%;
+  right: 40%;
 }
 
 .user-avatar-edit {
@@ -195,4 +203,12 @@ img {
     font-size: 12px;
     line-height: 20px;
   }
+}
+
+.bg-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background-color: #70707053;
 }
