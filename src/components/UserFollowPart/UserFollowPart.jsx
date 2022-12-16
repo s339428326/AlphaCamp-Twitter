@@ -1,27 +1,5 @@
 import styles from "./UserFollowPart.module.scss";
-import { useEffect, useState } from "react";
-
-const FollowButton = ({ onClick, isFollow }) => {
-  const [follow, setFollow] = useState(false);
-  useEffect(() => {
-    if (isFollow) {
-      setFollow(true);
-    } else {
-      setFollow(false);
-    }
-  }, [isFollow]);
-
-  return (
-    <button
-      onClick={() => setFollow((currentValue) => !currentValue)}
-      className={`${styles.btn} btn ${
-        follow ? "btn-primary text-white" : "btn-outline-primary"
-      } rounded-pill`}
-    >
-      {follow ? "正在跟隨" : "跟隨"}
-    </button>
-  );
-};
+import FollowButton from "../FollowButton/FollowButton";
 
 export const FollowItem = ({ avatarImg, isFollow }) => {
   return (
