@@ -53,9 +53,8 @@ const UserProfilePage = () => {
       }
     };
     userInfo();
-  }, [decodeData.id]);
-  console.log(userData?.isVisitOthers);
-  console.log("get Data", userData);
+  }, [decodeData.id, urlUserId, navigate]);
+
   ///////////update userData////////////
 
   return (
@@ -70,7 +69,7 @@ const UserProfilePage = () => {
           <div className="sticky-top">
             <PageTitle
               title={userData?.name || "讀取中..."}
-              tweetQuantity={userData?.replyCount}
+              tweetQuantity={userData?.tweetCount}
             />
           </div>
           <UserProfilePart userData={userData} />

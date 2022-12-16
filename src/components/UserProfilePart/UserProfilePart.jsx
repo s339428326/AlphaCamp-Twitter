@@ -118,14 +118,19 @@ export const ArrowLeftIcon = () => {
 };
 
 /*
-props
-userName => 使用者姓名
-useId => @uerId
-userImage => 使用者頭像url
-bgImage => bg url
-isOtherUser => 如果true 編輯按鈕換成有小鈴鐺樣式
-isFollow => 有沒有追隨
-isNotion => 有沒有開啟小鈴鐺
+{
+    "id": 14,
+    "account": "user1",
+    "name": "user1",
+    "email": "user1@example.com",
+    "avatar": "https://i.imgur.com/k4iCvXX.png",
+    "cover": "https://i.imgur.com/ZxEsjfY.jpg",
+    "introduction": "Hola amigos!",
+    "tweetCount": 10,
+    "followingCount": 1,
+    "followerCount": 1,
+    "isFollowed": false
+}
 */
 
 const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
@@ -189,7 +194,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     }
   };
 
-  //User Avatar
+  //User Avatar 顯示邏輯
   const UserAvatar = () => {
     if (userData?.cover === null) {
       return (
@@ -230,149 +235,166 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     }
   };
 
+  //是否為本人按鈕樣式切換
+  const ButtonView = () => {
+    if (userData?.isVisitOthers === undefined) {
+      return (
+        <div className="d-flex align-items-center text-secondary">
+          <div
+            className="spinner-border ms-auto"
+            role="status"
+            aria-hidden="true"
+          ></div>
+        </div>
+      );
+    }
+    if (userData?.isVisitOthers === true) {
+      return (
+        <div className="d-flex gap-3 justify-content-end">
+          {/* 是否啟用信箱通知 */}
+          <button className={`${styles["btn-circle"]} btn`}>
+            <EmailIcon />
+          </button>
+          {/* 是否啟用小鈴鐺 */}
+          <button
+            className={`${
+              isNotin ? styles["btn-circle__active"] : styles["btn-circle"]
+            } btn`}
+          >
+            {isNotin ? <ActiveBallIcon /> : <BallIcon />}
+          </button>
+
+          {/* 是否開啟追隨 */}
+          <FollowButton isFollow={userData?.isFollowed} />
+        </div>
+      );
+    } else {
+      return (
+        <div className="d-flex justify-content-end">
+          {/* 控制編輯資料按鈕 */}
+          <button
+            onClick={handleShow}
+            className={`${styles["btn"]} btn btn-outline-primary rounded-pill`}
+          >
+            編輯個人資料
+          </button>
+          {/* 編輯資料彈跳視窗 */}
+          <Modal
+            size="lg"
+            show={show}
+            fullscreen={fullscreen}
+            onHide={handleClose}
+            backdrop="static"
+          >
+            <form action="">
+              <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
+                <button className="btn me-3 d-sm-none" onClick={handleClose}>
+                  <ArrowLeftIcon />
+                </button>
+                <CloseButton
+                  className={`${styles["btn-close"]} d-none d-sm-block`}
+                  onClick={handleClose}
+                  aria-label="Close"
+                />
+
+                <h5>編輯個人資料</h5>
+                <button className="btn btn-primary text-white rounded-pill ms-auto">
+                  儲存
+                </button>
+              </Modal.Header>
+              <Modal.Body className={`${styles["modal-body"]}`}>
+                <div className={`${styles["bg-edit"]}`}>
+                  <img
+                    className={`${styles["bg"]}`}
+                    src={userData?.cover || "https://fakeimg.pl/639x200/"}
+                    alt="user-edit-bg"
+                  />
+
+                  <div className={`${styles["bg-edit-button"]}`}>
+                    <label htmlFor="bg-edit" className="btn">
+                      <CameraIcon />
+                    </label>
+                    <input
+                      className="d-none"
+                      type="file"
+                      name="bg-edit"
+                      id="bg-edit"
+                    />
+                    <button className="btn">
+                      <CrossIcon />
+                    </button>
+                  </div>
+                </div>
+                <label
+                  htmlFor="avatar"
+                  className={`${styles["user-avatar"]} ${styles["user-avatar-edit"]} p-3`}
+                >
+                  <img
+                    className={`${styles["avatar"]}`}
+                    src={
+                      userData?.avatar ||
+                      "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                    }
+                    alt="user-avatar"
+                    width={140}
+                    height={140}
+                  />
+                  <div className={`${styles["avatar-edit-icon"]}`}>
+                    <CameraIcon />
+                  </div>
+                  <input
+                    className="d-none"
+                    type="file"
+                    name="avatar"
+                    id="avatar"
+                  />
+                </label>
+                <div className="p-3 mt-5">
+                  <AuthInput
+                    onChange={handleName}
+                    defaultValue={userData?.name}
+                    label="名稱"
+                    placeholder="請輸入名稱"
+                    error={errorMessage.userName}
+                  />
+                  <div
+                    className={`${styles["input-style"]} d-flex flex-column`}
+                  >
+                    <label htmlFor="userIntroduction">自我介紹</label>
+                    <textarea
+                      onChange={handleCount}
+                      style={{
+                        resize: "none",
+                        outline: "none",
+                      }}
+                      maxLength={160}
+                      name="userIntroduction"
+                      id="userIntroduction"
+                      defaultValue={userData?.introduction}
+                      cols="30"
+                      rows="5"
+                    ></textarea>
+                    <p className={styles["count"]}>{count}/160</p>
+                  </div>
+                </div>
+              </Modal.Body>
+            </form>
+          </Modal>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className={`${styles["profile"]} border-start border-end`}>
       {/* 使用者背景 */}
-      {UserCover()}
+      <UserCover />
       <div className={`${styles["user-avatar"]} p-3`}>
         {/* 使用者頭像 */}
-        {UserAvatar()}
+        <UserAvatar />
         <div className="mb-3">
           {/* 是否為本人樣式切換 */}
-          {isOtherUser ? (
-            <div className="d-flex gap-3 justify-content-end">
-              {/* 是否啟用信箱通知 */}
-              <button className={`${styles["btn-circle"]} btn`}>
-                <EmailIcon />
-              </button>
-              {/* 是否啟用小鈴鐺 */}
-              <button
-                className={`${
-                  isNotin ? styles["btn-circle__active"] : styles["btn-circle"]
-                } btn`}
-              >
-                {isNotin ? <ActiveBallIcon /> : <BallIcon />}
-              </button>
-
-              {/* 是否開啟追隨 */}
-              <FollowButton isFollow={userData?.isFollowed} />
-            </div>
-          ) : (
-            <div className="d-flex justify-content-end">
-              {/* 控制編輯資料按鈕 */}
-              <button
-                onClick={handleShow}
-                className={`${styles["btn"]} btn btn-outline-primary rounded-pill`}
-              >
-                編輯個人資料
-              </button>
-              {/* 編輯資料彈跳視窗 */}
-              <Modal
-                size="lg"
-                show={show}
-                fullscreen={fullscreen}
-                onHide={handleClose}
-                backdrop="static"
-              >
-                <form action="">
-                  <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
-                    <button
-                      className="btn me-3 d-sm-none"
-                      onClick={handleClose}
-                    >
-                      <ArrowLeftIcon />
-                    </button>
-                    <CloseButton
-                      className={`${styles["btn-close"]} d-none d-sm-block`}
-                      onClick={handleClose}
-                      aria-label="Close"
-                    />
-
-                    <h5>編輯個人資料</h5>
-                    <button className="btn btn-primary text-white rounded-pill ms-auto">
-                      儲存
-                    </button>
-                  </Modal.Header>
-                  <Modal.Body className={`${styles["modal-body"]}`}>
-                    <div className={`${styles["bg-edit"]}`}>
-                      <img
-                        className={`${styles["bg"]}`}
-                        src={userData?.cover || "https://fakeimg.pl/639x200/"}
-                        alt="user-edit-bg"
-                      />
-
-                      <div className={`${styles["bg-edit-button"]}`}>
-                        <label htmlFor="bg-edit" className="btn">
-                          <CameraIcon />
-                        </label>
-                        <input
-                          className="d-none"
-                          type="file"
-                          name="bg-edit"
-                          id="bg-edit"
-                        />
-                        <button className="btn">
-                          <CrossIcon />
-                        </button>
-                      </div>
-                    </div>
-                    <label
-                      htmlFor="avatar"
-                      className={`${styles["user-avatar"]} ${styles["user-avatar-edit"]} p-3`}
-                    >
-                      <img
-                        className={`${styles["avatar"]}`}
-                        src={
-                          userData?.avatar ||
-                          "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                        }
-                        alt="user-avatar"
-                        width={140}
-                        height={140}
-                      />
-                      <div className={`${styles["avatar-edit-icon"]}`}>
-                        <CameraIcon />
-                      </div>
-                      <input
-                        className="d-none"
-                        type="file"
-                        name="avatar"
-                        id="avatar"
-                      />
-                    </label>
-                    <div className="p-3 mt-5">
-                      <AuthInput
-                        onChange={handleName}
-                        defaultValue={userData?.name}
-                        label="名稱"
-                        placeholder="請輸入名稱"
-                        error={errorMessage.userName}
-                      />
-                      <div
-                        className={`${styles["input-style"]} d-flex flex-column`}
-                      >
-                        <label htmlFor="userIntroduction">自我介紹</label>
-                        <textarea
-                          onChange={handleCount}
-                          style={{
-                            resize: "none",
-                            outline: "none",
-                          }}
-                          maxLength={160}
-                          name="userIntroduction"
-                          id="userIntroduction"
-                          defaultValue={userData?.introduction}
-                          cols="30"
-                          rows="5"
-                        ></textarea>
-                        <p className={styles["count"]}>{count}/160</p>
-                      </div>
-                    </div>
-                  </Modal.Body>
-                </form>
-              </Modal>
-            </div>
-          )}
+          <ButtonView />
         </div>
         <div className={`${styles["info"]}`}>
           <div className={`${styles["info-content"]}`}>
