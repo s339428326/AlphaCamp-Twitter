@@ -4,7 +4,7 @@ import Tweet from "../Tweet/Tweet";
 const UserProfileTweet = ({ router }) => {
   return (
     <div>
-      {router === "" && <Tweet />}
+      {(router === "tweet" || router === "") && <Tweet />}
       {router === "reply" && <p> reply</p>}
       {router === "like" && <Tweet isLike={true} />}
     </div>

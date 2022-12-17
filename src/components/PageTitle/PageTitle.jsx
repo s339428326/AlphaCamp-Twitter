@@ -29,7 +29,16 @@ const PageTitle = ({ title, tweetQuantity }) => {
   const navigate = useNavigate();
   const normalTitleLsit = ["首頁", "推文清單", "帳戶設定", "使用者列表"];
   const isNormalTitle = normalTitleLsit.find((item) => item === title);
-  console.log(title, isNormalTitle);
+
+  ///////////整理PageTitle推文字串///////////
+  const replyCountString = (tweetCount) => {
+    if (tweetCount === 0) return "0";
+    if (tweetCount > 1000) return `${(tweetCount / 1000).toFixed(2)}K`;
+    return tweetCount;
+  };
+  tweetQuantity = replyCountString(tweetQuantity);
+  ///////////整理PageTitle推文字串///////////
+
   return (
     <div className={`${styles["title"]}`}>
       {!isNormalTitle && (

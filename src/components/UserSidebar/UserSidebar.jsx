@@ -1,10 +1,13 @@
+//react-router-dom
 import { Link, useLocation, useNavigate } from "react-router-dom";
+//context
 import { useAuth } from "../../contexts/AuthContext";
-
+//components
 import MainTweetModal from "../MainTweetModal/MainTweetModal";
-
 //style
 import styles from "./UserSidebar.module.scss";
+//jwt
+import jwt_decode from "jwt-decode";
 
 //icons
 //logo
@@ -203,12 +206,15 @@ export const LogOutIcon = () => {
 const UserSidebar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const userId = pathname.split("/")[1];
-  const item = pathname.split("/")[2];
+  const urlUserId = pathname.split("/")[1];
+  const urlItem = pathname.split("/")[2];
   //判斷是否為首頁
-  const isHome = item !== "profile" && item !== "setting";
-  //
+  const isHome = urlItem !== "profile" && urlItem !== "setting";
+  //logo out Context
   const { logout } = useAuth();
+  //取得使用者id
+  const token = localStorage.getItem("token");
+  const userId = jwt_decode(token).id;
 
   return (
     <nav className={`${styles["nav"]} pt-3`}>
@@ -220,7 +226,7 @@ const UserSidebar = () => {
       </div>
       <ul className="pt-3 d-flex flex-column list-unstyled align-items-center align-items-lg-start">
         <li className={styles["list-item"]}>
-          <Link to={`/${userId}`}>
+          <Link to={`/${urlUserId}`}>
             <div className="d-flex gap-3 fw-bold">
               {isHome ? <HomeActiveIcon /> : <HomeIcon />}
 
@@ -233,10 +239,10 @@ const UserSidebar = () => {
         <li className={styles["list-item"]}>
           <Link to={`/${userId}/profile`}>
             <div className="d-flex gap-3 fw-bold text-light">
-              {item === "profile" ? <ProfileActiveIcon /> : <ProfileIcon />}
+              {urlItem === "profile" ? <ProfileActiveIcon /> : <ProfileIcon />}
               <p
                 className={`${
-                  item === "profile" ? "text-primary" : ""
+                  urlItem === "profile" ? "text-primary" : ""
                 } d-none d-lg-block`}
               >
                 個人資料
@@ -245,12 +251,12 @@ const UserSidebar = () => {
           </Link>
         </li>
         <li className={`${styles["list-item"]} mb-1`}>
-          <Link to={`/${userId}/setting`}>
+          <Link to={`/${urlUserId}/setting`}>
             <div className="d-flex gap-3 fw-bold text-light">
-              {item === "setting" ? <SettingActiveIcon /> : <SettingIcon />}
+              {urlItem === "setting" ? <SettingActiveIcon /> : <SettingIcon />}
               <p
                 className={`${
-                  item === "setting" ? "text-primary" : ""
+                  urlItem === "setting" ? "text-primary" : ""
                 } d-none d-lg-block`}
               >
                 設定
