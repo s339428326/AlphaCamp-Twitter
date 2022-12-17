@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import Swal from "sweetalert2";
 const AUTH_URL = "https://rocky-sands-70657.herokuapp.com/api/";
 
 export const login = async ({ account, password }) => {
@@ -36,11 +37,48 @@ export const register = async ({
       checkPassword,
     });
 
-    const { authToken } = data;
-    if (authToken) return { success: true, ...data };
+    const { token } = data.data;
+    if (token) return { success: true, ...data };
     return data;
   } catch (error) {
-    console.error("[Register Failed]: ", error);
+    const errorText = () => {
+      if (error.response.data.message === "All field are required!") {
+        return "未填妥所有欄位";
+      }
+      if (
+        error.response.data.message ===
+        "Password and confirmPassword do not match."
+      ) {
+        return "密碼與確認密碼不相符";
+      }
+      if (error.response.data.message === "Email input is invalid!") {
+        return "email格式錯誤";
+      }
+      if (
+        error.response.data.message ===
+        "Name field has max length of 50 characters."
+      ) {
+        return "名稱超過字數限制";
+      }
+      if (error.response.data.message === "Account already exists!") {
+        return "帳號已註冊";
+      }
+      if (error.response.data.message === "Email already exists!") {
+        return "email已註冊";
+      }
+    };
+
+    console.error(error);
+    console.log("[註冊失敗]: ", errorText);
+    Swal.fire({
+      position: "top",
+      title: "註冊失敗！",
+      text: errorText(),
+      timer: 1000,
+      icon: "error",
+      showConfirmButton: false,
+    });
+    return { status: false };
   }
 };
 
@@ -54,7 +92,8 @@ export const checkPermission = async (authToken) => {
 
     return response.status;
   } catch (error) {
-    console.error("[Check Permission Failed]:", error);
+    console.error(error);
+    console.log("[Check Permission Failed]:", error);
   }
 };
 

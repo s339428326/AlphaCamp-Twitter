@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { login, checkPermission, adminLogin } from "../apis/auth";
+import { login, checkPermission, adminLogin, register } from "../apis/auth";
 import jwt_decode from "jwt-decode";
 import { useLocation } from "react-router-dom";
 
@@ -9,6 +9,7 @@ const defaultAuthContext = {
   register: null,
   login: null,
   logout: null,
+  adminLogin: null,
 };
 
 //export useAuth
@@ -29,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         setPayload(null);
         return;
       }
-      //checkPremisses
+      //checkPermission
       const isValid = await checkPermission(token);
       //   console.log("Token驗證", Boolean(isValid));
       if (isValid) {
@@ -52,6 +53,28 @@ export const AuthProvider = ({ children }) => {
           //   id: payload.id,
           //   name: payload.name,
           ...payload,
+        },
+        register: async (registerData) => {
+          const { status, data } = await register({
+            account: registerData.account,
+            name: registerData.name,
+            email: registerData.email,
+            password: registerData.password,
+            checkPassword: registerData.checkPassword,
+          });
+          if (data) {
+            const tempPayload = jwt_decode(data.token);
+            if (tempPayload) {
+              setPayload(tempPayload);
+              setIsAuthenticated(true);
+              localStorage.setItem("token", data.token);
+            } else {
+              setPayload(null);
+              setIsAuthenticated(false);
+            }
+          }
+
+          return status;
         },
         login: async (loginData) => {
           const { status, data } = await login({
