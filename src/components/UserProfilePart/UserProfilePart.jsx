@@ -165,6 +165,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       cover: userData?.cover,
       avatar: userData?.avatar,
     });
+    setErrorMassage({ ...errorMessage, userName: "" });
     setShow(false);
   };
 
@@ -193,6 +194,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       setErrorMassage({ ...errorMessage, userName: "請勿空白" });
     } else {
       setErrorMassage({ ...errorMessage, userName: "" });
+      setFormData({ ...formData, name: value });
     }
   };
   //////AuthInput嘗試實作錯誤訊息//////////
@@ -257,7 +259,6 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     if (formData?.name === "") {
       return;
     }
-    console.log(formData);
     const form = new FormData();
     form.append("name", formData.name);
     form.append("introduction", formData.introduction);
@@ -443,7 +444,9 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                       ) : (
                         <input
                           type="submit"
-                          className="btn btn-primary text-white rounded-pill ms-auto"
+                          className={`${
+                            errorMessage.userName.length > 0 ? "disabled" : ""
+                          } btn btn-primary text-white rounded-pill ms-auto`}
                           value="儲存"
                         />
                       )}
