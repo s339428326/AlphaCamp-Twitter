@@ -6,11 +6,18 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 //React
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+import Swal from "sweetalert2";
+
+import { useAuth } from "../contexts/AuthContext";
 
 const RegisterPage = () => {
-  const [register, setRegister] = useState({
+  const navigate = useNavigate();
+  const { register, isAuthenticated, currentMember } = useAuth();
+
+  const [registerPage, setRegisterPage] = useState({
     account: "",
     name: "",
     email: "",
@@ -19,11 +26,59 @@ const RegisterPage = () => {
   });
 
   const handleInput = (keyName) => (currentValue) => {
-    setRegister({
-      ...register,
+    setRegisterPage({
+      ...registerPage,
       [keyName]: currentValue,
     });
   };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    //空白阻擋
+    if (
+      !(
+        registerPage.account &&
+        registerPage.name &&
+        registerPage.email &&
+        registerPage.password &&
+        registerPage.checkPassword
+      )
+    )
+      return;
+
+    const success = await register({
+      account: registerPage["account"],
+      name: registerPage["name"],
+      email: registerPage["email"],
+      password: registerPage["password"],
+      checkPassword: registerPage["checkPassword"],
+    });
+
+    if (success) {
+      Swal.fire({
+        position: "top",
+        title: "註冊成功！",
+        timer: 1000,
+        icon: "success",
+        showConfirmButton: false,
+      });
+      return;
+    }
+    // Swal.fire({
+    //   position: "top",
+    //   title: "註冊失敗！",
+    //   timer: 1000,
+    //   icon: "error",
+    //   showConfirmButton: false,
+    // });
+  };
+
+  useEffect(() => {
+    console.log("[Signup useEffect] isAuthenticated:", isAuthenticated);
+    if (isAuthenticated) {
+      navigate(`/${currentMember.id}`);
+    }
+  }, [navigate, isAuthenticated, currentMember]);
 
   return (
     <Container>
@@ -66,7 +121,10 @@ const RegisterPage = () => {
               placeholder="請輸入密碼再次輸入密碼"
             />
             <div className="mb-3">
-              <button className="btn btn-primary w-100 text-white rounded-pill">
+              <button
+                onClick={handleClick}
+                className="btn btn-primary w-100 text-white rounded-pill"
+              >
                 註冊
               </button>
             </div>
