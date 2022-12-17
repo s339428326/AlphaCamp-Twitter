@@ -15,6 +15,29 @@ export const login = async ({ account, password }) => {
     if (token) return { success: true, ...data };
     return data;
   } catch (error) {
+    const errorText = () => {
+      if (error.response.data.message === "This account has not registered.") {
+        return "帳號不存在";
+      }
+      if (
+        error.response.data.message === "Account or password is not correct."
+      ) {
+        return "輸入密碼不正確";
+      }
+
+      if (error.response.data.message === "Permission denied.") {
+        return "管理員登入前台";
+      }
+    };
+
+    Swal.fire({
+      position: "top",
+      title: "登入失敗！",
+      text: errorText(),
+      timer: 1000,
+      icon: "error",
+      showConfirmButton: false,
+    });
     console.error(error);
     console.log("[登入失敗]", error.response.data.message);
     return { status: false };
