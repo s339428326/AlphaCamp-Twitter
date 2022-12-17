@@ -1,14 +1,17 @@
 //components
+import PageTitle from "../PageTitle/PageTitle";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import AuthInput from "../AuthInput/AuthInput";
-import FollowButton from "../FollowButton/FollowButton";
+
+//apis
+import { putUserProfile, getUserData } from "../../apis/userData";
 
 //css style
 import styles from "./UserProfilePart.module.scss";
 
 //react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 //icons
 export const BallIcon = () => {
@@ -134,20 +137,50 @@ export const ArrowLeftIcon = () => {
 */
 
 const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
+  useEffect(() => {
+    console.log("重新更新userData");
+    setFormData({
+      name: userData?.name,
+      introduction: userData?.introduction,
+      avatar: userData?.avatar,
+      cover: userData?.cover,
+    });
+  }, [userData]);
+
+  //確認是否正在上傳
+  const [isUpload, setIsUpload] = useState(false);
+  //用來暫存上傳資料
+  const [formData, setFormData] = useState();
+  //暫存modal更換即時顯示圖片檔案
+  const [imageView, setImageView] = useState();
+
+  let cover = null;
+
   /*Modal Setting*/
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
-  const [count, setCount] = useState(
-    userData?.introduction ? userData?.introduction.length : 0
-  );
-  const handleClose = () => setShow(false);
+
+  const handleClose = () => {
+    // 復歸FromData
+    // setFormData({
+    //   ...formData,
+    //   cover: userData?.cover,
+    //   avatar: userData?.avatar,
+    // });
+    setShow(false);
+  };
+
   const handleShow = () => {
+    //復歸modal imageView
+    // setImageView({
+    //   ...imageView,
+    //   cover: userData?.cover,
+    //   avatar: userData?.avatar,
+    // });
     setFullscreen("sm-down");
     setShow(true);
   };
-  const handleCount = (e) => {
-    setCount(e.target.value.length);
-  };
+
   /*Modal Setting*/
 
   //////AuthInput嘗試實作錯誤訊息//////////
@@ -163,6 +196,93 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     }
   };
   //////AuthInput嘗試實作錯誤訊息//////////
+  const [count, setCount] = useState(
+    userData?.introduction ? userData?.introduction.length : 0
+  );
+
+  const handleIntroduction = (e) => {
+    setCount(e.target.value.length);
+    setFormData({ ...formData, introduction: e.target.value });
+  };
+
+  const handleCover = (e) => {
+    const file = e.target.files[0];
+    if (e.target.files[0].size >= 1048576) {
+      return;
+    }
+    setFormData(() => {
+      console.log(file);
+      const data = { ...formData, cover: file };
+      console.log("我想要的樣子", data);
+      return data;
+    });
+  };
+
+  // const handleAvatar = (e) => {
+  //   const file = e.target.files[0];
+  //   if (e.target.files[0].size >= 1048576) {
+  //     Swal.fire({
+  //       position: "top",
+  //       icon: "error",
+  //       title: "上傳檔案錯誤",
+  //       text: "圖片大小請勿超過10MB!",
+  //     });
+  //     return;
+  //   }
+  //   //建置使用者imageView ,非上傳圖片。
+  //   const reader = new FileReader();
+  //   reader.addEventListener(
+  //     "load",
+  //     () => {
+  //       setImageView({ ...imageView, avatar: reader.result });
+  //       console.log(reader.result);
+  //       // console.log(imageView?.avatar);
+  //     },
+  //     false
+  //   );
+  //   if (file) reader.readAsDataURL(file);
+  //   console.log(e.target.files);
+
+  //   //
+  //   setFormData({ ...formData, avatar: file });
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("[傳送進確認的樣子]", formData);
+    if (formData?.name === "") {
+      return;
+    }
+    console.log(formData);
+    const form = new FormData();
+    form.append("name", formData.name);
+    form.append("introduction", formData.introduction);
+    if (typeof formData.avatar !== "string") {
+      form.append("avatar", formData.avatar);
+    }
+    if (typeof formData.cover !== "string") {
+      form.append("cover", formData.cover);
+    }
+    //查看form 傳送資料
+    console.log([...form]);
+    //確認上傳
+    setIsUpload(true);
+    const upadate = await putUserProfile(userData?.id, form);
+    const setForm = await getUserData(userData?.id);
+    setFormData({
+      name: setForm?.name,
+      introduction: setForm?.introduction,
+      avatar: setForm?.avatar,
+      cover: setForm?.cover,
+    });
+    console.log("[更新資料]", formData);
+    console.log("[上傳成功]", upadate);
+    setIsUpload(false);
+    //確認已完成上傳
+    setShow(false);
+  };
+
+  //////上傳使用者圖片//////
 
   //User Cover 顯示邏輯
   const UserCover = () => {
@@ -175,11 +295,11 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
         />
       );
     }
-    if (userData?.cover) {
+    if (formData?.cover) {
       return (
         <img
           className={`${styles["bg"]}`}
-          src={userData?.cover}
+          src={formData?.cover}
           alt="use-background"
         />
       );
@@ -211,7 +331,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       );
     }
 
-    if (userData?.cover) {
+    if (userData?.avatar) {
       return (
         <img
           className={`${styles["avatar"]}`}
@@ -235,195 +355,204 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     }
   };
 
-  //是否為本人按鈕樣式切換
-  const ButtonView = () => {
-    if (userData?.isVisitOthers === undefined) {
-      return (
-        <div className="d-flex align-items-center text-secondary">
-          <div
-            className="spinner-border ms-auto"
-            role="status"
-            aria-hidden="true"
-          ></div>
-        </div>
-      );
-    }
-    if (userData?.isVisitOthers === true) {
-      return (
-        <div className="d-flex gap-3 justify-content-end">
-          {/* 是否啟用信箱通知 */}
-          <button className={`${styles["btn-circle"]} btn`}>
-            <EmailIcon />
-          </button>
-          {/* 是否啟用小鈴鐺 */}
-          <button
-            className={`${
-              isNotin ? styles["btn-circle__active"] : styles["btn-circle"]
-            } btn`}
-          >
-            {isNotin ? <ActiveBallIcon /> : <BallIcon />}
-          </button>
-
-          {/* 是否開啟追隨 */}
-          <FollowButton isFollow={userData?.isFollowed} />
-        </div>
-      );
-    } else {
-      return (
-        <div className="d-flex justify-content-end">
-          {/* 控制編輯資料按鈕 */}
-          <button
-            onClick={handleShow}
-            className={`${styles["btn"]} btn btn-outline-primary rounded-pill`}
-          >
-            編輯個人資料
-          </button>
-          {/* 編輯資料彈跳視窗 */}
-          <Modal
-            size="lg"
-            show={show}
-            fullscreen={fullscreen}
-            onHide={handleClose}
-            backdrop="static"
-          >
-            <form action="">
-              <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
-                <button className="btn me-3 d-sm-none" onClick={handleClose}>
-                  <ArrowLeftIcon />
-                </button>
-                <CloseButton
-                  className={`${styles["btn-close"]} d-none d-sm-block`}
-                  onClick={handleClose}
-                  aria-label="Close"
-                />
-
-                <h5>編輯個人資料</h5>
-                <button className="btn btn-primary text-white rounded-pill ms-auto">
-                  儲存
-                </button>
-              </Modal.Header>
-              <Modal.Body className={`${styles["modal-body"]}`}>
-                <div className={`${styles["bg-edit"]}`}>
-                  <img
-                    className={`${styles["bg"]}`}
-                    src={userData?.cover || "https://fakeimg.pl/639x200/"}
-                    alt="user-edit-bg"
-                  />
-
-                  <div className={`${styles["bg-edit-button"]}`}>
-                    <label htmlFor="bg-edit" className="btn">
-                      <CameraIcon />
-                    </label>
-                    <input
-                      className="d-none"
-                      type="file"
-                      name="bg-edit"
-                      id="bg-edit"
-                    />
-                    <button className="btn">
-                      <CrossIcon />
-                    </button>
-                  </div>
-                </div>
-                <label
-                  htmlFor="avatar"
-                  className={`${styles["user-avatar"]} ${styles["user-avatar-edit"]} p-3`}
-                >
-                  <img
-                    className={`${styles["avatar"]}`}
-                    src={
-                      userData?.avatar ||
-                      "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                    }
-                    alt="user-avatar"
-                    width={140}
-                    height={140}
-                  />
-                  <div className={`${styles["avatar-edit-icon"]}`}>
-                    <CameraIcon />
-                  </div>
-                  <input
-                    className="d-none"
-                    type="file"
-                    name="avatar"
-                    id="avatar"
-                  />
-                </label>
-                <div className="p-3 mt-5">
-                  <AuthInput
-                    onChange={handleName}
-                    defaultValue={userData?.name}
-                    label="名稱"
-                    placeholder="請輸入名稱"
-                    error={errorMessage.userName}
-                  />
-                  <div
-                    className={`${styles["input-style"]} d-flex flex-column`}
-                  >
-                    <label htmlFor="userIntroduction">自我介紹</label>
-                    <textarea
-                      onChange={handleCount}
-                      style={{
-                        resize: "none",
-                        outline: "none",
-                      }}
-                      maxLength={160}
-                      name="userIntroduction"
-                      id="userIntroduction"
-                      defaultValue={userData?.introduction}
-                      cols="30"
-                      rows="5"
-                    ></textarea>
-                    <p className={styles["count"]}>{count}/160</p>
-                  </div>
-                </div>
-              </Modal.Body>
-            </form>
-          </Modal>
-        </div>
-      );
-    }
-  };
-
   return (
-    <div className={`${styles["profile"]} border-start border-end`}>
-      {/* 使用者背景 */}
-      <UserCover />
-      <div className={`${styles["user-avatar"]} p-3`}>
-        {/* 使用者頭像 */}
-        <UserAvatar />
-        <div className="mb-3">
-          {/* 是否為本人樣式切換 */}
-          <ButtonView />
-        </div>
-        <div className={`${styles["info"]}`}>
-          <div className={`${styles["info-content"]}`}>
-            <div>
-              <strong>{userData?.name || "無讀取資料"}</strong>
-              <p className="text-secondary mb-2">
-                {userData?.account ? `@${userData?.account}` : "無讀取資料"}
-              </p>
+    <>
+      <div className="sticky-top">
+        <PageTitle
+          title={formData?.name || "讀取中..."}
+          tweetQuantity={userData?.tweetCount}
+        />
+      </div>
+      <div className={`${styles["profile"]} border-start border-end`}>
+        {/* 使用者背景 */}
+        <UserCover />
+        <div className={`${styles["user-avatar"]} p-3`}>
+          {/* 使用者頭像 */}
+          <UserAvatar />
+          <div className="mb-3">
+            {/* 是否為本人樣式切換 */}
+            {/* <ButtonView /> */}
+            {userData?.isVisitOthers === undefined ? (
+              <div className="d-flex align-items-center text-secondary">
+                <div
+                  className="spinner-border ms-auto"
+                  role="status"
+                  aria-hidden="true"
+                ></div>
+              </div>
+            ) : userData?.isVisitOthers === true ? (
+              <div className="d-flex align-items-center text-secondary">
+                <div
+                  className="spinner-border ms-auto"
+                  role="status"
+                  aria-hidden="true"
+                ></div>
+              </div>
+            ) : (
+              <div className="d-flex justify-content-end">
+                {/* 控制編輯資料按鈕 */}
+                <button
+                  onClick={handleShow}
+                  className={`${styles["btn"]} btn btn-outline-primary rounded-pill `}
+                >
+                  編輯個人資料
+                </button>
+                {/* 編輯資料彈跳視窗 */}
+                <Modal
+                  size="lg"
+                  show={show}
+                  keyboard={false}
+                  fullscreen={fullscreen}
+                  onHide={handleClose}
+                  backdrop="static"
+                >
+                  <form action="" onSubmit={handleSubmit}>
+                    <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
+                      <button
+                        className="btn me-3 d-sm-none"
+                        onClick={handleClose}
+                      >
+                        <ArrowLeftIcon />
+                      </button>
+                      <CloseButton
+                        className={`${styles["btn-close"]} d-none d-sm-block ${
+                          isUpload && "disabled"
+                        }`}
+                        onClick={handleClose}
+                        aria-label="Close"
+                      />
 
-              <p className="mb-2">
-                {userData?.introduction || "請設置自我介紹"}
-              </p>
-              <div className="d-flex gap-4">
-                {/* 點擊 跟隨中 Link to follower 頁面 */}
-                <p>
-                  {userData?.followingCount || 0} 個
-                  <span className="text-secondary">跟隨中</span>
+                      <h5>編輯個人資料</h5>
+                      {isUpload ? (
+                        <button
+                          className="btn btn-primary text-white rounded-pill ms-auto"
+                          type="button"
+                          disabled
+                        >
+                          <span
+                            className="spinner-border spinner-border-sm"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                          Loading...
+                        </button>
+                      ) : (
+                        <input
+                          type="submit"
+                          className="btn btn-primary text-white rounded-pill ms-auto"
+                          value="儲存"
+                        />
+                      )}
+                    </Modal.Header>
+                    <Modal.Body className={`${styles["modal-body"]}`}>
+                      <div className={`${styles["bg-edit"]}`}>
+                        <img
+                          className={`${styles["bg"]}`}
+                          // imageView?.cover ||
+                          // formData?.cover ||
+                          src={"https://fakeimg.pl/639x200/"}
+                          alt="user-edit-bg"
+                        />
+
+                        <div className={`${styles["bg-edit-button"]}`}>
+                          <label htmlFor="bg-edit" className="btn">
+                            <CameraIcon />
+                          </label>
+                          <input
+                            onChange={handleCover}
+                            className="d-none"
+                            type="file"
+                            accept="image/png,jpg,jpeg"
+                            name="bg-edit"
+                            id="bg-edit"
+                          />
+                          <button className="btn">
+                            <CrossIcon />
+                          </button>
+                        </div>
+                      </div>
+                      <label
+                        htmlFor="avatar"
+                        className={`${styles["user-avatar"]} ${styles["user-avatar-edit"]} p-3`}
+                      >
+                        <img
+                          className={`${styles["avatar"]}`}
+                          src={
+                            userData?.avatar ||
+                            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                          }
+                          alt="user-avatar"
+                          width={140}
+                          height={140}
+                        />
+                        <div className={`${styles["avatar-edit-icon"]}`}>
+                          <CameraIcon />
+                        </div>
+                        <input className="d-none" name="avatar" id="avatar" />
+                      </label>
+                      <div className="p-3 mt-5">
+                        <AuthInput
+                          onChange={handleName}
+                          defaultValue={formData?.name}
+                          label="名稱"
+                          placeholder="請輸入名稱"
+                          error={errorMessage.userName}
+                        />
+                        <div
+                          className={`${styles["input-style"]} d-flex flex-column`}
+                        >
+                          <label htmlFor="userIntroduction">自我介紹</label>
+                          <textarea
+                            onChange={handleIntroduction}
+                            style={{
+                              resize: "none",
+                              outline: "none",
+                            }}
+                            maxLength={160}
+                            name="userIntroduction"
+                            id="userIntroduction"
+                            defaultValue={formData?.introduction}
+                            cols="30"
+                            rows="5"
+                          ></textarea>
+                          <p className={styles["count"]}>{count}/160</p>
+                        </div>
+                      </div>
+                    </Modal.Body>
+                  </form>
+                </Modal>
+              </div>
+            )}
+          </div>
+          <div className={`${styles["info"]}`}>
+            <div className={`${styles["info-content"]}`}>
+              <div>
+                <strong>{formData?.name || "無讀取資料"}</strong>
+                <p className="text-secondary mb-2">
+                  {userData?.account ? `@${userData?.account}` : "無讀取資料"}
                 </p>
-                {/*點擊 跟隨中 Link to following 頁面  */}
-                <p>
-                  {userData?.followerCount || 0} 位
-                  <span className="text-secondary">跟隨者</span>
+
+                <p className="mb-2">
+                  {formData?.introduction || "請設置自我介紹"}
                 </p>
+                <div className="d-flex gap-4">
+                  {/* 點擊 跟隨中 Link to follower 頁面 */}
+                  <p>
+                    {userData?.followingCount || 0} 個
+                    <span className="text-secondary">跟隨中</span>
+                  </p>
+                  {/*點擊 跟隨中 Link to following 頁面  */}
+                  <p>
+                    {userData?.followerCount || 0} 位
+                    <span className="text-secondary">跟隨者</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

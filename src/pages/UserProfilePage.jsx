@@ -1,7 +1,6 @@
 //Component
 import UserSidebar from "../components/UserSidebar/UserSidebar";
 import TopUser from "../components/TopUser/TopUser";
-import PageTitle from "../components/PageTitle/PageTitle";
 import UserProfilePart from "../components/UserProfilePart/UserProfilePart";
 import UserProfileTabs from "../components/UserProfileTabs/UserProfileTabs";
 
@@ -66,18 +65,14 @@ const UserProfilePage = () => {
           </div>
         </Col>
         <Col xs={7}>
-          <div className="sticky-top">
-            <PageTitle
-              title={userData?.name || "讀取中..."}
-              tweetQuantity={userData?.tweetCount}
-            />
-          </div>
           <UserProfilePart userData={userData} />
           <UserProfileTabs />
           <Outlet />
         </Col>
         <Col xs={3}>
-          <TopUser />
+          <div className="sticky-top">
+            <TopUser />
+          </div>
         </Col>
       </Row>
     </Container>
