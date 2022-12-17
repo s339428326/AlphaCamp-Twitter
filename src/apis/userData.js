@@ -1,5 +1,9 @@
 import axios from "axios";
-const BASE_URL = "https://rocky-sands-70657.herokuapp.com/api/users/";
+
+const BASE = "https://rocky-sands-70657.herokuapp.com";
+// const BASE = "https://shielded-brook-33484.herokuapp.com";
+
+const BASE_URL = BASE + "/api/users/";
 
 //攔截器設定
 //https://github.com/axios/axios#request-config
@@ -36,6 +40,26 @@ export const getUserData = async (userId) => {
     return res.data;
   } catch (error) {
     console.error("[取得使用者資料失敗]", error);
+  }
+};
+
+//[U_04] put-user-profile 編輯登入使用者的profile
+//PUT /api/users/:id
+export const putUserProfile = async (userId, data) => {
+  console.log("[API URL:] :", BASE_URL + `${userId}`);
+  if (!userId) {
+    console.log("[使用putUserProfile錯誤]：請帶入使用者id");
+    return;
+  }
+  if (!data) {
+    console.log("[使用putUserProfile錯誤]：請帶入form-data");
+    return;
+  }
+  try {
+    const res = await axiosInstance.put(BASE_URL + userId, data);
+    return res;
+  } catch (error) {
+    console.error(error);
   }
 };
 
