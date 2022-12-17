@@ -218,34 +218,34 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     });
   };
 
-  // const handleAvatar = (e) => {
-  //   const file = e.target.files[0];
-  //   if (e.target.files[0].size >= 1048576) {
-  //     Swal.fire({
-  //       position: "top",
-  //       icon: "error",
-  //       title: "上傳檔案錯誤",
-  //       text: "圖片大小請勿超過10MB!",
-  //     });
-  //     return;
-  //   }
-  //   //建置使用者imageView ,非上傳圖片。
-  //   const reader = new FileReader();
-  //   reader.addEventListener(
-  //     "load",
-  //     () => {
-  //       setImageView({ ...imageView, avatar: reader.result });
-  //       console.log(reader.result);
-  //       // console.log(imageView?.avatar);
-  //     },
-  //     false
-  //   );
-  //   if (file) reader.readAsDataURL(file);
-  //   console.log(e.target.files);
+  const handleAvatar = (e) => {
+    const file = e.target.files[0];
+    if (e.target.files[0].size >= 1048576) {
+      // Swal.fire({
+      //   position: "top",
+      //   icon: "error",
+      //   title: "上傳檔案錯誤",
+      //   text: "圖片大小請勿超過10MB!",
+      // });
+      return;
+    }
+    //建置使用者imageView ,非上傳圖片。
+    // const reader = new FileReader();
+    // reader.addEventListener(
+    //   "load",
+    //   () => {
+    //     setImageView({ ...imageView, avatar: reader.result });
+    //     console.log(reader.result);
+    //     // console.log(imageView?.avatar);
+    //   },
+    //   false
+    // );
+    // if (file) reader.readAsDataURL(file);
+    // console.log(e.target.files);
 
-  //   //
-  //   setFormData({ ...formData, avatar: file });
-  // };
+    //
+    setFormData({ ...formData, avatar: file });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -488,7 +488,14 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                         <div className={`${styles["avatar-edit-icon"]}`}>
                           <CameraIcon />
                         </div>
-                        <input className="d-none" name="avatar" id="avatar" />
+                        <input
+                          onChange={handleAvatar}
+                          type="file"
+                          accept="image/png,jpg,jpeg"
+                          className="d-none"
+                          name="avatar"
+                          id="avatar"
+                        />
                       </label>
                       <div className="p-3 mt-5">
                         <AuthInput
