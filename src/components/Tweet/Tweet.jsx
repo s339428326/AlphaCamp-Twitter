@@ -1,7 +1,11 @@
+//style
 import styles from "./Tweet.module.scss";
-
+//component
 import MainReplyModal from "../MainReplyModal/MainReplyModal";
-import { useEffect, useState } from "react";
+//react
+import { useState } from "react";
+//
+import useMoment from "../../hooks/useMoment";
 
 //icon
 export const HeartIcon = () => {
@@ -38,42 +42,46 @@ export const RedHeartIcon = () => {
   );
 };
 
-const Tweet = ({
-  userName,
-  userId,
-  userAvatar,
-  createTime,
-  tweetId,
-  isLike,
-  tweetContent,
-  replyQuantity,
-  likeQuantity,
-}) => {
+/*
+   {
+        "id": 4,
+        "description": "Et illo qui voluptas quia.",
+        "createdAt": 1671163227000,
+        "isLiked": false,
+        "replyCount": 3,
+        "likeCount": 1,
+        "User": {
+            "id": 14,
+            "name": "user1",
+            "account": "user1",
+            "avatar": "https://i.imgur.com/k4iCvXX.png"
+        },
+    }
+*/
+
+const Tweet = ({ data, isisLikeList }) => {
+  //isLikeList的狀態判斷是否為瀏覽別的使用者
+  //當為true時不能點擊愛心(like)(未完成)
+
   /*Like 暫時作法*/
+  const [likeCount, setLikeCount] = useState(data?.likeCount);
   const [like, setLike] = useState(false);
   const handleLike = () => {
+    if (like) {
+      setLikeCount((prevValue) => prevValue - 1);
+    } else {
+      setLikeCount((prevValue) => prevValue + 1);
+    }
     setLike((prevValue) => !prevValue);
   };
-
-  useEffect(() => {
-    //這裡會使用API確認userId的喜歡推文
-    if (isLike) {
-      setLike(true);
-    } else {
-      setLike(false);
-    }
-  }, [isLike]);
-
   /*Like 暫時作法*/
+
   return (
     <section className="border-start border-end border-bottom px-4 py-3 d-flex gap-2">
       <div>
         <img
           className="rounded"
-          src={
-            userAvatar ||
-            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-          }
+          src={data?.User.avatar}
           alt="user-avatar"
           width={50}
           height={50}
@@ -83,29 +91,29 @@ const Tweet = ({
         <div
           className={`${styles["tweet-header"]} d-flex align-items-center gap-2`}
         >
-          <strong>{userName || "無讀取資料"}</strong>
+          <strong>{data?.User.name || "無讀取資料"}</strong>
           <small className="text-light mb-0">
-            @{userId || "無讀取資料"}・{createTime || "無讀取資料"}
+            @{data?.User.account || "無讀取資料"}・
+            {useMoment(data?.createdAt) || "無讀取資料"}
           </small>
         </div>
         <p className={`${styles["tweet-content"]}`}>
-          {tweetContent || "無讀取資料"}
+          {data?.description || "無讀取資料"}
         </p>
         <div className={`${styles["tweet-footer"]} d-flex`}>
           <div className="d-flex gap-2">
             <MainReplyModal width={16} height={16} />
             <span className="font-monospace text-light me-4">
-              {replyQuantity || "無讀取資料"}
+              {data?.replyCount !== 0 ? data?.replyCount : 0}
             </span>
           </div>
+          {/* Like邏輯 */}
           <button
             onClick={handleLike}
             className="d-flex gap-2 border-0 p-0 bg-transparent"
           >
             {like ? <RedHeartIcon /> : <HeartIcon />}
-            <span className="font-monospace text-light">
-              {likeQuantity || "無讀取資料"}
-            </span>
+            <span className="font-monospace text-light">{likeCount}</span>
           </button>
         </div>
       </div>
