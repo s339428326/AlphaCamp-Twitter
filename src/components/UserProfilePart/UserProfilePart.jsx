@@ -162,21 +162,21 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
 
   const handleClose = () => {
     // 復歸FromData
-    // setFormData({
-    //   ...formData,
-    //   cover: userData?.cover,
-    //   avatar: userData?.avatar,
-    // });
+    setFormData({
+      ...formData,
+      cover: userData?.cover,
+      avatar: userData?.avatar,
+    });
     setShow(false);
   };
 
   const handleShow = () => {
     //復歸modal imageView
-    // setImageView({
-    //   ...imageView,
-    //   cover: userData?.cover,
-    //   avatar: userData?.avatar,
-    // });
+    setImageView({
+      ...imageView,
+      cover: userData?.cover,
+      avatar: userData?.avatar,
+    });
     setFullscreen("sm-down");
     setShow(true);
   };
@@ -331,11 +331,11 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       );
     }
 
-    if (userData?.avatar) {
+    if (formData?.avatar) {
       return (
         <img
           className={`${styles["avatar"]}`}
-          src={userData?.avatar}
+          src={formData?.avatar}
           alt="user-avatar"
           width={140}
           height={140}
