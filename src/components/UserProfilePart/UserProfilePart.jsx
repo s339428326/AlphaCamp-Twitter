@@ -13,9 +13,6 @@ import styles from "./UserProfilePart.module.scss";
 //react
 import { useState, useEffect } from "react";
 
-//react-router-dom
-import { useNavigate } from "react-router-dom";
-
 //icons
 export const BallIcon = () => {
   return (
@@ -140,7 +137,6 @@ export const ArrowLeftIcon = () => {
 */
 
 const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
-  const navgaite = useNavigate();
   useEffect(() => {
     console.log("重新更新userData");
     setFormData({
