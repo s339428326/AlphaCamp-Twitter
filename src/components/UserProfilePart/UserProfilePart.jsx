@@ -13,6 +13,9 @@ import styles from "./UserProfilePart.module.scss";
 //react
 import { useState, useEffect } from "react";
 
+//react-router-dom
+import { useNavigate } from "react-router-dom";
+
 //icons
 export const BallIcon = () => {
   return (
@@ -137,6 +140,7 @@ export const ArrowLeftIcon = () => {
 */
 
 const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
+  const navgaite = useNavigate();
   useEffect(() => {
     console.log("重新更新userData");
     setFormData({
@@ -154,8 +158,6 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   //暫存modal更換即時顯示圖片檔案
   const [imageView, setImageView] = useState();
 
-  let cover = null;
-
   /*Modal Setting*/
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
@@ -170,12 +172,14 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     setShow(false);
   };
 
-  const handleShow = () => {
-    //復歸modal imageView
+  const handleShow = async () => {
+    // 復歸modal imageView
+    const data = await getUserData(userData?.id);
+    console.log("hi", data);
     setImageView({
       ...imageView,
-      cover: userData?.cover,
-      avatar: userData?.avatar,
+      cover: data?.cover,
+      avatar: data?.avatar,
     });
     setFullscreen("sm-down");
     setShow(true);
@@ -210,10 +214,17 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     if (e.target.files[0].size >= 1048576) {
       return;
     }
+    const reader = new FileReader();
+    if (file) reader.readAsDataURL(file);
+    reader.addEventListener(
+      "load",
+      () => {
+        setImageView({ ...imageView, cover: reader.result });
+      },
+      false
+    );
     setFormData(() => {
-      console.log(file);
       const data = { ...formData, cover: file };
-      console.log("我想要的樣子", data);
       return data;
     });
   };
@@ -229,19 +240,16 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       // });
       return;
     }
-    //建置使用者imageView ,非上傳圖片。
-    // const reader = new FileReader();
-    // reader.addEventListener(
-    //   "load",
-    //   () => {
-    //     setImageView({ ...imageView, avatar: reader.result });
-    //     console.log(reader.result);
-    //     // console.log(imageView?.avatar);
-    //   },
-    //   false
-    // );
-    // if (file) reader.readAsDataURL(file);
-    // console.log(e.target.files);
+    // 建置使用者imageView ,非上傳圖片。
+    const reader = new FileReader();
+    if (file) reader.readAsDataURL(file);
+    reader.addEventListener(
+      "load",
+      () => {
+        setImageView({ ...imageView, avatar: reader.result });
+      },
+      false
+    );
 
     //
     setFormData({ ...formData, avatar: file });
@@ -448,9 +456,11 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                       <div className={`${styles["bg-edit"]}`}>
                         <img
                           className={`${styles["bg"]}`}
-                          // imageView?.cover ||
-                          // formData?.cover ||
-                          src={"https://fakeimg.pl/639x200/"}
+                          src={
+                            imageView?.cover ||
+                            formData?.cover ||
+                            "https://fakeimg.pl/639x200/"
+                          }
                           alt="user-edit-bg"
                         />
 
@@ -478,7 +488,8 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                         <img
                           className={`${styles["avatar"]}`}
                           src={
-                            userData?.avatar ||
+                            imageView?.avatar ||
+                            formData?.avatar ||
                             "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                           }
                           alt="user-avatar"
