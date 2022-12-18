@@ -20,6 +20,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [payload, setPayload] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }) => {
       if (!token) {
         setIsAuthenticated(false);
         setPayload(null);
+        setIsLoading(false);
         return;
       }
       //checkPermission
@@ -41,6 +43,7 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
         setPayload(null);
       }
+      setIsLoading(false);
     };
     checkTokenIsValid();
   }, [pathname]);
@@ -122,7 +125,7 @@ export const AuthProvider = ({ children }) => {
         },
       }}
     >
-      {children}
+      {isLoading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );
 };
