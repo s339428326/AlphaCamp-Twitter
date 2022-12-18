@@ -1,0 +1,30 @@
+.tweet-item {
+  border-bottom: solid 1px #e6ecf0;
+  padding-left: 15px;
+  padding-top: 13px;
+  position: relative;
+}
+
+.tweet-header {
+  strong {
+    line-height: 26px;
+  }
+}
+
+.tweet-avatar {
+  margin-right: 15px;
+}
+
+.tweet-content {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  height: 52px;
+}
+
+.tweet-closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
