@@ -56,13 +56,13 @@ const UserLoginPage = () => {
       return;
     }
 
-    Swal.fire({
-      position: "top",
-      title: "登入失敗！",
-      timer: 1000,
-      icon: "error",
-      showConfirmButton: false,
-    });
+    // Swal.fire({
+    //   position: "top",
+    //   title: "登入失敗！",
+    //   timer: 1000,
+    //   icon: "error",
+    //   showConfirmButton: false,
+    // });
   };
 
   useEffect(() => {

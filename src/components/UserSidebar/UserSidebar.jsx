@@ -203,7 +203,7 @@ export const LogOutIcon = () => {
   );
 };
 
-const UserSidebar = () => {
+const UserSidebar = ({userData}) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const urlUserId = pathname.split("/")[1];
@@ -266,6 +266,7 @@ const UserSidebar = () => {
         </li>
         <li className="w-100">
           <MainTweetModal
+          userData={userData}
             element={
               <div className="d-flex flex-column align-items-center">
                 <button className="d-none d-lg-block btn btn-primary text-white rounded-pill w-100 text-center">

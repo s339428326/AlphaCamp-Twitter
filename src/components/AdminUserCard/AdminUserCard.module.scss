@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+
+.card-container {
+  max-width: 256px;
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+  }
+}
+
+.card {
+  margin-bottom: 16px;
+  .card-header {
+    position: relative;
+  }
+  .card-cover {
+    height: 140px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 100%;
+    object-fit: cover;
+  }
+  .card-avatar {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: #fff;
+    padding: 5px;
+    position: absolute;
+    bottom: -20px;
+    right: 50%;
+    transform: translate(50%, 0);
+  }
+  .card-content {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #f6f7f8;
+    padding-top: 32px;
+  }
+  .card-info {
+    font-family: "Montserrat", sans-serif;
+    color: #1c1c1c;
+  }
+}

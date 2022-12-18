@@ -1,24 +1,49 @@
-// import { Outlet } from "react-router-dom";
 import UserSidebar from "../components/UserSidebar/UserSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import UserFollowTabs from "../components/UserFollowTabs/UserFollowTabs";
 import TopUser from "../components/TopUser/TopUser";
 //import UserFollowPart from "../components/UserFollowPart/UserFollowPart"
-import { FollowItem } from "../components/UserFollowPart/UserFollowPart";
-import { useNavigate } from "react-router-dom";
+//import { FollowItem } from "../components/UserFollowPart/UserFollowPart";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { getUserData } from "../apis/userData";
+import { useAuth } from "../contexts/AuthContext";
+
+// import jwt_decode from "jwt-decode";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const UserFollowPage = ({ user }) => {
+const UserFollowPage = () => {
+  const [userData, setUserData] = useState();
   const navigate = useNavigate();
-  // const OutletContainer = () => {
-  //   return (
-  //     <div>
-  //       <Outlet />
-  //     </div>
-  //   );
-  // };
+  const { isAuthenticated, currentMember } = useAuth();
+
+  const url = useLocation().pathname.split("/");
+  const urlUserId = url[1];
+  // const token = localStorage.getItem("token");
+  // const decodeData = jwt_decode(token);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    } 
+  }, [navigate, isAuthenticated]);
+
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const data = await getUserData(currentMember.id);
+        if (data === undefined) navigate(`/${currentMember.id}`);
+        setUserData({
+          ...data,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    userData();
+  }, [currentMember.id, navigate]);
+
   return (
     <Container>
       <Row>
@@ -31,14 +56,13 @@ const UserFollowPage = ({ user }) => {
         <Col xs md={7}>
           <div>
             <div className="sticky-top">
-              <PageTitle title={user} tweetQuantity={user} />
+              <PageTitle
+                title={userData?.name || "讀取中..."}
+                tweetQuantity={userData?.tweetCount}
+              />
             </div>
-            <UserFollowTabs navigate={navigate} />
-            {/*先用 followItem，followpart要等功能實作 然後要設定條件，如果沒有追蹤者就顯示提示，有的話再render出來*/}
-            <div>
-              <FollowItem />
-            </div>
-            {/*<div><OutletContainer /></div>*/}
+            <UserFollowTabs navigate={navigate} userId={urlUserId} />
+            <Outlet />
           </div>
         </Col>
         <Col xs={4} md={3}>

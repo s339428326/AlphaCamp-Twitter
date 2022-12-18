@@ -1,51 +1,118 @@
 import styles from "./UserFollowPart.module.scss";
 import FollowButton from "../FollowButton/FollowButton";
+import { getUserFollowers, getUserFollowings } from "../../apis/userData";
+import { useLocation, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-export const FollowItem = ({ avatarImg, isFollow }) => {
+const FollowItem = ({ userData }) => {
+  const { name, avatar, introduction, isFollowed, id } = userData;
   return (
-<div className={`${styles.followItem} d-flex`}>
-    <div>
-      <img
-        src={
-          avatarImg || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-        }
-        alt="user-avatar"
-        width={50}
-        height={50}
-      />
-    </div>
-    {/* 內容 */}
-    <div className={styles.followInfo}>
-      <div className={styles.followName}>username</div>
-      {/*<div className={styles.followAcount}>@test</div>*/}
-      <div className={styles.followDescription}>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ullam
-        laboriosam! Libero eos aut nostrum. Tempora, quidem reiciendis!
-        Expedita, ea. Nisi impedit voluptates incidunt molestias, soluta modi
-        deleniti magnam asperiores?
+    <div className={`${styles.followItem} d-flex`}>
+      <div>
+        <Link to={`/${id}/profile`} className={styles.link}>
+          <img
+            className="rounded-circle"
+            src={
+              avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="user-avatar"
+            width={50}
+            height={50}
+          />
+        </Link>
+      </div>
+      {/* 內容 */}
+      <div className={styles.followInfo}>
+        <div className={styles.followName}>
+          <Link to={`/${id}/profile`} className={styles.link}>
+            {name}{" "}
+          </Link>
+        </div>
+        {/*<div className={styles.followAcount}>@test</div>*/}
+        <div className={styles.followDescription}>{introduction}</div>
+      </div>
+      <div className={styles.followBtn}>
+        <FollowButton isFollow={isFollowed} />
       </div>
     </div>
-    <div className={styles.followBtn}><FollowButton isFollow={isFollow} /></div>
-  </div>
-  )
+  );
 };
 
-const UserFollowPart = ({
-  follows,
-  isFollow,
-}) => {
+const UserFollowPart = () => {
+  const urlUserId = useLocation().pathname.split("/")[1];
+  const [followerData, setFollowerData] = useState([]);
+  const [followingData, setFollowingData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getFollowers = async () => {
+      try {
+        setIsLoading(true);
+        const userFollowers = await getUserFollowers(urlUserId);
+        setFollowerData(userFollowers.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getFollowers();
+  }, [urlUserId]);
+
+  useEffect(() => {
+    const getFollowings = async () => {
+      try {
+        setIsLoading(true);
+        const userFollowings = await getUserFollowings(urlUserId);
+        setFollowingData(userFollowings.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getFollowings();
+  }, [urlUserId]);
+
+  const location = useLocation();
+  const followType = location.pathname.split("/")[3];
+  let data;
+  if (followType === undefined) {
+    data = followerData;
+  } else {
+    switch (followType) {
+      case "follower":
+        data = followerData;
+        break;
+      case "following":
+        data = followingData;
+        break;
+      default:
+        data = [];
+    }
+  }
+
   return (
     <div>
-      {follows.map((follow) => {
-        return (
-          <FollowItem
-            key={follow.id}
-            avatarImg={follow.img}
-            isFollow={isFollow}
-          />
-        );
-      })}
+      {isLoading ? (
+        <div className={styles.alert}>Loading...</div>
+      ) : data.length === 0 ? (
+        <div className={styles.alert}>
+          {followType === "following" ? "No followings" : "No followers"}
+        </div>
+      ) : (
+        data.map((item, index) => {
+          return (
+            <FollowItem
+              key={
+                `follower-${index}-${item.followerId}` ||
+                `following-${index}-${item.followingId}`
+              }
+              userData={item.Followings || item.Followers}
+            />
+          );
+        })
+      )}
     </div>
-  )
+  );
 };
+
 export default UserFollowPart;

@@ -90,6 +90,7 @@ export const getUserTweets = async (userId) => {
   }
 };
 
+
 //[U_07] get-user-likes 取得指定使用者喜歡的推文
 //GET /api/users/:id/likes
 
@@ -102,5 +103,25 @@ export const getUserLikes = async (userId) => {
     return res.data;
   } catch (error) {
     console.error(error);
+  }
+};
+
+//[U_08] get-user-followings 取得指定使用者的追蹤者 GET /api/users/:id/followings
+export const getUserFollowings = async (id) => {
+  try {
+    const res = await axiosInstance.get(`${BASE_URL}/${id}/followings`);
+    return res;
+  } catch (error) {
+    console.error("[Get User Following Failed]: ", error);
+  }
+};
+
+//[U_09] get-user-followers 取得指定使用者的追隨者 GET /api/users/:id/followers
+export const getUserFollowers = async (id) => {
+  try {
+    const res = await axiosInstance.get(`${BASE_URL}/${id}/followers`);
+    return res;
+  } catch (error) {
+    console.error("[Get User Follower Failed]: ", error);
   }
 };

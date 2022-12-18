@@ -7,43 +7,60 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
-const UserMainPage = ({ user }) => {
-  // check permission
+import { getUserData } from "../apis/userData";
 
+const UserMainPage = () => {
+  // check permission
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, currentMember } = useAuth();
+  const [userData, setUserData] = useState();
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
-    }
+    } 
   }, [navigate, isAuthenticated]);
+
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const data = await getUserData(currentMember.id);
+        if (data === undefined) navigate('/login');
+        setUserData({
+          ...data,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    userData();
+  }, [currentMember.id, navigate]);
 
   return (
     <Container>
-      <Row>
-        <Col xs={1} lg={2}>
-          <div className="sticky-top">
-            <UserSidebar />
-          </div>
-        </Col>
-        <Col xs={7}>
-          <div className="sticky-top">
-            <PageTitle title={"首頁"} tweetQuantity={user} />
-          </div>
-          <MainCreateTweet />
-          <Tweet />
-        </Col>
-        <Col xs={4} lg={3}>
-          <div className="sticky-top ">
-            <TopUser />
-          </div>
-        </Col>
-      </Row>
+        <Row>
+          <Col xs={1} lg={2}>
+            <div className="sticky-top">
+              <UserSidebar userData={userData} />
+            </div>
+          </Col>
+          <Col xs={7}>
+            <div className="sticky-top">
+              <PageTitle title={"首頁"} />
+            </div>
+            <MainCreateTweet userData={userData} />
+            <Tweet />
+          </Col>
+          <Col xs={4} lg={3}>
+            <div className="sticky-top ">
+              <TopUser />
+            </div>
+          </Col>
+        </Row>
     </Container>
   );
 };
