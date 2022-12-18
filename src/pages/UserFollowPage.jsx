@@ -7,7 +7,9 @@ import TopUser from "../components/TopUser/TopUser";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getUserData } from "../apis/userData";
-import jwt_decode from "jwt-decode";
+import { useAuth } from "../contexts/AuthContext";
+
+// import jwt_decode from "jwt-decode";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -15,26 +17,32 @@ import Col from "react-bootstrap/Col";
 const UserFollowPage = () => {
   const [userData, setUserData] = useState();
   const navigate = useNavigate();
+  const { isAuthenticated, currentMember } = useAuth();
+
   const url = useLocation().pathname.split("/");
   const urlUserId = url[1];
-  const token = localStorage.getItem("token");
-  const decodeData = jwt_decode(token);
+  // const token = localStorage.getItem("token");
+  // const decodeData = jwt_decode(token);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    } 
+  }, [navigate, isAuthenticated]);
 
   useEffect(() => {
     const userData = async () => {
       try {
-        const data = await getUserData(urlUserId);
-        if (data === undefined) navigate(`/${decodeData.id}`);
+        const data = await getUserData(currentMember.id);
+        if (data === undefined) navigate(`/${currentMember.id}`);
         setUserData({
           ...data,
-          isVisitOthers: decodeData.id !== Number(urlUserId),
         });
       } catch (error) {
         console.error(error);
       }
     };
     userData();
-  }, [decodeData.id, urlUserId, navigate]);
+  }, [currentMember.id, navigate]);
 
   return (
     <Container>
@@ -53,7 +61,7 @@ const UserFollowPage = () => {
                 tweetQuantity={userData?.tweetCount}
               />
             </div>
-            <UserFollowTabs navigate={navigate} userId={urlUserId}/>
+            <UserFollowTabs navigate={navigate} userId={urlUserId} />
             <Outlet />
           </div>
         </Col>

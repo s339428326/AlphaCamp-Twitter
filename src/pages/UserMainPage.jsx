@@ -8,36 +8,28 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
-import jwt_decode from "jwt-decode";
 import { getUserData } from "../apis/userData";
 
 const UserMainPage = () => {
   // check permission
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, currentMember } = useAuth();
   const [userData, setUserData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const url = useLocation().pathname.split("/");
-  const urlUserId = url[1];
-  const token = localStorage.getItem("token");
-  const decodeData = jwt_decode(token);
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
-    } else {
-      setIsLoading(false);
-    }
+    } 
   }, [navigate, isAuthenticated]);
 
   useEffect(() => {
     const userData = async () => {
       try {
-        const data = await getUserData(urlUserId);
-        if (data === undefined) navigate(`/${decodeData.id}`);
+        const data = await getUserData(currentMember.id);
+        if (data === undefined) navigate('/login');
         setUserData({
           ...data,
         });
@@ -46,13 +38,10 @@ const UserMainPage = () => {
       }
     };
     userData();
-  }, [decodeData.id, urlUserId, navigate]);
+  }, [currentMember.id, navigate]);
 
   return (
     <Container>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
         <Row>
           <Col xs={1} lg={2}>
             <div className="sticky-top">
@@ -72,7 +61,6 @@ const UserMainPage = () => {
             </div>
           </Col>
         </Row>
-      )}
     </Container>
   );
 };
