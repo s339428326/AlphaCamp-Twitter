@@ -20,7 +20,8 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainTweetModal = ({ user, element }) => {
+const MainTweetModal = ({ userData, element }) => {
+  console.log('last', userData)
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
@@ -64,8 +65,9 @@ const MainTweetModal = ({ user, element }) => {
               <div className={styles.inputContainer}>
                 <div className={styles.inputAvatar}>
                   <img
+                    className="rounded-circle"
                     src={
-                      user ||
+                       userData?.avatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"

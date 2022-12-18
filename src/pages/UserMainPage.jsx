@@ -50,7 +50,7 @@ const UserMainPage = () => {
       <Row>
         <Col xs={1} lg={2}>
           <div className="sticky-top">
-            <UserSidebar />
+            <UserSidebar userData={userData}/>
           </div>
         </Col>
         <Col xs={7}>
