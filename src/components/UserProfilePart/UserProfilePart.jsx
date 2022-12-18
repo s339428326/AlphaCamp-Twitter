@@ -158,12 +158,13 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
 
-  const handleClose = () => {
+  const handleClose = async () => {
+    const data = await getUserData(userData?.id);
     // 復歸FromData
     setFormData({
       ...formData,
-      cover: userData?.cover,
-      avatar: userData?.avatar,
+      cover: data?.cover,
+      avatar: data?.avatar,
     });
     setErrorMassage({ ...errorMessage, userName: "" });
     setShow(false);
