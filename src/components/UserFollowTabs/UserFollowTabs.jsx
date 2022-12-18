@@ -1,10 +1,27 @@
 import styles from "./UserFollowTabs.module.scss"
-import { useState } from "react";
-const UserFollowTabs = ({navigate}) => {
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
+const UserFollowTabs = ({navigate , userId}) => {
   const [active, setActive] = useState ({
   follower: true,
   following: false,
 });
+const location = useLocation();
+useEffect(()=> {
+ if (location.pathname.endsWith('/follower')) {
+      setActive({
+        follower: true,
+        following: false,
+      });
+    } else if (location.pathname.endsWith('/following')) {
+      setActive({
+        follower: false,
+        following: true,
+      });
+    }
+  }, [location]);
+  
   const handleActive = (e) => {
     const buttonName = e.target.innerText;
     
@@ -14,7 +31,7 @@ const UserFollowTabs = ({navigate}) => {
           follower: true,
           following: false,
         });
-        navigate("/userfollow/follower");
+        navigate(`/${userId}/follow/follower`);
 
         break;
       case "正在跟隨":
@@ -22,7 +39,7 @@ const UserFollowTabs = ({navigate}) => {
           follower: false,
           following: true,
         });
-      navigate("/userfollow/following");
+      navigate(`/${userId}/follow/following`);
       break;
 
       default:

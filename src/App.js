@@ -38,9 +38,9 @@ function App() {
             <Route path="/:userId" element={<UserMainPage />} />
             <Route path="/:userId/reply" element={<UserMainReplyPage />} />
             <Route path="/:userId/follow" element={<UserFollowPage />}>
-              <Route index element={<UserFollowPart router=""/>} />
-              <Route path="follower" element={<UserFollowPart router="follower"/>} />
-              <Route path="following" element={<UserFollowPart router="following"/>} />
+              <Route index element={<UserFollowPart />} />
+              <Route path="follower" element={<UserFollowPart />} />
+              <Route path="following" element={<UserFollowPart />} />
             </Route>
             <Route path="/:userId/profile" element={<UserProfilePage />}>
               <Route index element={<UserProfileTweet router="" />} />
