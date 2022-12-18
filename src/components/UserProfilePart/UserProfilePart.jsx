@@ -3,6 +3,7 @@ import PageTitle from "../PageTitle/PageTitle";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import AuthInput from "../AuthInput/AuthInput";
+import FollowButton from "../FollowButton/FollowButton";
 
 //apis
 import { putUserProfile, getUserData } from "../../apis/userData";
@@ -146,7 +147,6 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       cover: userData?.cover,
     });
   }, [userData]);
-
   //確認是否正在上傳
   const [isUpload, setIsUpload] = useState(false);
   //用來暫存上傳資料
@@ -295,7 +295,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       return (
         <img
           className={`${styles["bg"]}`}
-          src="https://fakeimg.pl/639x200/"
+          src={imageView?.cover || "https://fakeimg.pl/639x200/"}
           alt="use-background"
         />
       );
@@ -326,8 +326,9 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
         <img
           className={`${styles["avatar"]}`}
           src={
-            userData?.avatar ||
-            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            (userData?.cover === null &&
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
+            imageView?.avatar
           }
           alt="user-avatar"
           width={140}
@@ -386,12 +387,24 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                 ></div>
               </div>
             ) : userData?.isVisitOthers === true ? (
-              <div className="d-flex align-items-center text-secondary">
-                <div
-                  className="spinner-border ms-auto"
-                  role="status"
-                  aria-hidden="true"
-                ></div>
+              <div className="d-flex gap-3 justify-content-end">
+                {/* 是否啟用信箱通知 */}
+                <button className={`${styles["btn-circle"]} btn`}>
+                  <EmailIcon />
+                </button>
+                {/* 是否啟用小鈴鐺 */}
+                <button
+                  className={`${
+                    isNotin
+                      ? styles["btn-circle__active"]
+                      : styles["btn-circle"]
+                  } btn`}
+                >
+                  {isNotin ? <ActiveBallIcon /> : <BallIcon />}
+                </button>
+
+                {/* 是否開啟追隨 */}
+                <FollowButton isFollow={false} />
               </div>
             ) : (
               <div className="d-flex justify-content-end">
