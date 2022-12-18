@@ -154,8 +154,16 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   const [isUpload, setIsUpload] = useState(false);
   //用來暫存上傳資料
   const [formData, setFormData] = useState();
+  //暫存瀏覽 View
+  const [view, setView] = useState({
+    cover: userData?.cover,
+    avatar: userData?.avatar,
+  });
   //暫存modal更換即時顯示圖片檔案
-  const [imageView, setImageView] = useState();
+  const [modalView, setModalView] = useState({
+    cover: userData?.cover,
+    avatar: userData?.avatar,
+  });
 
   /*Modal Setting*/
   const [fullscreen, setFullscreen] = useState(true);
@@ -177,8 +185,8 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     // 復歸modal imageView
     const data = await getUserData(userData?.id);
     console.log("hi", data);
-    setImageView({
-      ...imageView,
+    setModalView({
+      ...modalView,
       cover: data?.cover,
       avatar: data?.avatar,
     });
@@ -221,7 +229,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     reader.addEventListener(
       "load",
       () => {
-        setImageView({ ...imageView, cover: reader.result });
+        setModalView({ ...modalView, cover: reader.result });
       },
       false
     );
@@ -248,7 +256,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     reader.addEventListener(
       "load",
       () => {
-        setImageView({ ...imageView, avatar: reader.result });
+        setModalView({ ...modalView, avatar: reader.result });
       },
       false
     );
@@ -277,12 +285,17 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     //確認上傳
     setIsUpload(true);
     const upadate = await putUserProfile(userData?.id, form);
-    const setForm = await getUserData(userData?.id);
+    const newData = await getUserData(userData?.id);
     setFormData({
-      name: setForm?.name,
-      introduction: setForm?.introduction,
-      avatar: setForm?.avatar,
-      cover: setForm?.cover,
+      name: newData?.name,
+      introduction: newData?.introduction,
+      avatar: newData?.avatar,
+      cover: newData?.cover,
+    });
+    setView({
+      ...view,
+      cover: newData?.cover,
+      avatar: newData?.avatar,
     });
     console.log("[更新資料]", formData);
     console.log("[上傳成功]", upadate);
@@ -299,69 +312,69 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       return (
         <img
           className={`${styles["bg"]}`}
-          src={imageView?.cover || "https://fakeimg.pl/639x200/"}
-          alt="use-background"
-        />
-      );
-    }
-    if (formData?.cover) {
-      return (
-        <img
-          className={`${styles["bg"]}`}
-          src={formData?.cover}
+          src={view?.cover || "https://fakeimg.pl/639x200/"}
           alt="use-background"
         />
       );
     } else {
-      return (
-        <div className={`${styles["bg-loading"]}`}>
-          <div className="spinner-border text-secondary" role="status">
-            <span className="visually-hidden">Loading...</span>
+      if (formData?.cover) {
+        return (
+          <img
+            className={`${styles["bg"]}`}
+            src={formData?.cover}
+            alt="use-background"
+          />
+        );
+      } else {
+        return (
+          <div className={`${styles["bg-loading"]}`}>
+            <div className="spinner-border text-secondary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
     }
   };
 
   //User Avatar 顯示邏輯
   const UserAvatar = () => {
-    if (userData?.cover === null) {
+    if (userData?.avatar === null) {
       return (
         <img
           className={`${styles["avatar"]}`}
           src={
-            (userData?.cover === null &&
-              "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
-            imageView?.avatar
+            view?.avatar ||
+            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
           }
           alt="user-avatar"
           width={140}
           height={140}
         />
       );
-    }
-
-    if (formData?.avatar) {
-      return (
-        <img
-          className={`${styles["avatar"]}`}
-          src={formData?.avatar}
-          alt="user-avatar"
-          width={140}
-          height={140}
-        />
-      );
     } else {
-      return (
-        <div className={`${styles["avatar"]}`}>
-          <div
-            className={`${styles["avatar-loading"]} spinner-border text-secondary`}
-            role="status"
-          >
-            <span className="visually-hidden">Loading...</span>
+      if (formData?.avatar) {
+        return (
+          <img
+            className={`${styles["avatar"]}`}
+            src={formData?.avatar}
+            alt="user-avatar"
+            width={140}
+            height={140}
+          />
+        );
+      } else {
+        return (
+          <div className={`${styles["avatar"]}`}>
+            <div
+              className={`${styles["avatar-loading"]} spinner-border text-secondary`}
+              role="status"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
     }
   };
 
@@ -473,7 +486,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                         <img
                           className={`${styles["bg"]}`}
                           src={
-                            imageView?.cover ||
+                            modalView?.cover ||
                             formData?.cover ||
                             "https://fakeimg.pl/639x200/"
                           }
@@ -504,7 +517,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                         <img
                           className={`${styles["avatar"]}`}
                           src={
-                            imageView?.avatar ||
+                            modalView?.avatar ||
                             formData?.avatar ||
                             "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                           }
