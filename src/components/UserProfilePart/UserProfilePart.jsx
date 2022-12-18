@@ -14,6 +14,9 @@ import styles from "./UserProfilePart.module.scss";
 //react
 import { useState, useEffect } from "react";
 
+//react-route-dom
+import { Link } from "react-router-dom";
+
 //icons
 export const BallIcon = () => {
   return (
@@ -568,15 +571,19 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                 </p>
                 <div className="d-flex gap-4">
                   {/* 點擊 跟隨中 Link to follower 頁面 */}
-                  <p>
-                    {userData?.followingCount || 0} 個
-                    <span className="text-secondary">跟隨中</span>
-                  </p>
+                  <Link to={`/${userData?.id}/follow/follower`}>
+                    <p>
+                      {userData?.followingCount || 0} 個
+                      <span className="text-secondary">跟隨中</span>
+                    </p>
+                  </Link>
                   {/*點擊 跟隨中 Link to following 頁面  */}
-                  <p>
-                    {userData?.followerCount || 0} 位
-                    <span className="text-secondary">跟隨者</span>
-                  </p>
+                  <Link to={`/${userData?.id}/follow/followings`}>
+                    <p>
+                      {userData?.followerCount || 0} 位
+                      <span className="text-secondary">跟隨者</span>
+                    </p>
+                  </Link>
                 </div>
               </div>
             </div>
