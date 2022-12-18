@@ -12,8 +12,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
 import { getUserData } from "../apis/userData";
-import { getAllTweets
- } from "../apis/tweets";
+import { getAllTweets } from "../apis/tweets";
 
 const Tweets = () => {
   const [ allTweets, setAllTweets] = useState([]);
@@ -27,8 +26,7 @@ const Tweets = () => {
       }
     }
     allTweets();
-  }, [])
-  
+  },[] )
   return (
     <ul className="list-unstyled ps-0">
       {allTweets.map((tweet) => (
