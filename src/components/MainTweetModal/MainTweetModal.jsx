@@ -21,7 +21,6 @@ export const ArrowLeftIcon = () => {
 };
 
 const MainTweetModal = ({ userData, element }) => {
-  console.log('last', userData)
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);

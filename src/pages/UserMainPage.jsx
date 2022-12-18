@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
-import jwt_decode from "jwt-decode"
+import jwt_decode from "jwt-decode";
 import { getUserData } from "../apis/userData";
 
 const UserMainPage = () => {
@@ -19,6 +19,7 @@ const UserMainPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [userData, setUserData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const url = useLocation().pathname.split("/");
   const urlUserId = url[1];
   const token = localStorage.getItem("token");
@@ -27,6 +28,8 @@ const UserMainPage = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
+    } else {
+      setIsLoading(false);
     }
   }, [navigate, isAuthenticated]);
 
@@ -47,25 +50,29 @@ const UserMainPage = () => {
 
   return (
     <Container>
-      <Row>
-        <Col xs={1} lg={2}>
-          <div className="sticky-top">
-            <UserSidebar userData={userData}/>
-          </div>
-        </Col>
-        <Col xs={7}>
-          <div className="sticky-top">
-            <PageTitle title={"首頁"} />
-          </div>
-          <MainCreateTweet userData={userData}/>
-          <Tweet />
-        </Col>
-        <Col xs={4} lg={3}>
-          <div className="sticky-top ">
-            <TopUser />
-          </div>
-        </Col>
-      </Row>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Row>
+          <Col xs={1} lg={2}>
+            <div className="sticky-top">
+              <UserSidebar userData={userData} />
+            </div>
+          </Col>
+          <Col xs={7}>
+            <div className="sticky-top">
+              <PageTitle title={"首頁"} />
+            </div>
+            <MainCreateTweet userData={userData} />
+            <Tweet />
+          </Col>
+          <Col xs={4} lg={3}>
+            <div className="sticky-top ">
+              <TopUser />
+            </div>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 };

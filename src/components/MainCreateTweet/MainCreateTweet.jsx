@@ -2,7 +2,6 @@ import styles from "./MainCreateTweet.module.scss";
 import MainTweetModal from "../MainTweetModal/MainTweetModal";
 
 const MainCreateTweet = ({ userData }) => {
-  console.log("test", userData);
   return (
     <div className={styles.tweetInput}>
       <div className={styles.inputContainer}>
