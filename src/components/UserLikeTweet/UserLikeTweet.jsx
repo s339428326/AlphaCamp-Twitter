@@ -1,13 +1,16 @@
 //style
-import styles from "./Tweet.module.scss";
+import styles from "./UserLikeTweet.module.scss";
 //component
 import MainReplyModal from "../MainReplyModal/MainReplyModal";
 //react
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+
 //hook
 import useMoment from "../../hooks/useMoment";
 
-//icon
+import jwt_decode from "jwt-decode";
+
 export const HeartIcon = () => {
   return (
     <svg
@@ -25,6 +28,7 @@ export const HeartIcon = () => {
   );
 };
 
+//icon
 export const RedHeartIcon = () => {
   return (
     <svg
@@ -42,27 +46,34 @@ export const RedHeartIcon = () => {
   );
 };
 
-/*
-   {
-        "id": 4,
-        "description": "Et illo qui voluptas quia.",
-        "createdAt": 1671163227000,
-        "isLiked": false,
-        "replyCount": 3,
-        "likeCount": 1,
-        "User": {
-            "id": 14,
-            "name": "user1",
-            "account": "user1",
-            "avatar": "https://i.imgur.com/k4iCvXX.png"
-        },
-    }
-*/
+//  {
+//     "id": 374,
+//     "TweetId": 104,
+//     "createdAt": 1671369546000,
+//     "Tweet": {
+//         "id": 104,
+//         "description": "Consequuntur dolor id animi sint.",
+//         "createdAt": 1671163227000,
+//         "replyCount": 3,
+//         "likeCount": 2,
+//         "User": {
+//             "id": 24,
+//             "name": "user2",
+//             "account": "user2",
+//             "avatar": "https://loremflickr.com/320/240/girl/?lock=64.07136831048908"
+//         },
+//     "isLiked": true
+// }
 
-const Tweet = ({ data }) => {
+const UserLikeTweet = ({ data }) => {
+  const { pathname } = useLocation();
+  const urlUserId = pathname.split("/")[1];
+  const token = localStorage.getItem("token");
+  const decodeData = jwt_decode(token);
+
   /*Like 暫時作法*/
-  const [likeCount, setLikeCount] = useState(data?.likeCount);
-  const [like, setLike] = useState(false);
+  const [likeCount, setLikeCount] = useState(data?.Tweet.likeCount);
+  const [like, setLike] = useState(true);
   const handleLike = () => {
     if (like) {
       setLikeCount((prevValue) => prevValue - 1);
@@ -78,7 +89,7 @@ const Tweet = ({ data }) => {
       <div>
         <img
           className="rounded-circle"
-          src={data?.User.avatar}
+          src={data?.Tweet.User.avatar}
           alt="user-avatar"
           width={50}
           height={50}
@@ -88,34 +99,41 @@ const Tweet = ({ data }) => {
         <div
           className={`${styles["tweet-header"]} d-flex align-items-center gap-2`}
         >
-          <strong>{data?.User.name || "無讀取資料"}</strong>
+          <strong>{data?.Tweet.User.name || "無讀取資料"}</strong>
           <small className="text-light mb-0">
-            @{data?.User.account || "無讀取資料"}・
+            @{data?.Tweet.User.account || "無讀取資料"}・
             {useMoment(data?.createdAt) || "無讀取資料"}
           </small>
         </div>
         <p className={`${styles["tweet-content"]}`}>
-          {data?.description || "無讀取資料"}
+          {data?.Tweet.description || "無讀取資料"}
         </p>
         <div className={`${styles["tweet-footer"]} d-flex`}>
           <div className="d-flex gap-2">
             <MainReplyModal width={16} height={16} />
             <span className="font-monospace text-light me-4">
-              {data?.replyCount !== 0 ? data?.replyCount : 0}
+              {data?.Tweet.replyCount}
             </span>
           </div>
           {/* Like邏輯 */}
-          <button
-            onClick={handleLike}
-            className="d-flex gap-2 border-0 p-0 bg-transparent"
-          >
-            {like ? <RedHeartIcon /> : <HeartIcon />}
-            <span className="font-monospace text-light">{likeCount}</span>
-          </button>
+          {decodeData.id !== Number(urlUserId) ? (
+            <button className="d-flex gap-2 border-0 p-0 bg-transparent">
+              <RedHeartIcon />
+              <span className="font-monospace text-light">{likeCount}</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleLike}
+              className="d-flex gap-2 border-0 p-0 bg-transparent"
+            >
+              {like ? <RedHeartIcon /> : <HeartIcon />}
+              <span className="font-monospace text-light">{likeCount}</span>
+            </button>
+          )}
         </div>
       </div>
     </section>
   );
 };
 
-export default Tweet;
+export default UserLikeTweet;

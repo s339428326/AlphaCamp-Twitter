@@ -19,14 +19,19 @@
     }
 
     .infoTopSec {
+      font-size: 14px;
       color: #657786;
     }
   }
- .tweetReplyTo {
-      padding-bottom: 8px;
- }
+  .tweetReplyTo {
+    padding-bottom: 8px;
+  }
   .infoContent {
-    padding-bottom: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 72px;
   }
 
   .tweetReplyToSec {
