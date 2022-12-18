@@ -44,7 +44,7 @@ export const postReply = async (tweet_id, comment) => {
 export const getAllTweets = async () => {
   try {
     const res = await axiosInstance.get(`${TWEET_URL}`);
-    return res;
+    return res.data;
   } catch (error) {
     console.error("[Get All Tweets Failed]: ", error);
   }

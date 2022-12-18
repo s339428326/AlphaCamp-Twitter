@@ -12,6 +12,33 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
 import { getUserData } from "../apis/userData";
+import { getAllTweets
+ } from "../apis/tweets";
+
+const Tweets = () => {
+  const [ allTweets, setAllTweets] = useState([]);
+  useEffect(()=> {
+    const allTweets = async () => {
+      try {
+        const tweets = await getAllTweets();
+        setAllTweets(tweets)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    allTweets();
+  }, [])
+  
+  return (
+    <ul className="list-unstyled ps-0">
+      {allTweets.map((tweet) => (
+        <li key={tweet.id}>
+          <Tweet data={tweet} />
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 const UserMainPage = () => {
   // check permission
@@ -40,6 +67,8 @@ const UserMainPage = () => {
     userData();
   }, [currentMember.id, navigate]);
 
+  
+
   return (
     <Container>
         <Row>
@@ -53,7 +82,7 @@ const UserMainPage = () => {
               <PageTitle title={"首頁"} />
             </div>
             <MainCreateTweet userData={userData} />
-            <Tweet />
+            <Tweets />
           </Col>
           <Col xs={4} lg={3}>
             <div className="sticky-top ">
