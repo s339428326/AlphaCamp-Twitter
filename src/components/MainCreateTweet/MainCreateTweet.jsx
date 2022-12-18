@@ -1,7 +1,7 @@
 import styles from "./MainCreateTweet.module.scss";
 import MainTweetModal from "../MainTweetModal/MainTweetModal";
 
-const MainCreateTweet = ({ avatarImg }) => {
+const MainCreateTweet = ({ userData }) => {
 
   return (
     <div className={styles.tweetInput}>
