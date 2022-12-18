@@ -80,7 +80,7 @@ const Tweet = ({ data, isisLikeList }) => {
     <section className="border-start border-end border-bottom px-4 py-3 d-flex gap-2">
       <div>
         <img
-          className="rounded"
+          className="rounded-circle"
           src={data?.User.avatar}
           alt="user-avatar"
           width={50}

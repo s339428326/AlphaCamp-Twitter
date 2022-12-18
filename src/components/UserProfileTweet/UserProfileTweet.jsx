@@ -6,7 +6,6 @@ import { getUserTweets } from "../../apis/userData";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-//推文
 const Tweets = () => {
   const urlUserId = useLocation().pathname.split("/")[1];
   const [data, setData] = useState([]);
