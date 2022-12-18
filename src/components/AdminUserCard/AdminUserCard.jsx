@@ -1,6 +1,5 @@
-import styles from "./AdminUserList.module.scss";
-
-import AdminUserCard from "../AdminUserCard/AdminUserCard";
+import React from "react";
+import styles from "./AdminUserCard.module.scss";
 
 export const HeartIcon = ({ size }) => {
   return (
@@ -36,15 +35,57 @@ export const TweetIcon = () => {
   );
 };
 
-export default function AdminUserList({ users }) {
+export default function AdminUserCard({ user }) {
   return (
-    <ul className={`${styles["container"]}`}>
-      {users &&
-        users
-          .filter((user) => user.name !== "Admin")
-          .map((user) => {
-            return <AdminUserCard user={user} key={user.id} />;
-          })}
-    </ul>
+    <>
+      <li className={`${styles["card-container"]} mb-0 list-unstyled`}>
+        <div className={`${styles["card"]}`}>
+          <div className={`${styles["card-header"]}`}>
+            <img
+              className={`${styles["card-cover"]}`}
+              src={
+                user.cover ||
+                "https://img.freepik.com/free-photo/beautiful-scenery-phragmites-plants-by-sea-with-swimming-pelican-sunset_181624-37787.jpg"
+              }
+              alt="user-cover"
+            />
+            <img
+              className={`${styles["card-avatar"]}`}
+              src={
+                user.avatar ||
+                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              }
+              alt=""
+            />
+          </div>
+          <div
+            className={`${styles["card-content"]} d-flex flex-column align-items-center`}
+          >
+            <strong>{user.name}</strong>
+            <small>@{user.account}</small>
+            <div className={`${styles["card-info"]} d-flex gap-3 mt-3`}>
+              <div className="d-flex gap-1">
+                <TweetIcon />
+                <p>{user.tweetsCount}</p>
+              </div>
+              <div className="d-flex gap-1">
+                <HeartIcon size={24} />
+                <p>{user.tweetsLikedCount}</p>
+              </div>
+            </div>
+            <div className="d-flex gap-2 pb-4">
+              <small>
+                {user.followingCount} 個
+                <span className="text-light">跟隨中</span>
+              </small>
+              <small>
+                {user.followerCount} 位
+                <span className="text-light">跟隨者</span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </li>
+    </>
   );
 }
