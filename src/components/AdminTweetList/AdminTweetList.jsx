@@ -1,5 +1,3 @@
-import styles from "./AdminTweetList.module.scss";
-
 import AdminTweetItem from "../AdminTweetItem/AdminTweetItem";
 
 const AdminTweetList = ({ tweets, onDelete }) => {
