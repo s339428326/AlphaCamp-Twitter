@@ -51,6 +51,11 @@ const MainReplyModal = ({
   data,
   userAvatar,
 }) => {
+  // if (userAvatar === undefined) {
+  //   console.log("沒抓到");
+  // } else {
+  //   console.log("抓到了", userAvatar);
+  // }
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);

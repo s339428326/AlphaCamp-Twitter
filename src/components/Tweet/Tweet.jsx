@@ -63,6 +63,7 @@ export const RedHeartIcon = () => {
 */
 
 const Tweet = ({ data, userAvatar }) => {
+  // console.log(userAvatar);
   //取得個人id
   const token = localStorage.getItem("token");
   const decodeData = jwt_decode(token);
