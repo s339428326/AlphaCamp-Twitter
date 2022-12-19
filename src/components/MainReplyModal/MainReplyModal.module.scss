@@ -3,9 +3,7 @@
   cursor: pointer;
 }
 
-
 .replyModalContainer {
-
   .replyModalTweet {
     padding: 16px 24px 16px 16px;
     display: flex;
@@ -29,6 +27,7 @@
     }
 
     .infoContent {
+      min-height: 96px;
       padding-bottom: 18px;
     }
 

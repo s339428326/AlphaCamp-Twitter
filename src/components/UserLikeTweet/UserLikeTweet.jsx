@@ -65,12 +65,11 @@ export const RedHeartIcon = () => {
 //     "isLiked": true
 // }
 
-const UserLikeTweet = ({ data }) => {
+const UserLikeTweet = ({ data, userAvatar }) => {
   const { pathname } = useLocation();
   const urlUserId = pathname.split("/")[1];
   const token = localStorage.getItem("token");
   const decodeData = jwt_decode(token);
-
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.Tweet.likeCount);
   const [like, setLike] = useState(true);
@@ -117,7 +116,18 @@ const UserLikeTweet = ({ data }) => {
         </Link>
         <div className={`${styles["tweet-footer"]} d-flex`}>
           <div className="d-flex gap-2">
-            <MainReplyModal width={16} height={16} />
+            <MainReplyModal
+              width={16}
+              height={16}
+              data={{
+                name: data?.Tweet.User.name,
+                account: data?.Tweet.User.account,
+                avatar: data?.Tweet.User.avatar,
+                description: data?.Tweet.description,
+                createdAt: useMoment(data?.createdAt),
+              }}
+              userAvatar={userAvatar}
+            />
             <span className="font-monospace text-light me-4">
               {data?.Tweet.replyCount}
             </span>
