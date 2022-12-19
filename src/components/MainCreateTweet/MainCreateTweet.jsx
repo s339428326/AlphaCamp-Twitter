@@ -1,7 +1,9 @@
 import styles from "./MainCreateTweet.module.scss";
 import MainTweetModal from "../MainTweetModal/MainTweetModal";
+import { useAuth } from "../../contexts/AuthContext";
 
 const MainCreateTweet = ({ userData }) => {
+  const { avatar } = useAuth();
   return (
     <div className={styles.tweetInput}>
       <div className={styles.inputContainer}>
@@ -12,7 +14,7 @@ const MainCreateTweet = ({ userData }) => {
               <img
                 className="rounded-circle"
                 src={
-                  userData?.avatar ||
+                  avatar ||
                   "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                 }
                 alt="user-avatar"

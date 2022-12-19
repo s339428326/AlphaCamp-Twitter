@@ -2,7 +2,8 @@ import styles from "./MainReplyModal.module.scss";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 
-import React, { useState } from "react";
+import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 // 1 要改 回覆按鈕的功能
 // 2 串 api
 // 3 提交成功後要有 alert
@@ -43,14 +44,7 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainReplyModal = ({
-  avatarImg,
-  inputValue,
-  width,
-  height,
-  data,
-  userAvatar,
-}) => {
+const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
   // if (userAvatar === undefined) {
   //   console.log("沒抓到");
   // } else {
@@ -59,6 +53,7 @@ const MainReplyModal = ({
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
+  const { avatar } = useAuth();
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setFullscreen("sm-down");
@@ -136,7 +131,7 @@ const MainReplyModal = ({
                   <img
                     className="rounded-circle"
                     src={
-                      userAvatar ||
+                      avatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"

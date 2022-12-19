@@ -67,7 +67,7 @@ const UserLikeTweet = ({ data }) => {
   const { pathname } = useLocation();
   const urlUserId = pathname.split("/")[1];
   const userId = localStorage.getItem("id");
-  const userAvatar = localStorage.getItem("avatar");
+  // const userAvatar = localStorage.getItem("avatar");
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.Tweet.likeCount);
   const [like, setLike] = useState(true);
@@ -124,7 +124,6 @@ const UserLikeTweet = ({ data }) => {
                 description: data?.Tweet.description,
                 createdAt: useMoment(data?.createdAt),
               }}
-              userAvatar={userAvatar}
             />
             <span className="font-monospace text-light me-4">
               {data?.Tweet.replyCount}

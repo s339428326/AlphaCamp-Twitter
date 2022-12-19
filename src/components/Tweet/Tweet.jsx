@@ -8,6 +8,8 @@ import { useState } from "react";
 import useMoment from "../../hooks/useMoment";
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../../contexts/AuthContext";
+
 //icon
 export const HeartIcon = () => {
   return (
@@ -61,8 +63,8 @@ export const RedHeartIcon = () => {
 */
 
 const Tweet = ({ data }) => {
-  const userAvatar = localStorage.getItem("avatar");
   const userId = localStorage.getItem("id");
+  const { avatar } = useAuth();
 
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.likeCount);
@@ -84,7 +86,9 @@ const Tweet = ({ data }) => {
       <Link to={`/${data?.User.id}/profile`}>
         <img
           className="rounded-circle"
-          src={data?.User.avatar}
+          src={
+            avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+          }
           alt="user-avatar"
           width={50}
           height={50}
@@ -118,7 +122,6 @@ const Tweet = ({ data }) => {
                 description: data?.description,
                 createdAt: useMoment(data?.createdAt),
               }}
-              userAvatar={userAvatar}
             />
             <span className="font-monospace text-light me-4">
               {data?.replyCount !== 0 ? data?.replyCount : 0}

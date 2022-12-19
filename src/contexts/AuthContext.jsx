@@ -10,6 +10,7 @@ const defaultAuthContext = {
   login: null,
   logout: null,
   adminLogin: null,
+  avatar: null,
 };
 
 //export useAuth
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [payload, setPayload] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [avatar, setAvatar] = useState(null);
   const { pathname } = useLocation();
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -44,6 +46,7 @@ export const AuthProvider = ({ children }) => {
         if (check === null) {
           localStorage.setItem("name", tempPayload.name);
           localStorage.setItem("avatar", tempPayload.avatar);
+          setAvatar(tempPayload.avatar);
           localStorage.setItem("cover", tempPayload.cover);
           localStorage.setItem("introduction", tempPayload.introduction);
           localStorage.setItem("id", tempPayload.id);
@@ -61,6 +64,8 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        avatar,
+        setAvatar,
         currentMember: payload && {
           //   id: payload.id,
           //   name: payload.name,
