@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 //react-router-dom
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 //react
 import { useState, useEffect } from "react";
@@ -27,7 +27,6 @@ const UserProfilePage = () => {
   const [userData, setUserData] = useState();
 
   //分析路由
-  const navigate = useNavigate();
   const url = useLocation().pathname.split("/");
   const urlUserId = url[1];
 
@@ -40,8 +39,6 @@ const UserProfilePage = () => {
       //decodeData.id
       try {
         const data = await getUserData(urlUserId);
-        //如果為undefined 跳轉首頁
-        if (data === undefined) navigate(`/${decodeData.id}`);
         //添加是否訪問別人頁面判斷
         setUserData({
           ...data,
@@ -52,7 +49,7 @@ const UserProfilePage = () => {
       }
     };
     userInfo();
-  }, [decodeData.id, urlUserId, navigate]);
+  }, [decodeData.id, urlUserId]);
 
   ///////////update userData////////////
 
