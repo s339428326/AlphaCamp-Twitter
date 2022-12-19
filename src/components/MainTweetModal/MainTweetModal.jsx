@@ -2,7 +2,7 @@ import styles from "./MainTweetModal.module.scss";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import React, { useState } from "react";
-import { getAllTweets, postTweet } from "../../apis/tweets";
+import { postTweet } from "../../apis/tweets";
 import Swal from "sweetalert2";
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
 
@@ -28,7 +28,7 @@ const MainTweetModal = ({ userData, element }) => {
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
   const [description, setDescription] = useState("");
-  const {  setIsGlobalTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
+  const { setIsGlobalTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -50,8 +50,8 @@ const MainTweetModal = ({ userData, element }) => {
       if (postStatus && postStatus === "success") {
         setDescription("");
         setShow(false);
-        setIsGlobalTweetUpdate(true)
-        setIsUserTweetUpdate(true)
+        setIsGlobalTweetUpdate(true);
+        setIsUserTweetUpdate(true);
         Swal.fire({
           position: "top-end",
           title: "推文發送成功！",
