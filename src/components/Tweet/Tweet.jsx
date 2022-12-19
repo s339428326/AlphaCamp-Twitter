@@ -7,8 +7,6 @@ import { useState } from "react";
 //hook
 import useMoment from "../../hooks/useMoment";
 import { Link } from "react-router-dom";
-//jwt
-import jwt_decode from "jwt-decode";
 
 //icon
 export const HeartIcon = () => {
@@ -62,11 +60,9 @@ export const RedHeartIcon = () => {
     }
 */
 
-const Tweet = ({ data, userAvatar }) => {
-  // console.log(userAvatar);
-  //取得個人id
-  const token = localStorage.getItem("token");
-  const decodeData = jwt_decode(token);
+const Tweet = ({ data }) => {
+  const userAvatar = localStorage.getItem("avatar");
+  const userId = localStorage.getItem("id");
 
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.likeCount);
@@ -105,7 +101,7 @@ const Tweet = ({ data, userAvatar }) => {
             {useMoment(data?.createdAt) || "無讀取資料"}
           </small>
         </Link>
-        <Link to={`/${decodeData.id}/reply/${data?.id}`}>
+        <Link to={`/${userId}/reply/${data?.id}`}>
           <p className={`${styles["tweet-content"]}`}>
             {data?.description || "無讀取資料"}
           </p>

@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }) => {
   const [payload, setPayload] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { pathname } = useLocation();
-
   useEffect(() => {
     const checkTokenIsValid = async () => {
       const token = localStorage.getItem("token");
@@ -39,6 +38,16 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         const tempPayload = jwt_decode(token);
         setPayload(tempPayload);
+        //儲存個人資料
+        const check = localStorage.getItem("name");
+        //只可以賦值一次
+        if (check === null) {
+          localStorage.setItem("name", tempPayload.name);
+          localStorage.setItem("avatar", tempPayload.avatar);
+          localStorage.setItem("cover", tempPayload.cover);
+          localStorage.setItem("introduction", tempPayload.introduction);
+          localStorage.setItem("id", tempPayload.id);
+        }
       } else {
         setIsAuthenticated(false);
         setPayload(null);
@@ -99,7 +108,7 @@ export const AuthProvider = ({ children }) => {
           return status;
         },
         logout: () => {
-          localStorage.removeItem("token");
+          localStorage.clear();
           setPayload(null);
           setIsAuthenticated(false);
         },

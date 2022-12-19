@@ -5,7 +5,6 @@ import MainReply from "../MainReply/MainReply";
 //apis
 //getRepliedTweets
 import {
-  getUserData,
   getUserTweets,
   getRepliedTweets,
   getUserLikes,
@@ -15,8 +14,6 @@ import {
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-//jwt
-import jwt_decode from "jwt-decode";
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -138,28 +135,11 @@ const LikeList = () => {
     getData();
   }, [urlUserId]);
 
-  //取得頭像
-  const token = localStorage.getItem("token");
-  const decodeData = jwt_decode(token);
-
-  const [userAvatar, setUserAvatar] = useState();
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await getUserData(decodeData.id);
-        setUserAvatar(res.avatar);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, [decodeData.id]);
   return (
     <ul className="list-unstyled ps-0">
       {data.map((item) => (
         <li key={item.TweetId}>
-          <UserLikeTweet data={item} userAvatar={userAvatar} />
+          <UserLikeTweet data={item} />
         </li>
       ))}
     </ul>
