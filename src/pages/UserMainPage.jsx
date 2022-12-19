@@ -14,13 +14,15 @@ import { useAuth } from "../contexts/AuthContext";
 import { getUserData } from "../apis/userData";
 import { getAllTweets } from "../apis/tweets";
 import { useTweetStatus } from "../contexts/TweetStatusContext";
+import { useLocation } from "react-router-dom";
 
-const Tweets = () => {
+const Tweets = ({userId}) => {
   const [allTweets, setAllTweets] = useState([]);
+  const { pathname } = useLocation();
   const { isGlobalTweetUpdate, setIsGlobalTweetUpdate } = useTweetStatus();
 
   useEffect(() => {
-    const allTweets = async () => {
+    const updateAllTweets = async () => {
       try {
         const tweets = await getAllTweets();
         setAllTweets(tweets);
@@ -29,10 +31,11 @@ const Tweets = () => {
         console.error(error);
       }
     };
-    if (isGlobalTweetUpdate) {
-      allTweets();
+
+    if (pathname === `/${userId}` || isGlobalTweetUpdate) {
+      updateAllTweets();
     }
-  }, [isGlobalTweetUpdate, setIsGlobalTweetUpdate]);
+  }, [pathname, isGlobalTweetUpdate, setIsGlobalTweetUpdate, userId]);
   return (
     <ul className="list-unstyled ps-0">
       {allTweets.map((tweet) => (
@@ -84,7 +87,7 @@ const UserMainPage = () => {
             <PageTitle title={"首頁"} />
           </div>
           <MainCreateTweet userData={userData} />
-          <Tweets />
+          <Tweets userId={currentMember.id} />
         </Col>
         <Col xs={4} lg={3}>
           <div className="sticky-top ">
