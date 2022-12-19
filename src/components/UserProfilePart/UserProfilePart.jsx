@@ -15,10 +15,7 @@ import styles from "./UserProfilePart.module.scss";
 import { useState, useEffect } from "react";
 
 //react-route-dom
-import { Link, useNavigate } from "react-router-dom";
-
-//jwt
-import jwt_decode from "jwt-decode";
+import { Link } from "react-router-dom";
 
 //icons
 export const BallIcon = () => {
@@ -145,21 +142,15 @@ export const ArrowLeftIcon = () => {
 
 const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   //分析使用者路由是否存在
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const decodeData = jwt_decode(token);
 
-  //如果為undefined 跳轉首頁
   useEffect(() => {
-    if (userData === undefined) navigate(`/${decodeData.id}/profile`);
-    console.log("重新更新userData");
     setFormData({
       name: userData?.name,
       introduction: userData?.introduction,
       avatar: userData?.avatar,
       cover: userData?.cover,
     });
-  }, [decodeData.id, userData, navigate]);
+  }, [userData]);
   //確認是否正在上傳
   const [isUpload, setIsUpload] = useState(false);
   //用來暫存上傳資料

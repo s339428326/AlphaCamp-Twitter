@@ -43,7 +43,14 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainReplyModal = ({ avatarImg, inputValue, width, height }) => {
+const MainReplyModal = ({
+  avatarImg,
+  inputValue,
+  width,
+  height,
+  data,
+  userAvatar,
+}) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
@@ -52,6 +59,7 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height }) => {
     setFullscreen("sm-down");
     setShow(true);
   };
+
   const showText = (e) => {
     setWordCount(e.target.value.length);
   };
@@ -89,8 +97,9 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height }) => {
               {/* 圖片 */}
               <div className={styles.replyModalAvatarContainer}>
                 <img
+                  className="rounded-circle"
                   src={
-                    avatarImg ||
+                    data?.avatar ||
                     "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                   }
                   alt="user-avatar"
@@ -102,19 +111,16 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height }) => {
               {/* 內容 */}
               <div className={styles.tweetInfo}>
                 <div className={styles.infoTop}>
-                  <span className={styles.infoTopPrime}>username</span>
-                  <span className={styles.infoTopSec}>@test</span>
-                  <span className={styles.infoTopSec}>．test</span>
+                  <span className={styles.infoTopPrime}>{data?.name}</span>
+                  <span className={styles.infoTopSec}>@{data?.account}</span>
+                  <span className={styles.infoTopSec}>．{data?.createdAt}</span>
                 </div>
-                <div className={styles.infoContent}>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. In,
-                  ullam laboriosam! Libero eos aut nostrum. Tempora, quidem
-                  reiciendis! Expedita, ea. Nisi impedit voluptates incidunt
-                  molestias, soluta modi deleniti magnam asperiores?
-                </div>
+                <div className={styles.infoContent}>{data?.description}</div>
                 <div className={styles.tweetReplyTo}>
                   <span className={styles.tweetReplyToSec}>回覆給 </span>
-                  <span className={styles.tweetReplyToPrime}>@testother</span>
+                  <span className={styles.tweetReplyToPrime}>
+                    @{data?.account}
+                  </span>
                 </div>
               </div>
             </div>
@@ -123,8 +129,9 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height }) => {
               <div className={styles.inputContainer}>
                 <div className={styles.inputAvatar}>
                   <img
+                    className="rounded-circle"
                     src={
-                      avatarImg ||
+                      userAvatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"
