@@ -1,34 +1,52 @@
 import styles from "./MainReply.module.scss";
+import useMoment from "../../hooks/useMoment";
 
-const MainReply = ({ user }) => {
+import { Link } from "react-router-dom";
+
+const MainReply = ({ data }) => {
   return (
     <div className={styles.replyModalTweet}>
       {/* 圖片 */}
       <div className={styles.replyModalAvatarContainer}>
-        <img
-          src={user || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-          alt="user-avatar"
-          width={50}
-          height={50}
-        />
+        <Link to={`/${data?.User.id}/profile`}>
+          <img
+            className="rounded-circle"
+            src={
+              data?.User.avatar ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="user-avatar"
+            width={50}
+            height={50}
+          />
+        </Link>
       </div>
       {/* 內容 */}
       <div className={styles.tweetInfo}>
         <div className={styles.infoTop}>
-          <span className={styles.infoTopPrime}>username</span>
-          <span className={styles.infoTopSec}>@test</span>
-          <span className={styles.infoTopSec}>．test</span>
+          <Link to={`/${data?.User.id}/profile`}>
+            <span className={styles.infoTopPrime}>{data?.User.name}</span>
+            <span
+              className={styles.infoTopSec}
+            >{`@${data?.User.account}`}</span>
+          </Link>
+          <span className={styles.infoTopSec}>{`．${useMoment(
+            data?.createdAt
+          )}`}</span>
         </div>
         <div className={styles.tweetReplyTo}>
-          <span className={styles.tweetReplyToSec}>回覆給 </span>
-          <span className={styles.tweetReplyToPrime}>@testother</span>
+          <Link to={`/${data?.Tweet.User.id}/profile`}>
+            <span className={styles.tweetReplyToSec}>回覆給 </span>
+            <span
+              className={styles.tweetReplyToPrime}
+            >{`@${data?.Tweet.User.account}`}</span>
+          </Link>
         </div>
-        <div className={styles.infoContent}>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ullam
-          laboriosam! Libero eos aut nostrum. Tempora, quidem reiciendis!
-          Expedita, ea. Nisi impedit voluptates incidunt molestias, soluta modi
-          deleniti magnam asperiores?
-        </div>
+        <Link to={`/${data?.User.id}/reply/${data?.Tweet.id}`}>
+          <div className={styles.infoContent}>
+            <p>{data?.comment}</p>
+          </div>
+        </Link>
       </div>
     </div>
   );

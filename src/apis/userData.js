@@ -29,7 +29,6 @@ axiosInstance.interceptors.request.use(
 //[U_03] get-user-profile 取得指定使用者
 //GET /api/users/:id
 export const getUserData = async (userId) => {
-  console.log("[API URL:] :", BASE_URL + `${userId}`);
   if (!userId) {
     console.log("[使用getUserData錯誤]：請帶入使用者id");
     return;
@@ -46,7 +45,6 @@ export const getUserData = async (userId) => {
 //[U_04] put-user-profile 編輯登入使用者的profile
 //PUT /api/users/:id
 export const putUserProfile = async (userId, data) => {
-  console.log("[API URL:] :", BASE_URL + `${userId}`);
   if (!userId) {
     console.log("[使用putUserProfile錯誤]：請帶入使用者id");
     return;
@@ -56,8 +54,23 @@ export const putUserProfile = async (userId, data) => {
     return;
   }
   try {
+    // console.log("[使用putUserProfile成功]", res);
     const res = await axiosInstance.put(BASE_URL + userId, data);
     return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+//[U_05] get-user-replies 取得指定使用者的所有回覆 GET /api/users/:id/replied_tweets
+//GET /api/users/:id/replied_tweets
+export const getRepliedTweets = async (userId) => {
+  if (!userId) return console.error("[repliedTweets 錯誤]:請帶入使用者id");
+  try {
+    console.log(`${BASE_URL}${userId}/replied_tweets`);
+    const res = await axiosInstance.get(BASE_URL + userId + "/replied_tweets");
+    console.log("[getRepliedTweets 成功]:", res);
+    return res.data;
   } catch (error) {
     console.error(error);
   }
@@ -71,6 +84,20 @@ export const getUserTweets = async (userId) => {
     console.log(`${BASE_URL}${userId}/tweets`);
     const res = await axiosInstance.get(BASE_URL + userId + "/tweets");
     console.log("[getUserTweets 成功]:", res);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+//[U_07] get-user-likes 取得指定使用者喜歡的推文
+//GET /api/users/:id/likes
+export const getUserLikes = async (userId) => {
+  if (!userId) return console.error("[getUserLikes錯誤]:請帶入使用者id");
+  try {
+    console.log(`${BASE_URL}${userId}/likes`);
+    const res = await axiosInstance.get(BASE_URL + userId + "/likes");
+    console.log("[getUserLikes 成功]:", res);
     return res.data;
   } catch (error) {
     console.error(error);

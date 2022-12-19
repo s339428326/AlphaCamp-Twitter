@@ -7,7 +7,7 @@ import AdminUserList from "../components/AdminUserList/AdminUserList";
 
 import { useState, useEffect } from "react";
 
-import { getAllUsers } from "../apis/adminUsers";
+import { getAllUsers } from "../apis/admin";
 
 const AdminUserPage = ({ user }) => {
   const [allUsers, setAllUsers] = useState([]);

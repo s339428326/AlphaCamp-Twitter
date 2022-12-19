@@ -1,0 +1,25 @@
+.tweet-header {
+  strong {
+    line-height: 26px;
+  }
+}
+
+.tweet-content {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 72px;
+}
+
+.tweet-footer {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.LikeTweet {
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
