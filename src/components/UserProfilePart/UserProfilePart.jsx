@@ -591,7 +591,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                     </p>
                   </Link>
                   {/*點擊 跟隨中 Link to following 頁面  */}
-                  <Link to={`/${userData?.id}/follow/followings`}>
+                  <Link to={`/${userData?.id}/follow/following`}>
                     <p>
                       {userData?.followerCount || 0} 位
                       <span className="text-secondary">跟隨者</span>
