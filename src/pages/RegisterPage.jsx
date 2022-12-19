@@ -83,7 +83,7 @@ const RegisterPage = () => {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col md={6} xl={8}>
+        <Col md={6} lg={4}>
           <Logo title="建立你的帳號" />
           <form action="">
             <AuthInput

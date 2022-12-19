@@ -71,7 +71,7 @@ const AdminPage = () => {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col xl={6} md={8}>
+        <Col md={6} lg={4}>
           <Logo title={"後台登入"} />
           <form action="">
             <AuthInput
