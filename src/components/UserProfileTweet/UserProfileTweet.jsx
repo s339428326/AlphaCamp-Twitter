@@ -26,28 +26,32 @@ const Tweets = () => {
   const [data, setData] = useState([]);
   const { pathname } = useLocation();
   const { isUserTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
-    const { currentMember } = useAuth();
+  const { currentMember } = useAuth();
 
-
-  useEffect(() => {
-    const getTweets = async () => {
-      try {
-        const userTweets = await getUserTweets(urlUserId);
-        setData(userTweets.map((item) => item));
-        //setIsUserTweetUpdate(false);
-      } catch (error) {
-        console.error(error);
+useEffect(() => {
+  const getTweets = async () => {
+    try {
+      let userId = urlUserId;
+      if (pathname.startsWith(`/${currentMember.id}/`)) {
+        userId = currentMember.id;
       }
-    };
-
-    if (
-      pathname === `/${currentMember.id}/profile` ||
-      pathname === `/${currentMember.id}/profile/tweet` ||
-      isUserTweetUpdate
-    ) {
-      getTweets();
+      const userTweets = await getUserTweets(userId);
+      setData(userTweets.map((item) => item));
+      setIsUserTweetUpdate(false);
+    } catch (error) {
+      console.error(error);
     }
-  }, [currentMember.id, pathname, isUserTweetUpdate, setIsUserTweetUpdate, urlUserId]);
+  };
+  if (
+    pathname === `/${currentMember.id}/profile` ||
+    pathname === `/${currentMember.id}/profile/tweet` ||
+    pathname === `/${urlUserId}/profile` ||
+    pathname === `/${urlUserId}/profile/tweet` ||
+    isUserTweetUpdate
+  ) {
+    getTweets();
+  }
+}, [currentMember.id, pathname, isUserTweetUpdate, setIsUserTweetUpdate, urlUserId]);
 
   return (
     <ul className="list-unstyled ps-0">
