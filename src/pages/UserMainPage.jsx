@@ -40,6 +40,7 @@ const Tweets = ({ userId }) => {
       updateAllTweets();
     }
   }, [pathname, isGlobalTweetUpdate, setIsGlobalTweetUpdate, userId]);
+  // console.log('check', allTweets)
   return (
     <ul className="list-unstyled ps-0">
       {allTweets.map((tweet) => (

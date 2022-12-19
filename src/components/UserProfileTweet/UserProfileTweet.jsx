@@ -17,23 +17,37 @@ import { useEffect, useState } from "react";
 
 //jwt
 import jwt_decode from "jwt-decode";
+import { useTweetStatus } from "../../contexts/TweetStatusContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 //取得所有推文
 const Tweets = () => {
   const urlUserId = useLocation().pathname.split("/")[1];
   const [data, setData] = useState([]);
+  const { pathname } = useLocation();
+  const { isUserTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
+    const { currentMember } = useAuth();
+
 
   useEffect(() => {
     const getTweets = async () => {
       try {
         const userTweets = await getUserTweets(urlUserId);
         setData(userTweets.map((item) => item));
+        //setIsUserTweetUpdate(false);
       } catch (error) {
         console.error(error);
       }
     };
-    getTweets();
-  }, [urlUserId]);
+
+    if (
+      pathname === `/${currentMember.id}/profile` ||
+      pathname === `/${currentMember.id}/profile/tweet` ||
+      isUserTweetUpdate
+    ) {
+      getTweets();
+    }
+  }, [currentMember.id, pathname, isUserTweetUpdate, setIsUserTweetUpdate, urlUserId]);
 
   return (
     <ul className="list-unstyled ps-0">

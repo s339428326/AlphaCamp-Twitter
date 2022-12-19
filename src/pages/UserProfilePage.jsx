@@ -20,12 +20,14 @@ import jwt_decode from "jwt-decode";
 
 //api
 import { getUserData } from "../apis/userData";
+import { useAuth } from "../contexts/AuthContext";
 
 const UserProfilePage = () => {
   ///////////update userData////////////
   //userData狀態
   const [userData, setUserData] = useState();
-
+  const {currentMember} = useAuth()
+  
   //分析路由
   const navigate = useNavigate();
   const url = useLocation().pathname.split("/");
@@ -55,13 +57,12 @@ const UserProfilePage = () => {
   }, [decodeData.id, urlUserId, navigate]);
 
   ///////////update userData////////////
-
   return (
     <Container>
       <Row>
         <Col xs={1} lg={2}>
           <div className="sticky-top">
-            <UserSidebar />
+            <UserSidebar userData={currentMember}/>
           </div>
         </Col>
         <Col xs={7}>
