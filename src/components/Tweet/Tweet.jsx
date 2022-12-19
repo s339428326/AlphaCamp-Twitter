@@ -6,6 +6,9 @@ import MainReplyModal from "../MainReplyModal/MainReplyModal";
 import { useState } from "react";
 //hook
 import useMoment from "../../hooks/useMoment";
+import { Link } from "react-router-dom";
+//jwt
+import jwt_decode from "jwt-decode";
 
 //icon
 export const HeartIcon = () => {
@@ -59,7 +62,11 @@ export const RedHeartIcon = () => {
     }
 */
 
-const Tweet = ({ data }) => {
+const Tweet = ({ data, userAvatar }) => {
+  //取得個人id
+  const token = localStorage.getItem("token");
+  const decodeData = jwt_decode(token);
+
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.likeCount);
   const [like, setLike] = useState(false);
@@ -74,8 +81,10 @@ const Tweet = ({ data }) => {
   /*Like 暫時作法*/
 
   return (
-    <section className="border-start border-end border-bottom px-4 py-3 d-flex gap-2">
-      <div>
+    <section
+      className={`${styles["LikeTweet"]} border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
+    >
+      <Link to={`/${data?.User.id}/profile`}>
         <img
           className="rounded-circle"
           src={data?.User.avatar}
@@ -83,9 +92,10 @@ const Tweet = ({ data }) => {
           width={50}
           height={50}
         />
-      </div>
+      </Link>
       <div>
-        <div
+        <Link
+          to={`/${data?.User.id}/profile`}
           className={`${styles["tweet-header"]} d-flex align-items-center gap-2`}
         >
           <strong>{data?.User.name || "無讀取資料"}</strong>
@@ -93,13 +103,26 @@ const Tweet = ({ data }) => {
             @{data?.User.account || "無讀取資料"}・
             {useMoment(data?.createdAt) || "無讀取資料"}
           </small>
-        </div>
-        <p className={`${styles["tweet-content"]}`}>
-          {data?.description || "無讀取資料"}
-        </p>
+        </Link>
+        <Link to={`/${decodeData.id}/reply/${data?.id}`}>
+          <p className={`${styles["tweet-content"]}`}>
+            {data?.description || "無讀取資料"}
+          </p>
+        </Link>
         <div className={`${styles["tweet-footer"]} d-flex`}>
           <div className="d-flex gap-2">
-            <MainReplyModal width={16} height={16} />
+            <MainReplyModal
+              width={16}
+              height={16}
+              data={{
+                name: data?.User.name,
+                account: data?.User.account,
+                avatar: data?.User.avatar,
+                description: data?.description,
+                createdAt: useMoment(data?.createdAt),
+              }}
+              userAvatar={userAvatar}
+            />
             <span className="font-monospace text-light me-4">
               {data?.replyCount !== 0 ? data?.replyCount : 0}
             </span>
