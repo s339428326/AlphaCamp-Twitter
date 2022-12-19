@@ -34,7 +34,7 @@ const Tweets = () => {
       try {
         const userTweets = await getUserTweets(urlUserId);
         setData(userTweets.map((item) => item));
-        setIsUserTweetUpdate(false);
+        //setIsUserTweetUpdate(false);
       } catch (error) {
         console.error(error);
       }

@@ -29,6 +29,17 @@ const MainTweetModal = ({ userData, element }) => {
   const [wordCount, setWordCount] = useState(0);
   const [description, setDescription] = useState("");
   const { setIsGlobalTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-right",
+    customClass: {
+      popup: "colored-toast",
+    },
+    width: 394,
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+  });
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -52,31 +63,16 @@ const MainTweetModal = ({ userData, element }) => {
         setShow(false);
         setIsGlobalTweetUpdate(true);
         setIsUserTweetUpdate(true);
-        Swal.fire({
-          position: "top-end",
-          title: "推文發送成功！",
-          titlePosition: "left",
-          timer: 3000,
-          heightAuto: false,
-          width: 394,
+        Toast.fire({
           icon: "success",
-          customClass: {
-            icon: styles.alerticon,
-          },
-          iconPosition: "right",
-          showConfirmButton: false,
+          title: "推文發送成功！",
         });
       }
     } catch (error) {
       console.error(error);
-      Swal.fire({
-        position: "top-end",
-        title: "推文發送失敗！",
-        titlePosition: "left",
-        timer: 3000,
+      Toast.fire({
         icon: "error",
-        iconPosition: "right",
-        showConfirmButton: false,
+        title: "推文發送失敗！",
       });
     }
   };

@@ -50,7 +50,7 @@ const UserFollowPage = () => {
         <Col xs={1} md={2}>
           <div className="sticky-top">
             {" "}
-            <UserSidebar />
+            <UserSidebar userData={userData} />
           </div>
         </Col>
         <Col xs md={7}>
