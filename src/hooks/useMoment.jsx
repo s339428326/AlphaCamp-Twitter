@@ -1,5 +1,6 @@
 import moment from "moment";
 //https://github.com/derekprior/momentjs-rails/blob/main/vendor/assets/javascripts/moment/zh-tw.js
+//http://momentjs.cn/docs/displaying/fromnow.html
 
 const useMoment = (createdAt) => {
   moment.updateLocale("zh-tw", {
@@ -15,7 +16,7 @@ const useMoment = (createdAt) => {
 
   if (timeDifference < 3600000) {
     if (timeDifference < 60000) {
-      outcome = timeDifference < 1000 ? "幾秒前" : "1小時內";
+      outcome = "幾秒前";
     } else {
       const minutes = Math.floor(timeDifference / 60000);
       outcome = `${minutes}分鐘前`;

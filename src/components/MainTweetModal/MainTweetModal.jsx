@@ -2,8 +2,9 @@ import styles from "./MainTweetModal.module.scss";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import React, { useState } from "react";
-import { postTweet, getAllTweets } from "../../apis/tweets";
+import { getAllTweets, postTweet } from "../../apis/tweets";
 import Swal from "sweetalert2";
+import { useTweetStatus } from "../../contexts/TweetStatusContext";
 
 export const ArrowLeftIcon = () => {
   return (
@@ -22,11 +23,13 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainTweetModal = ({ userData, element, setAllTweets }) => {
+const MainTweetModal = ({ userData, element }) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
   const [description, setDescription] = useState("");
+  const {  setIsGlobalTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
+
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setFullscreen("sm-down");
@@ -43,21 +46,27 @@ const MainTweetModal = ({ userData, element, setAllTweets }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await postTweet(description);
-      getAllTweets();
-      setDescription("");
-      setShow(false);
-      Swal.fire({
-        position: "top-end",
-        title: "推文發送成功！",
-        titlePosition: "left",
-        timer: 3000,
-        heightAuto: false,
-        width: 394,
-        icon: "success",
-        iconPosition: "right",
-        showConfirmButton: false,
-      });
+      const postStatus = await postTweet(description);
+      if (postStatus && postStatus === "success") {
+        setDescription("");
+        setShow(false);
+        setIsGlobalTweetUpdate(true)
+        setIsUserTweetUpdate(true)
+        Swal.fire({
+          position: "top-end",
+          title: "推文發送成功！",
+          titlePosition: "left",
+          timer: 3000,
+          heightAuto: false,
+          width: 394,
+          icon: "success",
+          customClass: {
+            icon: styles.alerticon,
+          },
+          iconPosition: "right",
+          showConfirmButton: false,
+        });
+      }
     } catch (error) {
       console.error(error);
       Swal.fire({
