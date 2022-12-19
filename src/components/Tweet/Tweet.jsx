@@ -78,7 +78,6 @@ const Tweet = ({ data }) => {
     setLike((prevValue) => !prevValue);
   };
   /*Like 暫時作法*/
-
   return (
     <section
       className={`${styles["LikeTweet"]} border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
@@ -129,6 +128,7 @@ const Tweet = ({ data }) => {
               width={16}
               height={16}
               data={{
+                tweetId: data?.id,
                 name: data?.User.name,
                 account: data?.User.account,
                 avatar: data?.User.avatar,

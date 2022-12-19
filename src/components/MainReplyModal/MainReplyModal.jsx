@@ -2,11 +2,15 @@ import styles from "./MainReplyModal.module.scss";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 
-import { useState } from "react";
+
+
 import { useAuth } from "../../contexts/AuthContext";
-// 1 要改 回覆按鈕的功能
-// 2 串 api
-// 3 提交成功後要有 alert
+
+import React, { useState } from "react";
+
+import { postReply } from "../../apis/tweets";
+import Swal from "sweetalert2";
+
 
 export const MessageIcon = ({ height, width }) => {
   return (
@@ -53,7 +57,24 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
+
   const { avatar } = useAuth();
+
+  const [ comment, setComment ] = useState('');
+  const tweetId = data.tweetId
+
+   const Toast = Swal.mixin({
+    toast: true,
+    position: "top-right",
+    customClass: {
+      popup: "colored-toast",
+    },
+    width: 394,
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+  });
+
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setFullscreen("sm-down");
@@ -62,8 +83,33 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
 
   const showText = (e) => {
     setWordCount(e.target.value.length);
+    setComment(e.target.value)
   };
+  const handleClick = () => {
+    setComment('')
+    setShow(false)
+  }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const postStatus = await postReply( tweetId, comment);
+      if (postStatus && postStatus.status === 200) {
+        setComment("");
+        setShow(false);
+        Toast.fire({
+          icon: "success",
+          title: "回覆成功！",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      Toast.fire({
+        icon: "error",
+        title: "回覆失敗！",
+      });
+    }
+  };
   return (
     <>
       <button onClick={handleShow} className={styles.messageBtn}>
@@ -81,13 +127,13 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
           <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
             <button
               className="btn me-3 d-sm-none"
-              onClick={() => setShow(false)}
+              onClick={handleClick}
             >
               <ArrowLeftIcon />
             </button>
             <CloseButton
               className="d-none d-sm-block"
-              onClick={() => setShow(false)}
+              onClick={handleClick}
               aria-label="Close"
             />
           </Modal.Header>
@@ -161,6 +207,7 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
                 <button
                   className="btn btn-primary text-white rounded-pill"
                   disabled={wordCount === 0 ? true : false}
+                  onClick={handleSubmit}
                 >
                   回覆
                 </button>
