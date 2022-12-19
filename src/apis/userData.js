@@ -90,10 +90,8 @@ export const getUserTweets = async (userId) => {
   }
 };
 
-
 //[U_07] get-user-likes 取得指定使用者喜歡的推文
 //GET /api/users/:id/likes
-
 export const getUserLikes = async (userId) => {
   if (!userId) return console.error("[getUserLikes錯誤]:請帶入使用者id");
   try {

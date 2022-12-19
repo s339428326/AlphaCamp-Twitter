@@ -4,6 +4,11 @@
   border-bottom: 1px solid #e6ecf0;
   padding: 16px 24px 16px 24px;
   display: flex;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .tweetInfo {

@@ -3,7 +3,7 @@ import Tweet from "../Tweet/Tweet";
 import UserLikeTweet from "../UserLikeTweet/UserLikeTweet";
 import MainReply from "../MainReply/MainReply";
 //apis
-//, getRepliedTweets
+//getRepliedTweets
 import {
   getUserTweets,
   getRepliedTweets,

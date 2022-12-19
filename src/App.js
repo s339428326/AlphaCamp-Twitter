@@ -36,7 +36,10 @@ function App() {
             <Route path="/admin_users" element={<AdminUserPage />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/:userId" element={<UserMainPage />} />
-            <Route path="/:userId/reply" element={<UserMainReplyPage />} />
+            <Route
+              path="/:userId/reply/:tweetId"
+              element={<UserMainReplyPage />}
+            />
             <Route path="/:userId/follow" element={<UserFollowPage />}>
               <Route index element={<UserFollowPart />} />
               <Route path="follower" element={<UserFollowPart />} />

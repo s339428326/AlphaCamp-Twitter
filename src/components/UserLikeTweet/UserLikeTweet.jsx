@@ -4,7 +4,7 @@ import styles from "./UserLikeTweet.module.scss";
 import MainReplyModal from "../MainReplyModal/MainReplyModal";
 //react
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 //hook
 import useMoment from "../../hooks/useMoment";
@@ -85,29 +85,36 @@ const UserLikeTweet = ({ data }) => {
   /*Like 暫時作法*/
 
   return (
-    <section className="border-start border-end border-bottom px-4 py-3 d-flex gap-2">
+    <section
+      className={`${styles["LikeTweet"]} border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
+    >
       <div>
-        <img
-          className="rounded-circle"
-          src={data?.Tweet.User.avatar}
-          alt="user-avatar"
-          width={50}
-          height={50}
-        />
+        <Link to={`/${data?.Tweet.User.id}/profile`}>
+          <img
+            className="rounded-circle"
+            src={data?.Tweet.User.avatar}
+            alt="user-avatar"
+            width={50}
+            height={50}
+          />
+        </Link>
       </div>
       <div>
-        <div
+        <Link
           className={`${styles["tweet-header"]} d-flex align-items-center gap-2`}
+          to={`/${data?.Tweet.User.id}/profile`}
         >
           <strong>{data?.Tweet.User.name || "無讀取資料"}</strong>
           <small className="text-light mb-0">
             @{data?.Tweet.User.account || "無讀取資料"}・
             {useMoment(data?.createdAt) || "無讀取資料"}
           </small>
-        </div>
-        <p className={`${styles["tweet-content"]}`}>
-          {data?.Tweet.description || "無讀取資料"}
-        </p>
+        </Link>
+        <Link to={`/${data?.Tweet.User.id}/reply/${data?.TweetId}`}>
+          <p className={`${styles["tweet-content"]}`}>
+            {data?.Tweet.description || "無讀取資料"}
+          </p>
+        </Link>
         <div className={`${styles["tweet-footer"]} d-flex`}>
           <div className="d-flex gap-2">
             <MainReplyModal width={16} height={16} />
