@@ -39,6 +39,7 @@ const Tweets = () => {
         console.error(error);
       }
     };
+
     if (
       pathname === `/${currentMember.id}/profile` ||
       pathname === `/${currentMember.id}/profile/tweet` ||
@@ -47,6 +48,7 @@ const Tweets = () => {
       getTweets();
     }
   }, [currentMember.id, pathname, isUserTweetUpdate, setIsUserTweetUpdate, urlUserId]);
+
   return (
     <ul className="list-unstyled ps-0">
       {data.map((item) => (

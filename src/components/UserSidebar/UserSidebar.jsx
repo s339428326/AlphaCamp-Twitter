@@ -203,7 +203,7 @@ export const LogOutIcon = () => {
   );
 };
 
-const UserSidebar = ({userData}) => {
+const UserSidebar = ({ userData }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const urlUserId = pathname.split("/")[1];
@@ -226,7 +226,7 @@ const UserSidebar = ({userData}) => {
       </div>
       <ul className="pt-3 d-flex flex-column list-unstyled align-items-center align-items-lg-start">
         <li className={styles["list-item"]}>
-          <Link to={`/${urlUserId}`}>
+          <Link to={`/${userId}`}>
             <div className="d-flex gap-3 fw-bold">
               {isHome ? <HomeActiveIcon /> : <HomeIcon />}
 
@@ -266,7 +266,7 @@ const UserSidebar = ({userData}) => {
         </li>
         <li className="w-100">
           <MainTweetModal
-          userData={userData}
+            userData={userData}
             element={
               <div className="d-flex flex-column align-items-center">
                 <button className="d-none d-lg-block btn btn-primary text-white rounded-pill w-100 text-center">

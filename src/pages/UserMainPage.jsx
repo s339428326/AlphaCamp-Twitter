@@ -16,17 +16,21 @@ import { getAllTweets } from "../apis/tweets";
 import { useTweetStatus } from "../contexts/TweetStatusContext";
 import { useLocation } from "react-router-dom";
 
-const Tweets = ({userId}) => {
+const Tweets = ({ userId }) => {
   const [allTweets, setAllTweets] = useState([]);
   const { pathname } = useLocation();
   const { isGlobalTweetUpdate, setIsGlobalTweetUpdate } = useTweetStatus();
-
+  //拿到使用者Avatar
+  const [userAvatar, setUserAvatar] = useState();
   useEffect(() => {
     const updateAllTweets = async () => {
       try {
         const tweets = await getAllTweets();
         setAllTweets(tweets);
         setIsGlobalTweetUpdate(false);
+        //拿到使用者Avatar
+        const userData = await getUserData(userId);
+        setUserAvatar(userData?.avatar);
       } catch (error) {
         console.error(error);
       }
@@ -41,7 +45,7 @@ const Tweets = ({userId}) => {
     <ul className="list-unstyled ps-0">
       {allTweets.map((tweet) => (
         <li key={tweet.id}>
-          <Tweet data={tweet} />
+          <Tweet data={tweet} userAvatar={userAvatar} />
         </li>
       ))}
     </ul>
