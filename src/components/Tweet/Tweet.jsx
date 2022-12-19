@@ -64,7 +64,7 @@ export const RedHeartIcon = () => {
 
 const Tweet = ({ data }) => {
   const userId = localStorage.getItem("id");
-  const { avatar } = useAuth();
+  const { currentMember, avatar } = useAuth();
 
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.likeCount);
@@ -84,15 +84,28 @@ const Tweet = ({ data }) => {
       className={`${styles["LikeTweet"]} border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
     >
       <Link to={`/${data?.User.id}/profile`}>
-        <img
-          className="rounded-circle"
-          src={
-            avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-          }
-          alt="user-avatar"
-          width={50}
-          height={50}
-        />
+        {currentMember.id !== data?.User.id ? (
+          <img
+            className="rounded-circle"
+            src={
+              data?.User.avatar ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="user-avatar"
+            width={50}
+            height={50}
+          />
+        ) : (
+          <img
+            className="rounded-circle"
+            src={
+              avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="user-avatar"
+            width={50}
+            height={50}
+          />
+        )}
       </Link>
       <div>
         <Link

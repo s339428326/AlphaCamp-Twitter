@@ -45,9 +45,21 @@ export const AuthProvider = ({ children }) => {
         //只可以賦值一次
         if (check === null) {
           localStorage.setItem("name", tempPayload.name);
-          localStorage.setItem("avatar", tempPayload.avatar);
-          setAvatar(tempPayload.avatar);
-          localStorage.setItem("cover", tempPayload.cover);
+          if (tempPayload.avatar === null) {
+            localStorage.setItem(
+              "avatar",
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            );
+            setAvatar(tempPayload.avatar);
+          } else {
+            localStorage.setItem("avatar", tempPayload.avatar);
+            setAvatar(tempPayload.avatar);
+          }
+          if (tempPayload.cover === null) {
+            localStorage.setItem("cover", "https://fakeimg.pl/639x200/");
+          } else {
+            localStorage.setItem("cover", tempPayload.cover);
+          }
           localStorage.setItem("introduction", tempPayload.introduction);
           localStorage.setItem("id", tempPayload.id);
         }
