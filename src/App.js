@@ -1,6 +1,7 @@
 // import './App.css';
 import "./styles/main.scss";
 import { AuthProvider } from "./contexts/AuthContext";
+import { TweetStatusProvider } from "./contexts/TweetStatusContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   UserLoginPage,
@@ -26,6 +27,7 @@ function App() {
     <div className="App">
       <BrowserRouter basename={basename}>
         <AuthProvider>
+          <TweetStatusProvider>
           <Routes>
             <Route path="/" element={<UserLoginPage />} />
             <Route path="/login" element={<UserLoginPage />} />
@@ -58,6 +60,7 @@ function App() {
               <Route path="like" element={<UserProfileTweet router="like" />} />
             </Route>
           </Routes>
+        </TweetStatusProvider>
         </AuthProvider>
       </BrowserRouter>
     </div>

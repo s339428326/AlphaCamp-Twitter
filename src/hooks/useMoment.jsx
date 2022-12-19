@@ -1,19 +1,29 @@
 import moment from "moment";
 //https://github.com/derekprior/momentjs-rails/blob/main/vendor/assets/javascripts/moment/zh-tw.js
+//http://momentjs.cn/docs/displaying/fromnow.html
 
 const useMoment = (createdAt) => {
   moment.updateLocale("zh-tw", {
     longDateFormat: {
       LL: "M月D日",
-      LLL: "YYYY年M月D日 HH:mm",
     },
   });
   const date = new Date(createdAt);
-  const timestamp = date.getTime();
-  const fromNow = Number(moment(timestamp).fromNow().replace("hour ago", ""));
-  let outcome = moment(timestamp).format("LL");
-  if (fromNow < 24) {
-    outcome = outcome + "小時";
+  const currentTime = Date.now();
+  const timeDifference = currentTime - date.getTime();
+
+  let outcome = moment(date).format("LL");
+
+  if (timeDifference < 3600000) {
+    if (timeDifference < 60000) {
+      outcome = "幾秒前";
+    } else {
+      const minutes = Math.floor(timeDifference / 60000);
+      outcome = `${minutes}分鐘前`;
+    }
+  } else if (timeDifference < 86400000) {
+    const hours = Math.floor(timeDifference / 3600000);
+    outcome = `${hours}小時前`;
   }
   return outcome;
 };

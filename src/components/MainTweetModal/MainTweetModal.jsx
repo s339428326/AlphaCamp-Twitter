@@ -2,6 +2,9 @@ import styles from "./MainTweetModal.module.scss";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import React, { useState } from "react";
+import { getAllTweets, postTweet } from "../../apis/tweets";
+import Swal from "sweetalert2";
+import { useTweetStatus } from "../../contexts/TweetStatusContext";
 
 export const ArrowLeftIcon = () => {
   return (
@@ -24,6 +27,9 @@ const MainTweetModal = ({ userData, element }) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
+  const [description, setDescription] = useState("");
+  const {  setIsGlobalTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
+
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setFullscreen("sm-down");
@@ -31,6 +37,48 @@ const MainTweetModal = ({ userData, element }) => {
   };
   const showText = (e) => {
     setWordCount(e.target.value.length);
+    setDescription(e.target.value);
+  };
+  const handleClick = () => {
+    setDescription("");
+    setShow(false);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const postStatus = await postTweet(description);
+      if (postStatus && postStatus === "success") {
+        setDescription("");
+        setShow(false);
+        setIsGlobalTweetUpdate(true)
+        setIsUserTweetUpdate(true)
+        Swal.fire({
+          position: "top-end",
+          title: "推文發送成功！",
+          titlePosition: "left",
+          timer: 3000,
+          heightAuto: false,
+          width: 394,
+          icon: "success",
+          customClass: {
+            icon: styles.alerticon,
+          },
+          iconPosition: "right",
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        position: "top-end",
+        title: "推文發送失敗！",
+        titlePosition: "left",
+        timer: 3000,
+        icon: "error",
+        iconPosition: "right",
+        showConfirmButton: false,
+      });
+    }
   };
 
   return (
@@ -46,15 +94,12 @@ const MainTweetModal = ({ userData, element }) => {
       >
         <div className={styles.replyModalContainer}>
           <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
-            <button
-              className="btn me-3 d-sm-none"
-              onClick={() => setShow(false)}
-            >
+            <button className="btn me-3 d-sm-none" onClick={handleClick}>
               <ArrowLeftIcon />
             </button>
             <CloseButton
               className="d-none d-sm-block"
-              onClick={() => setShow(false)}
+              onClick={handleClick}
               aria-label="Close"
             />
           </Modal.Header>
@@ -66,7 +111,7 @@ const MainTweetModal = ({ userData, element }) => {
                   <img
                     className="rounded-circle"
                     src={
-                       userData?.avatar ||
+                      userData?.avatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"
@@ -81,7 +126,7 @@ const MainTweetModal = ({ userData, element }) => {
                   cols={10}
                   id="tweetContent"
                   className={styles.inputContent}
-                  name="description"
+                  value={description}
                   type="text"
                   onChange={showText}
                   placeholder="有什麼新鮮事？"
@@ -94,8 +139,10 @@ const MainTweetModal = ({ userData, element }) => {
                 {wordCount === 140 && <span>字數不可以超過140字</span>}
                 {wordCount < 140 && wordCount !== 0 && <span></span>}
                 <button
+                  type="button"
                   className="btn btn-primary text-white rounded-pill"
                   disabled={wordCount === 0 ? true : false}
+                  onClick={handleSubmit}
                 >
                   推文
                 </button>
