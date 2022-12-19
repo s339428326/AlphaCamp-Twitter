@@ -14,13 +14,15 @@ import { useAuth } from "../contexts/AuthContext";
 import { getUserData } from "../apis/userData";
 import { getAllTweets } from "../apis/tweets";
 import { useTweetStatus } from "../contexts/TweetStatusContext";
+import { useLocation } from "react-router-dom";
 
 const Tweets = () => {
   const [allTweets, setAllTweets] = useState([]);
+  const { pathname } = useLocation();
   const { isGlobalTweetUpdate, setIsGlobalTweetUpdate } = useTweetStatus();
 
   useEffect(() => {
-    const allTweets = async () => {
+    const updateAllTweets = async () => {
       try {
         const tweets = await getAllTweets();
         setAllTweets(tweets);
@@ -29,10 +31,14 @@ const Tweets = () => {
         console.error(error);
       }
     };
-    if (isGlobalTweetUpdate) {
-      allTweets();
+    if (
+      !pathname.includes("profile", "setting", "follow") ||
+      isGlobalTweetUpdate
+    ) {
+      updateAllTweets(setAllTweets);
     }
-  }, [isGlobalTweetUpdate, setIsGlobalTweetUpdate]);
+  }, [pathname, isGlobalTweetUpdate, setIsGlobalTweetUpdate]);
+  // console.log('check', allTweets)
   return (
     <ul className="list-unstyled ps-0">
       {allTweets.map((tweet) => (
