@@ -3,7 +3,7 @@ import FollowButton from "../FollowButton/FollowButton";
 
 import { Link } from "react-router-dom";
 
-const TopUser = ({ user }) => {
+const TopUser = ({ user, userData }) => {
   console.log(user);
   //const name = user.name
   const name = user.name;
@@ -31,7 +31,7 @@ const TopUser = ({ user }) => {
         </div>
         <div className={styles.btn}>
           <Link>
-            <FollowButton className={styles.followBtn} />
+            <FollowButton />
           </Link>
         </div>
       </div>
