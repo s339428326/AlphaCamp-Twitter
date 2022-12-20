@@ -2,10 +2,15 @@ import styles from "./MainReplyModal.module.scss";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 
+
+
+import { useAuth } from "../../contexts/AuthContext";
+
 import React, { useState } from "react";
 
 import { postReply } from "../../apis/tweets";
 import Swal from "sweetalert2";
+
 
 export const MessageIcon = ({ height, width }) => {
   return (
@@ -43,14 +48,7 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainReplyModal = ({
-  avatarImg,
-  inputValue,
-  width,
-  height,
-  data,
-  userAvatar,
-}) => {
+const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
   // if (userAvatar === undefined) {
   //   console.log("沒抓到");
   // } else {
@@ -59,6 +57,9 @@ const MainReplyModal = ({
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
+
+  const { avatar } = useAuth();
+
   const [ comment, setComment ] = useState('');
   const tweetId = data.tweetId
 
@@ -73,6 +74,7 @@ const MainReplyModal = ({
     timer: 3000,
     timerProgressBar: true,
   });
+
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setFullscreen("sm-down");
@@ -175,7 +177,7 @@ const MainReplyModal = ({
                   <img
                     className="rounded-circle"
                     src={
-                      userAvatar ||
+                      avatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"

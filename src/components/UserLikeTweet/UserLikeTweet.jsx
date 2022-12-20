@@ -9,8 +9,6 @@ import { useLocation, Link } from "react-router-dom";
 //hook
 import useMoment from "../../hooks/useMoment";
 
-import jwt_decode from "jwt-decode";
-
 export const HeartIcon = () => {
   return (
     <svg
@@ -65,11 +63,11 @@ export const RedHeartIcon = () => {
 //     "isLiked": true
 // }
 
-const UserLikeTweet = ({ data, userAvatar }) => {
+const UserLikeTweet = ({ data }) => {
   const { pathname } = useLocation();
   const urlUserId = pathname.split("/")[1];
-  const token = localStorage.getItem("token");
-  const decodeData = jwt_decode(token);
+  const userId = localStorage.getItem("id");
+  // const userAvatar = localStorage.getItem("avatar");
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.Tweet.likeCount);
   const [like, setLike] = useState(true);
@@ -126,14 +124,13 @@ const UserLikeTweet = ({ data, userAvatar }) => {
                 description: data?.Tweet.description,
                 createdAt: useMoment(data?.createdAt),
               }}
-              userAvatar={userAvatar}
             />
             <span className="font-monospace text-light me-4">
               {data?.Tweet.replyCount}
             </span>
           </div>
           {/* Like邏輯 */}
-          {decodeData.id !== Number(urlUserId) ? (
+          {userId !== Number(urlUserId) ? (
             <button className="d-flex gap-2 border-0 p-0 bg-transparent">
               <RedHeartIcon />
               <span className="font-monospace text-light">{likeCount}</span>

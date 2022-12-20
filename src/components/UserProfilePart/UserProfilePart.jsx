@@ -17,6 +17,8 @@ import { useState, useEffect } from "react";
 //react-route-dom
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../../contexts/AuthContext";
+
 //icons
 export const BallIcon = () => {
   return (
@@ -141,8 +143,9 @@ export const ArrowLeftIcon = () => {
 */
 
 const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
-  //分析使用者路由是否存在
+  const { setAvatar } = useAuth();
 
+  //分析使用者路由是否存在
   useEffect(() => {
     setFormData({
       name: userData?.name,
@@ -162,8 +165,8 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   });
   //暫存modal更換即時顯示圖片檔案
   const [modalView, setModalView] = useState({
-    cover: userData?.cover,
-    avatar: userData?.avatar,
+    cover: localStorage.getItem("cover"),
+    avatar: localStorage.getItem("avatar"),
   });
 
   /*Modal Setting*/
@@ -171,25 +174,22 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = async () => {
-    const data = await getUserData(userData?.id);
+    // const data = await getUserData(userData?.id);
     // 復歸FromData
     setFormData({
       ...formData,
-      cover: data?.cover,
-      avatar: data?.avatar,
+      cover: localStorage.getItem("cover"),
+      avatar: localStorage.getItem("avatar"),
     });
     setErrorMassage({ ...errorMessage, userName: "" });
     setShow(false);
   };
 
   const handleShow = async () => {
-    // 復歸modal imageView
-    const data = await getUserData(userData?.id);
-    console.log("hi", data);
     setModalView({
       ...modalView,
-      cover: data?.cover,
-      avatar: data?.avatar,
+      cover: localStorage.getItem("cover"),
+      avatar: localStorage.getItem("avatar"),
     });
     setFullscreen("sm-down");
     setShow(true);
@@ -293,6 +293,9 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       avatar: newData?.avatar,
       cover: newData?.cover,
     });
+    localStorage.setItem("cover", newData?.cover);
+    localStorage.setItem("avatar", newData?.avatar);
+    setAvatar(newData?.avatar);
     setView({
       ...view,
       cover: newData?.cover,

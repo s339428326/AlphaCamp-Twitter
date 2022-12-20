@@ -10,6 +10,7 @@ const defaultAuthContext = {
   login: null,
   logout: null,
   adminLogin: null,
+  avatar: null,
 };
 
 //export useAuth
@@ -21,8 +22,8 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [payload, setPayload] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [avatar, setAvatar] = useState(null);
   const { pathname } = useLocation();
-
   useEffect(() => {
     const checkTokenIsValid = async () => {
       const token = localStorage.getItem("token");
@@ -39,6 +40,29 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         const tempPayload = jwt_decode(token);
         setPayload(tempPayload);
+        //儲存個人資料
+        const check = localStorage.getItem("name");
+        //只可以賦值一次
+        if (check === null) {
+          localStorage.setItem("name", tempPayload.name);
+          if (tempPayload.avatar === null) {
+            localStorage.setItem(
+              "avatar",
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            );
+            setAvatar(tempPayload.avatar);
+          } else {
+            localStorage.setItem("avatar", tempPayload.avatar);
+            setAvatar(tempPayload.avatar);
+          }
+          if (tempPayload.cover === null) {
+            localStorage.setItem("cover", "https://fakeimg.pl/639x200/");
+          } else {
+            localStorage.setItem("cover", tempPayload.cover);
+          }
+          localStorage.setItem("introduction", tempPayload.introduction);
+          localStorage.setItem("id", tempPayload.id);
+        }
       } else {
         setIsAuthenticated(false);
         setPayload(null);
@@ -52,6 +76,8 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        avatar,
+        setAvatar,
         currentMember: payload && {
           //   id: payload.id,
           //   name: payload.name,
@@ -99,7 +125,7 @@ export const AuthProvider = ({ children }) => {
           return status;
         },
         logout: () => {
-          localStorage.removeItem("token");
+          localStorage.clear();
           setPayload(null);
           setIsAuthenticated(false);
         },
