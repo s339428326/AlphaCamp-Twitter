@@ -7,7 +7,26 @@ import TopUser from "../components/TopUser/TopUser";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { getOneTweet } from "../apis/tweets";
 const UserMainReplyPage = ({ user }) => {
+  const { pathname } = useLocation();
+  const tweetId = pathname.split("/")[3];
+
+  // useEffect(() => {
+  //   const getOneTweet = async () => {
+  //     try {
+  //       const res = await getOneTweet(tweetId);
+  //       console.log(res);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   getOneTweet();
+  // });
+
   return (
     <Container>
       <Row>
@@ -21,7 +40,7 @@ const UserMainReplyPage = ({ user }) => {
             <PageTitle title={"推文"} tweetQuantity={user} />
           </div>
           <MainReplyTweet />
-          <MainReply />      
+          <MainReply />
         </Col>
         <Col xs={4} md={3}>
           <div className="sticky-top">
