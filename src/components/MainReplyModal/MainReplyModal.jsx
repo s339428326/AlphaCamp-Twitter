@@ -7,6 +7,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import React, { useState } from "react";
 
 import { postReply } from "../../apis/tweets";
+import { useTweetStatus } from "../../contexts/TweetStatusContext";
 import Swal from "sweetalert2";
 
 export const MessageIcon = ({ height, width }) => {
@@ -52,6 +53,8 @@ const MainReplyModal = ({ width, height, data }) => {
   const [wordCount, setWordCount] = useState(0);
   const { avatar } = useAuth();
   const [comment, setComment] = useState("");
+  const { setIsReplyTweetUpdate } = useTweetStatus();
+
   const tweetId = data?.replyPageTweetId || data?.tweetId;
 
   const Toast = Swal.mixin({
@@ -89,6 +92,7 @@ const MainReplyModal = ({ width, height, data }) => {
       if (postStatus && postStatus.status === 200) {
         setComment("");
         setShow(false);
+        setIsReplyTweetUpdate(true);
         Toast.fire({
           icon: "success",
           title: "回覆成功！",

@@ -11,12 +11,15 @@ import Col from "react-bootstrap/Col";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getOneTweet, getTweetReplies } from "../apis/tweets";
+import { useTweetStatus } from "../contexts/TweetStatusContext";
 
 const UserMainReplyPage = ({ user }) => {
   const { pathname } = useLocation();
   const tweetId = pathname.split("/")[3];
   const [replyData, setReplyData] = useState();
   const [replyList, setReplyList] = useState();
+  const userId = localStorage.getItem("id");
+  const { isReplyTweetUpdate, setIsReplyTweetUpdate } = useTweetStatus();
 
   useEffect(() => {
     const getData = async () => {
@@ -37,12 +40,15 @@ const UserMainReplyPage = ({ user }) => {
         const res = await getTweetReplies(tweetId);
         setReplyList([...res]);
         console.log("getTweetReplies", res);
+        setIsReplyTweetUpdate(false);
       } catch (error) {
         console.error(error);
       }
     };
-    getData();
-  }, [tweetId]);
+    if (pathname === `/${userId}/reply/${tweetId}` || isReplyTweetUpdate) {
+      getData();
+    }
+  }, [tweetId, isReplyTweetUpdate, pathname, userId, setIsReplyTweetUpdate]);
 
   return (
     <Container>
@@ -60,7 +66,7 @@ const UserMainReplyPage = ({ user }) => {
           {replyList && (
             <ul className="list-unstyled ps-0">
               {replyList.map((item) => (
-                <li>
+                <li key={item?.id}>
                   <MainReply data={item} />
                 </li>
               ))}
