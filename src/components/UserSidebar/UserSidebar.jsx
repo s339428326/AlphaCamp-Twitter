@@ -206,7 +206,6 @@ export const LogOutIcon = () => {
 const UserSidebar = ({ userData }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const urlUserId = pathname.split("/")[1];
   const urlItem = pathname.split("/")[2];
   //判斷是否為首頁
   const isHome = urlItem !== "profile" && urlItem !== "setting";
@@ -251,7 +250,7 @@ const UserSidebar = ({ userData }) => {
           </Link>
         </li>
         <li className={`${styles["list-item"]} mb-1`}>
-          <Link to={`/${urlUserId}/setting`}>
+          <Link to={`/${userId}/setting`}>
             <div className="d-flex gap-3 fw-bold text-light">
               {urlItem === "setting" ? <SettingActiveIcon /> : <SettingIcon />}
               <p

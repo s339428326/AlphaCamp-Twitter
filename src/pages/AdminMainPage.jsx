@@ -8,6 +8,8 @@ import Col from "react-bootstrap/Col";
 import { useState, useEffect } from "react";
 import { getAllTweets, deleteTweet } from "../apis/admin";
 
+import Swal from "sweetalert2";
+
 const AdminMainPage = ({ user }) => {
   const [allTweets, setAllTweets] = useState([]);
 
@@ -27,9 +29,23 @@ const AdminMainPage = ({ user }) => {
   const handleDelete = async (id) => {
     try {
       await deleteTweet(id);
-      setAllTweets((prevTweets) =>
-        prevTweets.filter((tweet) => tweet.id !== id)
-      );
+      Swal.fire({
+        position: "top",
+        title: "您確定嗎?",
+        text: "刪除的推文是回不來的喔!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#555",
+        confirmButtonText: "確認",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setAllTweets((prevTweets) =>
+            prevTweets.filter((tweet) => tweet.id !== id)
+          );
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
+      });
     } catch (error) {
       console.error(error);
     }
