@@ -7,7 +7,11 @@ import { useAuth } from "../../contexts/AuthContext";
 import React, { useState } from "react";
 
 import { postReply } from "../../apis/tweets";
+
 import { Toast } from "../../helpers/Toast";
+
+import { useTweetStatus } from "../../contexts/TweetStatusContext";
+
 export const MessageIcon = ({ height, width }) => {
   return (
     <div className={styles.messageIcon}>
@@ -51,9 +55,9 @@ const MainReplyModal = ({ width, height, data }) => {
   const [wordCount, setWordCount] = useState(0);
   const { avatar } = useAuth();
   const [comment, setComment] = useState("");
-  const tweetId = data?.replyPageTweetId || data?.tweetId;
+  const { setIsReplyTweetUpdate } = useTweetStatus();
 
-   
+  const tweetId = data?.replyPageTweetId || data?.tweetId;
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -78,6 +82,7 @@ const MainReplyModal = ({ width, height, data }) => {
       if (postStatus && postStatus.status === 200) {
         setComment("");
         setShow(false);
+        setIsReplyTweetUpdate(true);
         Toast.fire({
           icon: "success",
           title: "回覆成功！",

@@ -3,7 +3,6 @@ import axios from "axios";
 const FOLLOW_URL = "https://rocky-sands-70657.herokuapp.com/api/followships";
 // const FOLLOW_URL = "https://shielded-brook-33484.herokuapp.com/api/followships";
 
-
 const axiosInstance = axios.create({ baseURL: FOLLOW_URL });
 
 axiosInstance.interceptors.request.use(
