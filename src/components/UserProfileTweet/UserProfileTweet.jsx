@@ -17,33 +17,6 @@ import { useEffect, useState } from "react";
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
 import { useAuth } from "../../contexts/AuthContext";
 
-//取得所有推文
-// const Tweets = () => {
-//   const urlUserId = useLocation().pathname.split("/")[1];
-//   const [data, setData] = useState([]);
-
-//   useEffect(() => {
-//     const getTweets = async () => {
-//       try {
-//         const userTweets = await getUserTweets(urlUserId);
-//         setData(userTweets.map((item) => item));
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-//     getTweets();
-//   }, [urlUserId]);
-//   return (
-//     <ul className="list-unstyled ps-0">
-//       {data.map((item) => (
-//         <li key={item.id}>
-//           <Tweet data={item} />
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// };
-
 const Tweets = () => {
   const urlUserId = useLocation().pathname.split("/")[1];
   const [data, setData] = useState([]);
