@@ -7,8 +7,8 @@ import { useState } from "react";
 //hook
 import useMoment from "../../hooks/useMoment";
 import { Link } from "react-router-dom";
-//jwt
-import jwt_decode from "jwt-decode";
+
+import { useAuth } from "../../contexts/AuthContext";
 
 //icon
 export const HeartIcon = () => {
@@ -62,11 +62,10 @@ export const RedHeartIcon = () => {
     }
 */
 
-const Tweet = ({ data, userAvatar }) => {
-  // console.log(userAvatar);
-  //取得個人id
-  const token = localStorage.getItem("token");
-  const decodeData = jwt_decode(token);
+const Tweet = ({ data }) => {
+  const userId = localStorage.getItem("id");
+  const { currentMember, avatar, userName } = useAuth();
+  const localAvatar = localStorage.getItem("avatar");
 
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.likeCount);
@@ -85,26 +84,49 @@ const Tweet = ({ data, userAvatar }) => {
       className={`${styles["LikeTweet"]} border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
     >
       <Link to={`/${data?.User.id}/profile`}>
-        <img
-          className="rounded-circle"
-          src={data?.User.avatar}
-          alt="user-avatar"
-          width={50}
-          height={50}
-        />
+        {currentMember.id !== data?.User.id ? (
+          <img
+            className="rounded-circle"
+            src={
+              data?.User.avatar ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="user-avatar"
+            width={50}
+            height={50}
+          />
+        ) : (
+          // Test
+          <img
+            className="rounded-circle"
+            src={
+              avatar ||
+              localAvatar ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="user-avatar"
+            width={50}
+            height={50}
+          />
+        )}
       </Link>
       <div>
         <Link
           to={`/${data?.User.id}/profile`}
           className={`${styles["tweet-header"]} d-flex align-items-center gap-2`}
         >
-          <strong>{data?.User.name || "無讀取資料"}</strong>
+          {currentMember.id !== data?.User.id ? (
+            <strong>{data?.User.name || "無讀取資料"}</strong>
+          ) : (
+            <strong>{userName || data?.User.name || "無讀取資料"}</strong>
+          )}
+
           <small className="text-light mb-0">
             @{data?.User.account || "無讀取資料"}・
             {useMoment(data?.createdAt) || "無讀取資料"}
           </small>
         </Link>
-        <Link to={`/${decodeData.id}/reply/${data?.id}`}>
+        <Link to={`/${userId}/reply/${data?.id}`}>
           <p className={`${styles["tweet-content"]}`}>
             {data?.description || "無讀取資料"}
           </p>
@@ -122,7 +144,6 @@ const Tweet = ({ data, userAvatar }) => {
                 description: data?.description,
                 createdAt: useMoment(data?.createdAt),
               }}
-              userAvatar={userAvatar}
             />
             <span className="font-monospace text-light me-4">
               {data?.replyCount !== 0 ? data?.replyCount : 0}
