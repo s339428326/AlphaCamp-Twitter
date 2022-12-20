@@ -38,6 +38,7 @@ export const HeartedIcon = ({ size }) => {
 };
 
 const MainReplyTweet = ({ data }) => {
+  console.log("MainReplyTweet Data", data);
   //js 原生時間處理
   const date = new Date(data?.createdAt);
   const dateResult = date.toLocaleString().toString().split(" ");

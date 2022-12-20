@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 const MainReply = ({ data }) => {
+  console.log("[MainReply]", data);
   const { currentMember, userName, avatar } = useAuth();
   const localAvatar = localStorage.getItem("avatar");
   return (
