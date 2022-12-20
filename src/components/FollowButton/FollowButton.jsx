@@ -18,7 +18,8 @@ const FollowButton = ({ userData, readyOnly, isFollowed }) => {
         icon: "error",
         title: "不要這麼喜歡自己",
         willClose: () => setDisabled(false)
-      });
+      });     
+       setDisabled(true)
       return;
     }
     try {
