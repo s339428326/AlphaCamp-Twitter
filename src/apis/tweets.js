@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const TWEET_URL = "https://rocky-sands-70657.herokuapp.com/api/tweets";
+const BASE = "https://rocky-sands-70657.herokuapp.com";
+// const BASE = "https://shielded-brook-33484.herokuapp.com";
+
+const TWEET_URL = BASE + "/api/tweets";
 
 const axiosInstance = axios.create({ baseURL: TWEET_URL });
 
@@ -54,7 +57,7 @@ export const getAllTweets = async () => {
 export const getOneTweet = async (tweet_id) => {
   try {
     const res = await axiosInstance.get(`${TWEET_URL}/${tweet_id}`);
-    return res;
+    return res.data;
   } catch (error) {
     console.error("[Get One Tweet Failed]: ", error);
   }
@@ -64,8 +67,10 @@ export const getOneTweet = async (tweet_id) => {
 export const getTweetReplies = async (tweet_id) => {
   try {
     const res = await axiosInstance.get(`${TWEET_URL}/${tweet_id}/replies`);
-    return res;
+    console.log("[u17正確]", res);
+    return res.data;
   } catch (error) {
+    console.log("[U17錯誤]", error);
     console.error("[Get Replies Failed]: ", error);
   }
 };
