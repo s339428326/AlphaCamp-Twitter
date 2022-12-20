@@ -1,7 +1,11 @@
 import styles from "./MainReplyTweet.module.scss";
 import MainReplyModal from "../MainReplyModal/MainReplyModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useMoment from "../../hooks/useMoment";
+//api
+import { postLike, postUnlike } from "../../apis/tweets";
+
+import { useTweetStatus } from "../../contexts/TweetStatusContext";
 
 export const HeartIcon = ({ size }) => {
   return (
@@ -38,17 +42,60 @@ export const HeartedIcon = ({ size }) => {
 };
 
 const MainReplyTweet = ({ data }) => {
-  console.log("[test]", data);
+  // console.log(data);
   //js 原生時間處理
   const date = new Date(data?.createdAt);
   const dateResult = date.toLocaleString().toString().split(" ");
   const resultDate = dateResult[0];
   const resultTime = dateResult[1];
+  const [waiting, isWaiting] = useState(false);
+  const [likeCount, setLikeCount] = useState();
+  const [like, setLike] = useState();
+  const [replyCount, setReplyCount] = useState();
+  const { isReplyTweetUpdate } = useTweetStatus();
 
-  const [like, setLike] = useState(data?.isLiked);
-  const handleLike = () => {
-    setLike((current) => !current);
+  console.log();
+
+  useEffect(() => {
+    setLike(data?.isLiked);
+    setLikeCount(data?.likeCount);
+    setReplyCount(data?.replyCount);
+  }, [data?.isLiked, data?.likeCount, data?.replyCount]);
+
+  useEffect(() => {
+    if (isReplyTweetUpdate) setReplyCount((prevValue) => prevValue + 1);
+  }, [isReplyTweetUpdate]);
+
+  const handleLike = async () => {
+    if (like) {
+      //post 取消Like
+      setLikeCount((prevValue) => {
+        return prevValue - 1;
+      });
+      const unLike = async () => {
+        isWaiting(true);
+        const res = await postUnlike(data?.id);
+        isWaiting(false);
+        console.log("[取消]", res);
+      };
+      unLike();
+    } else {
+      //post 新增Like
+      setLikeCount((prevValue) => {
+        return prevValue + 1;
+      });
+      const addLike = async () => {
+        isWaiting(true);
+        const res = await postLike(data?.id);
+        isWaiting(false);
+        console.log("[新增]", res);
+      };
+      addLike();
+    }
+    //渲染頁面
+    setLike((prevValue) => !prevValue);
   };
+
   return (
     <div className={styles.container}>
       <div className="d-flex pb-2">
@@ -72,9 +119,9 @@ const MainReplyTweet = ({ data }) => {
       <div className={styles.infoContent}>{data?.description}</div>
       <div className={styles.time}>{`${resultTime}．${resultDate}`}</div>
       <div className={styles.count}>
-        <span className={styles.countNum}>{data?.replyCount}</span>
+        <span className={styles.countNum}>{replyCount}</span>
         <span className={styles.countTitle}>回覆</span>
-        <span className={styles.countNum}>{data?.likeCount}</span>
+        <span className={styles.countNum}>{likeCount}</span>
         <span className={styles.countTitle}>喜歡次數</span>
       </div>
       <div className={styles.iconContainer}>
@@ -94,7 +141,18 @@ const MainReplyTweet = ({ data }) => {
         </div>
         <span>
           <button onClick={handleLike}>
-            {like ? <HeartedIcon size={40} /> : <HeartIcon size={40} />}
+            {waiting ? (
+              <div className={styles["spinner"]}>
+                <div class=" spinner-grow spinner-grow-sm" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            ) : like ? (
+              <HeartedIcon size={40} />
+            ) : (
+              <HeartIcon size={40} />
+            )}
+            {}
           </button>
         </span>
       </div>

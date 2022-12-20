@@ -67,7 +67,6 @@ export const RedHeartIcon = () => {
 // }
 
 const UserLikeTweet = ({ data }) => {
-  console.log(data);
   const { pathname } = useLocation();
   const urlUserId = pathname.split("/")[1];
   const userId = localStorage.getItem("id");

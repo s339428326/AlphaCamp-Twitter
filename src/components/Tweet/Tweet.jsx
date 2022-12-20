@@ -69,12 +69,12 @@ const Tweet = ({ data }) => {
   const userId = localStorage.getItem("id");
   const { currentMember, avatar, userName } = useAuth();
   const localAvatar = localStorage.getItem("avatar");
+  const [tweetReplyCount, setTweetReplyCount] = useState(data?.replyCount);
 
   /*Like ver.1*/
   const [likeCount, setLikeCount] = useState(data?.likeCount);
   const [like, setLike] = useState(data?.isLiked);
   const handleLike = async () => {
-    console.log(1);
     //渲染頁面
     setLike((prevValue) => !prevValue);
     if (like) {
@@ -158,9 +158,11 @@ const Tweet = ({ data }) => {
                 description: data?.description,
                 createdAt: useMoment(data?.createdAt),
               }}
+              setTweetReplyCount={setTweetReplyCount}
             />
             <span className="font-monospace text-light me-4">
-              {data?.replyCount !== 0 ? data?.replyCount : 0}
+              {tweetReplyCount}
+              {/* {data?.replyCount !== 0 ? tweetReplyCount : 0} */}
             </span>
           </div>
           {/* Like邏輯 */}
