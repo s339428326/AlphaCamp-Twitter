@@ -32,9 +32,6 @@ const MainTweetModal = ({ userData, element }) => {
   const Toast = Swal.mixin({
     toast: true,
     position: "top-right",
-    customClass: {
-      popup: "colored-toast",
-    },
     width: 394,
     showConfirmButton: false,
     timer: 3000,
