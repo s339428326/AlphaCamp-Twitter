@@ -7,8 +7,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import React, { useState } from "react";
 
 import { postReply } from "../../apis/tweets";
-import Swal from "sweetalert2";
-
+import { Toast } from "../../helpers/Toast";
 export const MessageIcon = ({ height, width }) => {
   return (
     <div className={styles.messageIcon}>
@@ -54,17 +53,7 @@ const MainReplyModal = ({ width, height, data }) => {
   const [comment, setComment] = useState("");
   const tweetId = data?.replyPageTweetId || data?.tweetId;
 
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-right",
-    customClass: {
-      popup: "colored-toast",
-    },
-    width: 394,
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-  });
+   
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
