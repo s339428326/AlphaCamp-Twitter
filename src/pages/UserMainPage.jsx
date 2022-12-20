@@ -2,7 +2,6 @@ import UserSidebar from "../components/UserSidebar/UserSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import MainCreateTweet from "../components/MainCreateTweet/MainCreateTweet";
 import Tweet from "../components/Tweet/Tweet";
-import TopUser from "../components/TopUser/TopUser";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -11,10 +10,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
-import { getUserData } from "../apis/userData";
+import { getUserData, getTopUsers } from "../apis/userData";
 import { getAllTweets } from "../apis/tweets";
 import { useTweetStatus } from "../contexts/TweetStatusContext";
 import { useLocation } from "react-router-dom";
+import TopUserList from "../components/TopUserList/TopUserList";
 
 const Tweets = ({ userId }) => {
   const [allTweets, setAllTweets] = useState([]);
@@ -57,6 +57,7 @@ const UserMainPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, currentMember } = useAuth();
   const [userData, setUserData] = useState();
+  const [topUsers, setTopUsers] = useState([]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -79,6 +80,18 @@ const UserMainPage = () => {
     userData();
   }, [currentMember.id, navigate]);
 
+  useEffect(() => {
+    const topUsers = async () => {
+      try {
+        const { data } = await getTopUsers();
+        setTopUsers(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    topUsers();
+  }, []);
+
   return (
     <Container>
       <Row>
@@ -96,7 +109,7 @@ const UserMainPage = () => {
         </Col>
         <Col xs={4} lg={3}>
           <div className="sticky-top ">
-            <TopUser />
+            <TopUserList topUsers={topUsers} />
           </div>
         </Col>
       </Row>

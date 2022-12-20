@@ -1,37 +1,27 @@
-.container {
-  margin-top: 16px;
-  background: #fafafb;
-  border-radius: 16px;
-  position: relative;
-  .title {
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 26px;
-    padding-top: 24px;
-    padding-left: 24px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid #e6ecf0;
-  }
-  .userContainer {
-    display: flex;
-    padding: 16px;
-  }
-  .info {
-    padding-left: 8px;
-    padding-right: 13px;
-  }
-  .name {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 26px;
-  }
- .account {
+.userContainer {
+  display: flex;
+  padding: 16px;
+  border-bottom: 1px solid #e6ecf0;
+}
+.info {
+  padding-left: 8px;
+  padding-right: 13px;
+}
+.name {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+}
+.account {
   font-weight: 500;
   font-size: 14px;
-  color: #92929D;
- }
-  .btn {
-    position: absolute;
-    right: 16px;
-  }
+  color: #92929d;
+}
+.btn {
+  position: absolute;
+  right: 16px;
+}
+
+.avatar {
+  border-radius: 50%;
 }

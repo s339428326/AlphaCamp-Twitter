@@ -1,8 +1,8 @@
 //Component
 import UserSidebar from "../components/UserSidebar/UserSidebar";
-import TopUser from "../components/TopUser/TopUser";
 import UserProfilePart from "../components/UserProfilePart/UserProfilePart";
 import UserProfileTabs from "../components/UserProfileTabs/UserProfileTabs";
+import TopUserList from '../components/TopUserList/TopUserList'
 
 //react-bootstrap
 import Container from "react-bootstrap/Container";
@@ -19,15 +19,16 @@ import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 
 //api
-import { getUserData } from "../apis/userData";
+import { getTopUsers, getUserData } from "../apis/userData";
 import { useAuth } from "../contexts/AuthContext";
 
 const UserProfilePage = () => {
   ///////////update userData////////////
   //userData狀態
   const [userData, setUserData] = useState();
-  const {currentMember} = useAuth()
-  
+  const [topUsers, setTopUsers] = useState();
+  const { currentMember } = useAuth();
+
   //分析路由
   const navigate = useNavigate();
   const url = useLocation().pathname.split("/");
@@ -56,13 +57,25 @@ const UserProfilePage = () => {
     userInfo();
   }, [decodeData.id, urlUserId, navigate]);
 
+  useEffect(() => {
+    const topUsers = async () => {
+      try {
+        const { data } = await getTopUsers();
+        setTopUsers(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    topUsers();
+  }, []);
+
   ///////////update userData////////////
   return (
     <Container>
       <Row>
         <Col xs={1} lg={2}>
           <div className="sticky-top">
-            <UserSidebar userData={currentMember}/>
+            <UserSidebar userData={currentMember} />
           </div>
         </Col>
         <Col xs={7}>
@@ -72,7 +85,7 @@ const UserProfilePage = () => {
         </Col>
         <Col xs={3}>
           <div className="sticky-top">
-            <TopUser />
+            <TopUserList topUsers={topUsers}/>
           </div>
         </Col>
       </Row>
