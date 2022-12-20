@@ -2,6 +2,7 @@ import React from "react";
 import CloseButton from "react-bootstrap/CloseButton";
 
 import styles from "./AdminTweetItem.module.scss";
+import useMoment from "../../hooks/useMoment";
 
 export default function AdminTweetItem({ tweet, onDelete }) {
   return (
@@ -23,7 +24,7 @@ export default function AdminTweetItem({ tweet, onDelete }) {
           <strong>{tweet.User.name || "無讀取資料"}</strong>
           <small className="text-light mb-0">
             @{tweet.User.account || "無讀取資料"}・
-            {tweet.createdAt || "無讀取資料"}
+            {useMoment(tweet.createdAt) || "無讀取資料"}
           </small>
           <div className="ms-auto">
             <CloseButton
