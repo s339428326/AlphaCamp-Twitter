@@ -32,7 +32,7 @@ const FollowItem = ({ userData }) => {
         <div className={styles.followDescription}>{introduction}</div>
       </div>
       <div className={styles.followBtn}>
-        <FollowButton isFollow={isFollowed} />
+        <FollowButton userData={userData} />
       </div>
     </div>
   );
