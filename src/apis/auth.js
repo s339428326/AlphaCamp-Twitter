@@ -49,7 +49,7 @@ export const register = async ({
   name,
   email,
   password,
-  passwordCheck,
+  checkPassword,
 }) => {
   try {
     const { data } = await axios.post(AUTH_URL + "users", {
@@ -57,7 +57,7 @@ export const register = async ({
       name,
       email,
       password,
-      passwordCheck,
+      checkPassword,
     });
 
     const { token } = data.data;

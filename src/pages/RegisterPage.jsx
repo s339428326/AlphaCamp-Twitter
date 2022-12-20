@@ -13,6 +13,8 @@ import Swal from "sweetalert2";
 
 import { useAuth } from "../contexts/AuthContext";
 
+import { validAccount, validPassword, validEmail } from "../helper/regex";
+
 const RegisterPage = () => {
   const navigate = useNavigate();
   const { register, isAuthenticated, currentMember } = useAuth();
@@ -34,6 +36,7 @@ const RegisterPage = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+
     //空白阻擋
     if (
       !(
@@ -45,6 +48,35 @@ const RegisterPage = () => {
       )
     )
       return;
+
+    if (
+      !(
+        registerPage.account.match(validAccount) &&
+        registerPage.password.match(validPassword)
+      )
+    ) {
+      Swal.fire({
+        position: "top",
+        title: "註冊失敗！",
+        text: "帳號或密碼不可含有特殊字元",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return;
+    }
+
+    if (!registerPage.email.match(validEmail)) {
+      Swal.fire({
+        position: "top",
+        title: "註冊失敗！",
+        text: "Email格式不符",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return;
+    }
 
     const success = await register({
       account: registerPage["account"],
