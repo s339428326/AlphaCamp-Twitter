@@ -130,7 +130,7 @@ const UserLikeTweet = ({ data }) => {
             </span>
           </div>
           {/* Like邏輯 */}
-          {userId !== Number(urlUserId) ? (
+          {userId !== urlUserId ? (
             <button className="d-flex gap-2 border-0 p-0 bg-transparent">
               <RedHeartIcon />
               <span className="font-monospace text-light">{likeCount}</span>
