@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import Swal from "sweetalert2";
-
 const BASE = "https://rocky-sands-70657.herokuapp.com";
 // const BASE = "https://shielded-brook-33484.herokuapp.com";
 
