@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import React, { useState } from "react";
 import { postTweet } from "../../apis/tweets";
-import Swal from "sweetalert2";
+import { Toast } from "../../helpers/Toast";
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
 
 export const ArrowLeftIcon = () => {
@@ -29,17 +29,6 @@ const MainTweetModal = ({ userData, element }) => {
   const [wordCount, setWordCount] = useState(0);
   const [description, setDescription] = useState("");
   const { setIsGlobalTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-right",
-    customClass: {
-      popup: "colored-toast",
-    },
-    width: 394,
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-  });
 
   const handleClose = () => setShow(false);
   const handleShow = () => {

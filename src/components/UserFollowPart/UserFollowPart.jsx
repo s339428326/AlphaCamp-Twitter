@@ -5,15 +5,15 @@ import { useLocation, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const FollowItem = ({ userData }) => {
-  const { name, avatar, introduction, isFollowed, id } = userData;
   return (
     <div className={`${styles.followItem} d-flex`}>
       <div>
-        <Link to={`/${id}/profile`} className={styles.link}>
+        <Link to={`/${userData?.id}/profile`} className={styles.link}>
           <img
             className="rounded-circle"
             src={
-              avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              userData?.avatar ??
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
             }
             alt="user-avatar"
             width={50}
@@ -24,15 +24,15 @@ const FollowItem = ({ userData }) => {
       {/* 內容 */}
       <div className={styles.followInfo}>
         <div className={styles.followName}>
-          <Link to={`/${id}/profile`} className={styles.link}>
-            {name}{" "}
+          <Link to={`/${userData?.id}/profile`} className={styles.link}>
+            {userData?.name}{" "}
           </Link>
         </div>
         {/*<div className={styles.followAcount}>@test</div>*/}
-        <div className={styles.followDescription}>{introduction}</div>
+        <div className={styles.followDescription}>{userData?.introduction}</div>
       </div>
       <div className={styles.followBtn}>
-        <FollowButton isFollow={isFollowed} />
+        <FollowButton userData={userData} isFollowed={userData.isFollowed} />
       </div>
     </div>
   );

@@ -1,28 +1,60 @@
 import { useEffect, useState } from "react";
 import styles from "./FollowButton.module.scss";
-
-//[U_08] get-user-followings 取得指定使用者的追蹤者 GET /api/users/:id/followings
-//followingId
-
+import { useAuth } from "../../contexts/AuthContext";
+import { Toast } from "../../helpers/Toast";
+import { deleteFollow, postFollow } from "../../apis/followship";
 //readyOnly(boolean) => 設定只能讀取不能點擊
 
-const FollowButton = ({ followingId, isFollow, readyOnly }) => {
+const FollowButton = ({ userData, readyOnly, isFollowed }) => {
   const [follow, setFollow] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
+  const { currentMember } = useAuth();
+  const currentUserId = currentMember.id;
+
+  const handleFollowClick = async (userData, currentUserId) => {
+    if (currentUserId === userData.id) {
+      Toast.fire({
+        icon: "error",
+        title: "不要這麼喜歡自己",
+        willClose: () => setDisabled(false)
+      });     
+       setDisabled(true)
+      return;
+    }
+    try {
+      const { isFollowed, id } = userData;
+      if (isFollowed) {
+        await deleteFollow(id);
+        Toast.fire({
+          icon: "error",
+          title: "取消追隨",
+          willClose: () => setDisabled(false)
+        });
+      } else {
+        await postFollow(id);
+        Toast.fire({
+          icon: "success",
+          title: "成功追隨",
+          willClose: () => setDisabled(false)
+        });
+      }
+      setDisabled(true)
+      setFollow((currentValue) => !currentValue);
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  };
 
   useEffect(() => {
-    if (isFollow) {
-      setFollow(true);
-    } else {
-      setFollow(false);
-    }
-  }, [isFollow]);
-
+    setFollow(isFollowed);
+  }, [isFollowed]);
+  
+ 
   return (
     <button
-      onClick={() => {
-        //API[U_08]
-        if (!readyOnly) setFollow((currentValue) => !currentValue);
-      }}
+      disabled={disabled}
+      onClick={() => handleFollowClick(userData, currentUserId)}
       className={`
       ${styles["btn"]} 
       ${

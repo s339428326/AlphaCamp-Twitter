@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// const BASE = "https://rocky-sands-70657.herokuapp.com";
-const BASE = "https://shielded-brook-33484.herokuapp.com";
 
-const FOLLOW_URL = BASE + "/api/followships";
+const FOLLOW_URL = "https://rocky-sands-70657.herokuapp.com/api/followships";
+// const FOLLOW_URL = "https://shielded-brook-33484.herokuapp.com/api/followships";
+
 
 const axiosInstance = axios.create({ baseURL: FOLLOW_URL });
 
@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-export const follow = async (id) => {
+export const postFollow = async (id) => {
   try {
     const res = await axiosInstance.post(`${FOLLOW_URL}`, { id });
     return res;
@@ -29,7 +29,7 @@ export const follow = async (id) => {
   }
 };
 
-export const unfollow = async (id) => {
+export const deleteFollow = async (id) => {
   try {
     const res = await axiosInstance.delete(`${FOLLOW_URL}/${id}`, { id });
     return res;
