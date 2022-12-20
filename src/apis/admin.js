@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const ADMIN_URL = "https://rocky-sands-70657.herokuapp.com/api/admin";
-const ADMIN_URL = "https://shielded-brook-33484.herokuapp.com/api/admin/users";
+const ADMIN_URL = "https://rocky-sands-70657.herokuapp.com/api/admin";
+// const ADMIN_URL = "https://shielded-brook-33484.herokuapp.com/api/admin/users";
 
 const axiosInstance = axios.create({
   baseURL: ADMIN_URL,
