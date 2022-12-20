@@ -28,39 +28,42 @@ function App() {
       <BrowserRouter basename={basename}>
         <AuthProvider>
           <TweetStatusProvider>
-          <Routes>
-            <Route path="/" element={<UserLoginPage />} />
-            <Route path="/login" element={<UserLoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/:userId/setting" element={<UserSettingPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/admin_main" element={<AdminMainPage />} />
-            <Route path="/admin_users" element={<AdminUserPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/:userId" element={<UserMainPage />} />
-            <Route
-              path="/:userId/reply/:tweetId"
-              element={<UserMainReplyPage />}
-            />
-            <Route path="/:userId/follow" element={<UserFollowPage />}>
-              <Route index element={<UserFollowPart />} />
-              <Route path="follower" element={<UserFollowPart />} />
-              <Route path="following" element={<UserFollowPart />} />
-            </Route>
-            <Route path="/:userId/profile" element={<UserProfilePage />}>
-              <Route index element={<UserProfileTweet router="" />} />
+            <Routes>
+              <Route path="/" element={<UserLoginPage />} />
+              <Route path="/login" element={<UserLoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/:userId/setting" element={<UserSettingPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/admin_main" element={<AdminMainPage />} />
+              <Route path="/admin_users" element={<AdminUserPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+              <Route path="/:userId" element={<UserMainPage />} />
               <Route
-                path="tweet"
-                element={<UserProfileTweet router="tweet" />}
+                path="/:userId/reply/:tweetId"
+                element={<UserMainReplyPage />}
               />
-              <Route
-                path="reply"
-                element={<UserProfileTweet router="reply" />}
-              />
-              <Route path="like" element={<UserProfileTweet router="like" />} />
-            </Route>
-          </Routes>
-        </TweetStatusProvider>
+              <Route path="/:userId/follow" element={<UserFollowPage />}>
+                <Route index element={<UserFollowPart />} />
+                <Route path="follower" element={<UserFollowPart />} />
+                <Route path="following" element={<UserFollowPart />} />
+              </Route>
+              <Route path="/:userId/profile" element={<UserProfilePage />}>
+                <Route index element={<UserProfileTweet router="" />} />
+                <Route
+                  path="tweet"
+                  element={<UserProfileTweet router="tweet" />}
+                />
+                <Route
+                  path="reply"
+                  element={<UserProfileTweet router="reply" />}
+                />
+                <Route
+                  path="like"
+                  element={<UserProfileTweet router="like" />}
+                />
+              </Route>
+            </Routes>
+          </TweetStatusProvider>
         </AuthProvider>
       </BrowserRouter>
     </div>
