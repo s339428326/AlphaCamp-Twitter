@@ -9,6 +9,8 @@ import { useLocation } from "react-router-dom";
 
 import Swal from "sweetalert2";
 
+import { validAccount, validEmail, validPassword } from "../../helper/regex";
+
 export default function Setting({ onSave }) {
   const [setting, setSetting] = useState({
     account: "",
@@ -23,6 +25,33 @@ export default function Setting({ onSave }) {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    if (
+      !(
+        setting.account.match(validAccount) &&
+        setting.password.match(validPassword)
+      )
+    ) {
+      Swal.fire({
+        position: "top",
+        title: "修改失敗！",
+        text: "帳號或密碼不可含有特殊字元",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return;
+    }
+    if (!setting.email.match(validEmail)) {
+      Swal.fire({
+        position: "top",
+        title: "修改失敗！",
+        text: "Email格式不正確",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return;
+    }
     try {
       const success = await putUserAccountSetting({
         urlUserId,

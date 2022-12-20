@@ -70,7 +70,7 @@ const RegisterPage = () => {
       Swal.fire({
         position: "top",
         title: "註冊失敗！",
-        text: "Email格式不符",
+        text: "Email格式不正確",
         timer: 1000,
         icon: "error",
         showConfirmButton: false,
