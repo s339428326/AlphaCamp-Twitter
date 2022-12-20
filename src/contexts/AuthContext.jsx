@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
   const [payload, setPayload] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [avatar, setAvatar] = useState(null);
+  const [userName, setUserName] = useState(null);
   const { pathname } = useLocation();
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -45,6 +46,7 @@ export const AuthProvider = ({ children }) => {
         //只可以賦值一次
         if (check === null) {
           localStorage.setItem("name", tempPayload.name);
+          setUserName(tempPayload.name);
           if (tempPayload.avatar === null) {
             localStorage.setItem(
               "avatar",
@@ -70,12 +72,14 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(false);
     };
     checkTokenIsValid();
-  }, [pathname]);
+  }, [pathname, userName]);
 
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        userName,
+        setUserName,
         avatar,
         setAvatar,
         currentMember: payload && {

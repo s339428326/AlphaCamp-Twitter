@@ -2,15 +2,12 @@ import styles from "./MainReplyModal.module.scss";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 
-
-
 import { useAuth } from "../../contexts/AuthContext";
 
 import React, { useState } from "react";
 
 import { postReply } from "../../apis/tweets";
 import Swal from "sweetalert2";
-
 
 export const MessageIcon = ({ height, width }) => {
   return (
@@ -48,22 +45,16 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
-  // if (userAvatar === undefined) {
-  //   console.log("沒抓到");
-  // } else {
-  //   console.log("抓到了", userAvatar);
-  // }
+const MainReplyModal = ({ width, height, data }) => {
+  const localAvatar = localStorage.getItem("avatar");
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
-
   const { avatar } = useAuth();
+  const [comment, setComment] = useState("");
+  const tweetId = data?.replyPageTweetId || data?.tweetId;
 
-  const [ comment, setComment ] = useState('');
-  const tweetId = data.tweetId
-
-   const Toast = Swal.mixin({
+  const Toast = Swal.mixin({
     toast: true,
     position: "top-right",
     customClass: {
@@ -83,17 +74,18 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
 
   const showText = (e) => {
     setWordCount(e.target.value.length);
-    setComment(e.target.value)
+    setComment(e.target.value);
   };
   const handleClick = () => {
-    setComment('')
-    setShow(false)
-  }
+    setComment("");
+    setShow(false);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const postStatus = await postReply( tweetId, comment);
+      console.log(tweetId);
+      const postStatus = await postReply(tweetId, comment);
       if (postStatus && postStatus.status === 200) {
         setComment("");
         setShow(false);
@@ -125,10 +117,7 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
       >
         <div className={styles.replyModalContainer}>
           <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
-            <button
-              className="btn me-3 d-sm-none"
-              onClick={handleClick}
-            >
+            <button className="btn me-3 d-sm-none" onClick={handleClick}>
               <ArrowLeftIcon />
             </button>
             <CloseButton
@@ -178,6 +167,7 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
                     className="rounded-circle"
                     src={
                       avatar ||
+                      localAvatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"

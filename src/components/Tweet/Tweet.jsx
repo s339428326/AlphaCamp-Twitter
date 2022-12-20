@@ -64,7 +64,8 @@ export const RedHeartIcon = () => {
 
 const Tweet = ({ data }) => {
   const userId = localStorage.getItem("id");
-  const { currentMember, avatar } = useAuth();
+  const { currentMember, avatar, userName } = useAuth();
+  const localAvatar = localStorage.getItem("avatar");
 
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.likeCount);
@@ -95,10 +96,13 @@ const Tweet = ({ data }) => {
             height={50}
           />
         ) : (
+          // Test
           <img
             className="rounded-circle"
             src={
-              avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              avatar ||
+              localAvatar ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
             }
             alt="user-avatar"
             width={50}
@@ -111,7 +115,12 @@ const Tweet = ({ data }) => {
           to={`/${data?.User.id}/profile`}
           className={`${styles["tweet-header"]} d-flex align-items-center gap-2`}
         >
-          <strong>{data?.User.name || "無讀取資料"}</strong>
+          {currentMember.id !== data?.User.id ? (
+            <strong>{data?.User.name || "無讀取資料"}</strong>
+          ) : (
+            <strong>{userName || data?.User.name || "無讀取資料"}</strong>
+          )}
+
           <small className="text-light mb-0">
             @{data?.User.account || "無讀取資料"}・
             {useMoment(data?.createdAt) || "無讀取資料"}
