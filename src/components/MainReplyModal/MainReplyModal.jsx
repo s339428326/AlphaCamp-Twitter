@@ -45,16 +45,14 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
+const MainReplyModal = ({ width, height, data }) => {
   const localAvatar = localStorage.getItem("avatar");
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
-
   const { avatar } = useAuth();
-
   const [comment, setComment] = useState("");
-  const tweetId = data?.tweetId;
+  const tweetId = data?.replyPageTweetId || data?.tweetId;
 
   const Toast = Swal.mixin({
     toast: true,
@@ -86,6 +84,7 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(tweetId);
       const postStatus = await postReply(tweetId, comment);
       if (postStatus && postStatus.status === 200) {
         setComment("");
