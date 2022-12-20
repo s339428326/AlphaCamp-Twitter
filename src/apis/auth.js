@@ -1,7 +1,10 @@
 import axios from "axios";
 
 import Swal from "sweetalert2";
-const AUTH_URL = "https://rocky-sands-70657.herokuapp.com/api/";
+// const BASE = "https://rocky-sands-70657.herokuapp.com";
+const BASE = "https://shielded-brook-33484.herokuapp.com";
+
+const AUTH_URL = BASE + "/api/";
 
 export const login = async ({ account, password }) => {
   console.log({ account, password });

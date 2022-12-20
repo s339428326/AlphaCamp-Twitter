@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const FOLLOW_URL = "https://rocky-sands-70657.herokuapp.com/api/followships";
+// const BASE = "https://rocky-sands-70657.herokuapp.com";
+const BASE = "https://shielded-brook-33484.herokuapp.com";
+
+const FOLLOW_URL = BASE + "/api/followships";
 
 const axiosInstance = axios.create({ baseURL: FOLLOW_URL });
 
