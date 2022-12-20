@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
 
+import { postLike, postUnlike } from "../../apis/tweets";
+
 //icon
 export const HeartIcon = () => {
   return (
@@ -63,22 +65,34 @@ export const RedHeartIcon = () => {
 */
 
 const Tweet = ({ data }) => {
+  // console.log(data);
   const userId = localStorage.getItem("id");
   const { currentMember, avatar, userName } = useAuth();
   const localAvatar = localStorage.getItem("avatar");
 
-  /*Like 暫時作法*/
+  /*Like ver.1*/
   const [likeCount, setLikeCount] = useState(data?.likeCount);
-  const [like, setLike] = useState(false);
-  const handleLike = () => {
-    if (like) {
-      setLikeCount((prevValue) => prevValue - 1);
-    } else {
-      setLikeCount((prevValue) => prevValue + 1);
-    }
+  const [like, setLike] = useState(data?.isLiked);
+  const handleLike = async () => {
+    console.log(1);
+    //渲染頁面
     setLike((prevValue) => !prevValue);
+    if (like) {
+      //post 取消Like
+      setLikeCount((prevValue) => {
+        postUnlike(data?.id);
+        return prevValue - 1;
+      });
+    } else {
+      //post 新增Like
+      setLikeCount((prevValue) => {
+        postLike(data?.id);
+        return prevValue + 1;
+      });
+    }
   };
-  /*Like 暫時作法*/
+  /*Like ver.1*/
+
   return (
     <section
       className={`${styles["LikeTweet"]} border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
