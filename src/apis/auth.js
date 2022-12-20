@@ -18,7 +18,7 @@ export const login = async ({ account, password }) => {
     if (token) return { success: true, ...data };
     return data;
   } catch (error) {
-    const errorText = () => {
+    const errorMessage = () => {
       if (error.response.data.message === "This account has not registered.") {
         return "帳號不存在";
       }
@@ -36,7 +36,7 @@ export const login = async ({ account, password }) => {
     Swal.fire({
       position: "top",
       title: "登入失敗！",
-      text: errorText(),
+      text: errorMessage(),
       timer: 1000,
       icon: "error",
       showConfirmButton: false,
@@ -52,7 +52,7 @@ export const register = async ({
   name,
   email,
   password,
-  checkPassword,
+  passwordCheck,
 }) => {
   try {
     const { data } = await axios.post(AUTH_URL + "users", {
@@ -60,7 +60,7 @@ export const register = async ({
       name,
       email,
       password,
-      checkPassword,
+      passwordCheck,
     });
 
     const { token } = data.data;
@@ -110,7 +110,7 @@ export const register = async ({
 
 export const checkPermission = async (authToken) => {
   try {
-    const response = await axios.get(`${AUTH_URL}/auth/test-token`, {
+    const response = await axios.get(AUTH_URL + "auth/test-token", {
       headers: {
         Authorization: "Bearer " + authToken,
       },
@@ -126,7 +126,7 @@ export const checkPermission = async (authToken) => {
 export const adminLogin = async ({ account, password }) => {
   console.log({ account, password });
   try {
-    const { data } = await axios.post(`${AUTH_URL}/admin/signin`, {
+    const { data } = await axios.post(AUTH_URL + "admin/signin", {
       account,
       password,
     });

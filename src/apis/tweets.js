@@ -1,9 +1,7 @@
 import axios from "axios";
 
-// const BASE = "https://rocky-sands-70657.herokuapp.com";
-const BASE = "https://shielded-brook-33484.herokuapp.com";
-
-const TWEET_URL = BASE + "/api/tweets";
+const TWEET_URL = "https://rocky-sands-70657.herokuapp.com/api/tweets";
+// const TWEET_URL = "https://shielded-brook-33484.herokuapp.com/api/tweets";
 
 const axiosInstance = axios.create({ baseURL: TWEET_URL });
 

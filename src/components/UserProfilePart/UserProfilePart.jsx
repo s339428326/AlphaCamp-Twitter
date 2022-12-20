@@ -427,7 +427,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                 </button>
 
                 {/* 是否開啟追隨 */}
-                <FollowButton isFollow={false} />
+                <FollowButton userData={userData} isFollowed={userData.isFollowed} />
               </div>
             ) : (
               <div className="d-flex justify-content-end">

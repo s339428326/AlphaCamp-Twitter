@@ -1,7 +1,9 @@
 import axios from "axios";
 
-// const BASE = "https://rocky-sands-70657.herokuapp.com";
-const BASE = "https://shielded-brook-33484.herokuapp.com";
+import Swal from "sweetalert2";
+
+const BASE = "https://rocky-sands-70657.herokuapp.com";
+// const BASE = "https://shielded-brook-33484.herokuapp.com";
 
 const BASE_URL = BASE + "/api/users/";
 
@@ -121,5 +123,82 @@ export const getUserFollowers = async (id) => {
     return res;
   } catch (error) {
     console.error("[Get User Follower Failed]: ", error);
+  }
+};
+
+// [U_10] get-top-users 取得跟隨者數量前10名的推薦名單 GET /api/users/top
+
+export const getTopUsers = async () => {
+  try {
+    const res = await axiosInstance.get(BASE_URL + "top");
+    return res;
+  } catch (error) {
+    console.error("[Get Top Users Failed]: ", error);
+  }
+};
+
+//[U_11] put-user-account-setting 編輯登入使用者的設定 PUT /api/users/:id/setting
+export const putUserAccountSetting = async ({
+  account,
+  name,
+  email,
+  password,
+  checkPassword,
+  urlUserId,
+}) => {
+  try {
+    const { data } = await axiosInstance.put(
+      `${BASE_URL}${urlUserId}/setting`,
+      {
+        account,
+        name,
+        email,
+        password,
+        checkPassword,
+      }
+    );
+
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("[edit Setting failed]: ", error.response.data.message);
+    const errorMessage = () => {
+      if (error.response.data.message === "All field are required!") {
+        return "任一欄位為空";
+      }
+      if (error.response.data.message === "Cannot edit other user's setting.") {
+        return "帳號輸入錯誤";
+      }
+      if (error.response.data.message === "Email input is invalid!") {
+        return "email格式有誤";
+      }
+      if (
+        error.response.data.message ===
+        "Name field has max length of 50 characters."
+      ) {
+        return "名稱超過五十字元";
+      }
+      if (error.response.data.message === "Email already exists!") {
+        return "email已被註冊";
+      }
+      if (error.response.data.message === "Account name already exists!") {
+        return "帳號已被註冊";
+      }
+      if (
+        error.response.data.message ===
+        "Password and confirmPassword do not match."
+      ) {
+        return "密碼與確認密碼不符";
+      }
+    };
+
+    Swal.fire({
+      position: "top",
+      title: "修改失敗！",
+      text: errorMessage(),
+      timer: 1000,
+      icon: "error",
+      showConfirmButton: false,
+    });
   }
 };
