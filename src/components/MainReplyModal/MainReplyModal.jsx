@@ -46,11 +46,7 @@ export const ArrowLeftIcon = () => {
 };
 
 const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
-  // if (userAvatar === undefined) {
-  //   console.log("沒抓到");
-  // } else {
-  //   console.log("抓到了", userAvatar);
-  // }
+  const localAvatar = localStorage.getItem("avatar");
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
@@ -172,6 +168,7 @@ const MainReplyModal = ({ avatarImg, inputValue, width, height, data }) => {
                     className="rounded-circle"
                     src={
                       avatar ||
+                      localAvatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"

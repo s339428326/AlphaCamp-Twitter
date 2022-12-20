@@ -143,7 +143,7 @@ export const ArrowLeftIcon = () => {
 */
 
 const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
-  const { setAvatar } = useAuth();
+  const { setAvatar, setUserName } = useAuth();
 
   //分析使用者路由是否存在
   useEffect(() => {
@@ -293,6 +293,8 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       avatar: newData?.avatar,
       cover: newData?.cover,
     });
+    localStorage.setItem("name", newData?.name);
+    setUserName(newData?.name);
     localStorage.setItem("cover", newData?.cover);
     localStorage.setItem("avatar", newData?.avatar);
     setAvatar(newData?.avatar);

@@ -1,7 +1,9 @@
 import styles from "./MainReplyTweet.module.scss";
 import MainReplyModal from "../MainReplyModal/MainReplyModal";
 import { useState } from "react";
-export const HeartIcon = ({size}) => {
+import useMoment from "../../hooks/useMoment";
+
+export const HeartIcon = ({ size }) => {
   return (
     <svg
       width={size}
@@ -18,7 +20,7 @@ export const HeartIcon = ({size}) => {
   );
 };
 
-export const HeartedIcon = ({size}) => {
+export const HeartedIcon = ({ size }) => {
   return (
     <svg
       width={size}
@@ -35,45 +37,64 @@ export const HeartedIcon = ({size}) => {
   );
 };
 
-const MainReplyTweet = ({ user }) => {
-  const [like, setLike] = useState(false);
+const MainReplyTweet = ({ data }) => {
+  //js 原生時間處理
+  const date = new Date(data?.createdAt);
+  const dateResult = date.toLocaleString().toString().split(" ");
+  const resultDate = dateResult[0];
+  const resultTime = dateResult[1];
+
+  const [like, setLike] = useState(data?.isLiked);
   const handleLike = () => {
     setLike((current) => !current);
   };
   return (
     <div className={styles.container}>
       <div className="d-flex pb-2">
-      <div className={styles.avatarContainer}>
-        <img
-          src={user || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-          alt="user-avatar"
-          width={50}
-          height={50}
-        />
+        <div className={styles.avatarContainer}>
+          <img
+            className="rounded-circle"
+            src={
+              data?.User.avatar ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            alt="user-avatar"
+            width={50}
+            height={50}
+          />
+        </div>
+        <div className={styles.tweetInfo}>
+          <div className={styles.userName}>{data?.User.name}</div>
+          <div className={styles.userAccount}>@{data?.User.account}</div>
+        </div>
       </div>
-      <div className={styles.tweetInfo}>
-        <div className={styles.userName}>Apple</div>
-        <div className={styles.userAccount}>@apple</div>
-      </div>
-      </div>
-      <div className={styles.infoContent}>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ullam
-        laboriosam! Libero eos aut nostrum. Tempora, quidem reiciendis!
-        Expedita, ea. Nisi impedit voluptates incidunt molestias, soluta modi
-        deleniti magnam asperiores?
-      </div>
-      <div className={styles.time}>上午 10:05 ．2021年11月10日</div>
+      <div className={styles.infoContent}>{data?.description}</div>
+      <div className={styles.time}>{`${resultTime}．${resultDate}`}</div>
       <div className={styles.count}>
-        <span className={styles.countNum}>34</span>
+        <span className={styles.countNum}>{data?.replyCount}</span>
         <span className={styles.countTitle}>回覆</span>
-        <span className={styles.countNum}>808</span>
+        <span className={styles.countNum}>{data?.likeCount}</span>
         <span className={styles.countTitle}>喜歡次數</span>
       </div>
       <div className={styles.iconContainer}>
-        <div className={styles.msgIcon}><MainReplyModal width={26} height={26}/></div>
-        <span><button onClick={handleLike}>
-          {like ? <HeartedIcon size={40} /> : <HeartIcon size={40}/>}
-        </button></span>
+        <div className={styles.msgIcon}>
+          <MainReplyModal
+            width={26}
+            height={26}
+            data={{
+              name: data?.User.name,
+              account: data?.User.account,
+              avatar: data?.User.avatar,
+              description: data?.description,
+              createdAt: useMoment(data?.createdAt),
+            }}
+          />
+        </div>
+        <span>
+          <button onClick={handleLike}>
+            {like ? <HeartedIcon size={40} /> : <HeartIcon size={40} />}
+          </button>
+        </span>
       </div>
     </div>
   );

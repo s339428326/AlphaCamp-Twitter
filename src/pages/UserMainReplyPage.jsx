@@ -9,23 +9,40 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import { getOneTweet } from "../apis/tweets";
+import { useEffect, useState } from "react";
+import { getOneTweet, getTweetReplies } from "../apis/tweets";
+
 const UserMainReplyPage = ({ user }) => {
   const { pathname } = useLocation();
   const tweetId = pathname.split("/")[3];
+  const [replyData, setReplyData] = useState();
+  const [replyList, setReplyList] = useState();
 
-  // useEffect(() => {
-  //   const getOneTweet = async () => {
-  //     try {
-  //       const res = await getOneTweet(tweetId);
-  //       console.log(res);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getOneTweet();
-  // });
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await getOneTweet(tweetId);
+        setReplyData({ ...res });
+        console.log("getOneTweet", res);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, [tweetId]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await getTweetReplies(tweetId);
+        setReplyList([...res]);
+        console.log("getTweetReplies", res);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, [tweetId]);
 
   return (
     <Container>
@@ -39,8 +56,16 @@ const UserMainReplyPage = ({ user }) => {
           <div className="sticky-top">
             <PageTitle title={"推文"} tweetQuantity={user} />
           </div>
-          <MainReplyTweet />
-          <MainReply />
+          <MainReplyTweet data={replyData} />
+          {replyList && (
+            <ul className="list-unstyled ps-0">
+              {replyList.map((item) => (
+                <li>
+                  <MainReply data={item} />
+                </li>
+              ))}
+            </ul>
+          )}
         </Col>
         <Col xs={4} md={3}>
           <div className="sticky-top">

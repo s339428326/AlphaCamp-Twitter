@@ -1,8 +1,8 @@
 .container {
   padding: 16px 21px 0px 16px;
-  border-left: 1px solid #E6ECF0;
-  border-right: 1px solid #E6ECF0;
-  border-bottom: 1px solid #E6ECF0;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
 
   .avatarContainer {
     padding-right: 8px;
@@ -19,6 +19,7 @@
     color: #6c757d;
   }
   .infoContent {
+    min-height: 188px;
     font-weight: 400;
     font-size: 24px;
     line-height: 36px;
@@ -57,14 +58,13 @@
     display: flex;
     margin-bottom: 0;
     button {
-        border: none;
-        background-color: transparent;
-        padding-top: 20px;
-      }
-    
-      .msgIcon {
-        padding-right: 14%;
-      }
+      border: none;
+      background-color: transparent;
+      padding-top: 20px;
+    }
+
+    .msgIcon {
+      padding-right: 14%;
+    }
   }
-  
 }

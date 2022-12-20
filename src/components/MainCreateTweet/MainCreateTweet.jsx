@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 const MainCreateTweet = ({ userData }) => {
   const { avatar } = useAuth();
+  const localAvatar = localStorage.getItem("avatar");
   return (
     <div className={styles.tweetInput}>
       <div className={styles.inputContainer}>
@@ -15,6 +16,7 @@ const MainCreateTweet = ({ userData }) => {
                 className="rounded-circle"
                 src={
                   avatar ||
+                  localAvatar ||
                   "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                 }
                 alt="user-avatar"

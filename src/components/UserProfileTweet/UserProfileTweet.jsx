@@ -58,7 +58,7 @@ const Tweets = () => {
   return (
     <ul className="list-unstyled ps-0">
       {data.map((item) => (
-        <li key={item.id}>
+        <li key={`tweet-${item.id}`}>
           <Tweet data={item} />
         </li>
       ))}
@@ -84,7 +84,7 @@ const ReplyList = () => {
   return (
     <ul className="list-unstyled ps-0">
       {data.map((item) => (
-        <li key={item.id}>
+        <li key={`reply-${item.id}`}>
           <MainReply data={item} />
         </li>
       ))}
@@ -111,7 +111,7 @@ const LikeList = () => {
   return (
     <ul className="list-unstyled ps-0">
       {data.map((item) => (
-        <li key={item.TweetId}>
+        <li key={`like-${item.TweetId}`}>
           <UserLikeTweet data={item} />
         </li>
       ))}
