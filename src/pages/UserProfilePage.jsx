@@ -1,8 +1,8 @@
 //Component
 import UserSidebar from "../components/UserSidebar/UserSidebar";
-import TopUser from "../components/TopUser/TopUser";
 import UserProfilePart from "../components/UserProfilePart/UserProfilePart";
 import UserProfileTabs from "../components/UserProfileTabs/UserProfileTabs";
+import TopUserList from '../components/TopUserList/TopUserList'
 
 //react-bootstrap
 import Container from "react-bootstrap/Container";
@@ -16,13 +16,16 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 //api
-import { getUserData } from "../apis/userData";
+import { getTopUsers, getUserData } from "../apis/userData";
 import { useAuth } from "../contexts/AuthContext";
 
 const UserProfilePage = () => {
   ///////////update userData////////////
   //userData狀態
   const [userData, setUserData] = useState();
+  const [topUsers, setTopUsers] = useState();
+
+
   const { currentMember } = useAuth();
 
   //分析路由
@@ -51,6 +54,18 @@ const UserProfilePage = () => {
     userInfo();
   }, [currentMember.id, urlUserId, navigate]);
 
+  useEffect(() => {
+    const topUsers = async () => {
+      try {
+        const { data } = await getTopUsers();
+        setTopUsers(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    topUsers();
+  }, []);
+
   ///////////update userData////////////
   return (
     <Container>
@@ -67,7 +82,7 @@ const UserProfilePage = () => {
         </Col>
         <Col xs={3}>
           <div className="sticky-top">
-            <TopUser />
+            <TopUserList topUsers={topUsers}/>
           </div>
         </Col>
       </Row>

@@ -3,15 +3,48 @@ import AuthInput from "../AuthInput/AuthInput";
 import styles from "./Setting.module.scss";
 //React
 import { useState } from "react";
+import { putUserAccountSetting } from "../../apis/userData";
 
-export default function Setting() {
+import { useLocation } from "react-router-dom";
+
+import Swal from "sweetalert2";
+
+export default function Setting({ onSave }) {
   const [setting, setSetting] = useState({
     account: "",
     name: "",
     email: "",
     password: "",
-    passwordCheck: "",
+    checkPassword: "",
   });
+
+  const url = useLocation().pathname.split("/");
+  const urlUserId = url[1];
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      const success = await putUserAccountSetting({
+        urlUserId,
+        account: setting["account"],
+        name: setting["name"],
+        email: setting["email"],
+        password: setting["password"],
+        checkPassword: setting["checkPassword"],
+      });
+      if (success) {
+        Swal.fire({
+          position: "top",
+          title: "修改成功！",
+          timer: 1000,
+          icon: "success",
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.error(error.response.data.message);
+    }
+  };
 
   const handleInput = (keyName) => (currentValue) => {
     setSetting({
@@ -19,6 +52,7 @@ export default function Setting() {
       [keyName]: currentValue,
     });
   };
+
   return (
     <form
       action=""
@@ -56,12 +90,15 @@ export default function Setting() {
         label="密碼確認"
         type="password"
         autoComplete="off"
-        value={setting.passwordCheck}
-        onChange={handleInput("passwordCheck")}
+        value={setting.checkPassword}
+        onChange={handleInput("checkPassword")}
         placeholder="請再次輸入密碼"
       />
       <div className="mt-3 d-flex justify-content-end">
-        <button className="btn btn-primary text-white rounded-pill">
+        <button
+          onClick={handleSave}
+          className="btn btn-primary text-white rounded-pill"
+        >
           儲存
         </button>
       </div>
