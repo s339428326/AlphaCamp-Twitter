@@ -29,6 +29,7 @@ const MainTweetModal = ({ userData, element }) => {
   const [wordCount, setWordCount] = useState(0);
   const [description, setDescription] = useState("");
   const { setIsGlobalTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -45,6 +46,7 @@ const MainTweetModal = ({ userData, element }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       const postStatus = await postTweet(description);
       if (postStatus && postStatus === "success") {
@@ -64,6 +66,7 @@ const MainTweetModal = ({ userData, element }) => {
         title: "推文發送失敗！",
       });
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -124,12 +127,24 @@ const MainTweetModal = ({ userData, element }) => {
                 {wordCount === 140 && <span>字數不可以超過140字</span>}
                 {wordCount < 140 && wordCount !== 0 && <span></span>}
                 <button
-                  type="button"
-                  className="btn btn-primary text-white rounded-pill"
-                  disabled={wordCount === 0 ? true : false}
+                  className={`btn btn-primary text-white rounded-pill ${
+                    isSubmitting ? "disabled" : ""
+                  }`}
+                  disabled={wordCount === 0 || isSubmitting}
                   onClick={handleSubmit}
                 >
-                  推文
+                  {isSubmitting ? (
+                    <>
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Submitting...
+                    </>
+                  ) : (
+                    "推文"
+                  )}
                 </button>
               </div>
             </form>
