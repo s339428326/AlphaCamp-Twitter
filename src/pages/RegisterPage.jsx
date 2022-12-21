@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 
 import { useAuth } from "../contexts/AuthContext";
 
-import { validAccount, validPassword, validEmail } from "../helpers/regex";
+import { validAccount, validPassword, validEmail } from "../helper/regex";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
