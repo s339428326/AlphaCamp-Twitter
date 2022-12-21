@@ -78,19 +78,19 @@ const UserMainPage = () => {
   return (
     <Container>
       <Row>
-        <Col xs={1} lg={2}>
+        <Col xs={1} md={1} lg={2}>
           <div className="sticky-top">
             <UserSidebar userData={userData} />
           </div>
         </Col>
-        <Col xs={7}>
+        <Col xs={11} md={11} lg={7}>
           <div className="sticky-top">
             <PageTitle title={"首頁"} />
           </div>
           <MainCreateTweet userData={userData} />
           <Tweets userId={currentMember.id} />
         </Col>
-        <Col xs={4} lg={3}>
+        <Col xs={0} md={0} lg={3}>
           <div className="sticky-top ">
             <TopUserList />
           </div>
