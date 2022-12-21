@@ -180,8 +180,10 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       ...formData,
       cover: localStorage.getItem("cover"),
       avatar: localStorage.getItem("avatar"),
+      name: localStorage.getItem("name"),
+      introduction: localStorage.getItem("introduction"),
     });
-    setErrorMassage({ ...errorMessage, userName: "" });
+    setErrorMassage({ ...errorMessage, userName: "", introduction: "" });
     setShow(false);
   };
 
@@ -200,6 +202,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   //////AuthInput嘗試實作錯誤訊息//////////
   const [errorMessage, setErrorMassage] = useState({
     userName: "",
+    introduction: "",
   });
 
   const handleName = (value) => {
@@ -209,6 +212,10 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       setErrorMassage({ ...errorMessage, userName: "" });
       setFormData({ ...formData, name: value });
     }
+
+    if (value && value.length >= 50) {
+      setErrorMassage({ ...errorMessage, userName: "已達字數最大上限" });
+    }
   };
   //////AuthInput嘗試實作錯誤訊息//////////
   const [count, setCount] = useState(
@@ -217,6 +224,13 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
 
   const handleIntroduction = (e) => {
     setCount(e.target.value.length);
+
+    if (e.target.value.length === 160) {
+      setErrorMassage({ ...errorMessage, introduction: "已達字數最大上限" });
+    } else {
+      setErrorMassage({ ...errorMessage, introduction: "" });
+    }
+
     setFormData({ ...formData, introduction: e.target.value });
   };
 
@@ -484,7 +498,9 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                         <input
                           type="submit"
                           className={`${
-                            errorMessage.userName.length > 0 ? "disabled" : ""
+                            errorMessage.userName === "請勿空白"
+                              ? "disabled"
+                              : ""
                           } btn btn-primary text-white rounded-pill ms-auto`}
                           value="儲存"
                         />
@@ -514,7 +530,10 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                             name="bg-edit"
                             id="bg-edit"
                           />
-                          <button className="btn">
+                          <button
+                            onClick={(e) => e.preventDefault()}
+                            className="btn"
+                          >
                             <CrossIcon />
                           </button>
                         </div>
@@ -555,7 +574,11 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                           error={errorMessage.userName}
                         />
                         <div
-                          className={`${styles["input-style"]} d-flex flex-column`}
+                          className={`${
+                            errorMessage.introduction.length > 0
+                              ? styles["error"]
+                              : styles["input-style"]
+                          } d-flex flex-column`}
                         >
                           <label htmlFor="userIntroduction">自我介紹</label>
                           <textarea
@@ -571,7 +594,14 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                             cols="30"
                             rows="5"
                           ></textarea>
-                          <p className={styles["count"]}>{count}/160</p>
+                          <div
+                            className={`${styles["footer"]} d-flex justify-content-between`}
+                          >
+                            <p className="mb-0">{errorMessage.introduction}</p>
+                            <small className={`${styles["count"]} mb-0`}>
+                              {count}/160
+                            </small>
+                          </div>
                         </div>
                       </div>
                     </Modal.Body>
