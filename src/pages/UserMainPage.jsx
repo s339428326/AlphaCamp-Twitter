@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
-import { getUserData, getTopUsers } from "../apis/userData";
+import { getUserData } from "../apis/userData";
 import { getAllTweets } from "../apis/tweets";
 import { useTweetStatus } from "../contexts/TweetStatusContext";
 import { useLocation } from "react-router-dom";
@@ -53,7 +53,6 @@ const UserMainPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, currentMember } = useAuth();
   const [userData, setUserData] = useState();
-  const [topUsers, setTopUsers] = useState([]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -76,18 +75,6 @@ const UserMainPage = () => {
     userData();
   }, [currentMember.id, navigate]);
 
-  useEffect(() => {
-    const topUsers = async () => {
-      try {
-        const { data } = await getTopUsers();
-        setTopUsers(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    topUsers();
-  }, []);
-
   return (
     <Container>
       <Row>
@@ -105,7 +92,7 @@ const UserMainPage = () => {
         </Col>
         <Col xs={4} lg={3}>
           <div className="sticky-top ">
-            <TopUserList topUsers={topUsers} />
+            <TopUserList />
           </div>
         </Col>
       </Row>

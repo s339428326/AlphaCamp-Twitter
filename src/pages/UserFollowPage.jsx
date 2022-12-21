@@ -6,7 +6,7 @@ import TopUserList from "../components/TopUserList/TopUserList";
 //import { FollowItem } from "../components/UserFollowPart/UserFollowPart";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getUserData, getTopUsers } from "../apis/userData";
+import { getUserData } from "../apis/userData";
 import { useAuth } from "../contexts/AuthContext";
 
 // import jwt_decode from "jwt-decode";
@@ -17,7 +17,6 @@ import Col from "react-bootstrap/Col";
 const UserFollowPage = () => {
   const [userData, setUserData] = useState();
   const navigate = useNavigate();
-    const [topUsers, setTopUsers] = useState([]);
   const { isAuthenticated, currentMember } = useAuth();
 
   const url = useLocation().pathname.split("/");
@@ -27,7 +26,7 @@ const UserFollowPage = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
-    } 
+    }
   }, [navigate, isAuthenticated]);
 
   useEffect(() => {
@@ -44,17 +43,6 @@ const UserFollowPage = () => {
     };
     userData();
   }, [currentMember.id, navigate]);
-  useEffect(() => {
-    const topUsers = async () => {
-      try {
-        const { data } = await getTopUsers();
-        setTopUsers(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    topUsers();
-  }, []);
 
   return (
     <Container>
@@ -79,7 +67,7 @@ const UserFollowPage = () => {
         </Col>
         <Col xs={4} md={3}>
           <div className="sticky-top">
-            <TopUserList topUsers={topUsers}/>
+            <TopUserList />
           </div>
         </Col>
       </Row>
