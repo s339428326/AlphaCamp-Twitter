@@ -26,7 +26,7 @@ useEffect(()=> {
     const buttonName = e.target.innerText;
     
     switch (buttonName) {
-      case "跟隨者":
+      case "追隨者":
         setActive({
           follower: true,
           following: false,
@@ -34,7 +34,7 @@ useEffect(()=> {
         navigate(`/${userId}/follow/follower`);
 
         break;
-      case "正在跟隨":
+      case "正在追隨":
         setActive({
           follower: false,
           following: true,
@@ -54,10 +54,10 @@ return (
   <div>
     <ul className="border-start border-end border-bottom d-flex flex-wrap list-unstyled">
       <li>
-        <button className={`${styles.btn} ${active.follower && styles.active}`} onClick={handleActive}>跟隨者</button>
+        <button className={`${styles.btn} ${active.follower && styles.active}`} onClick={handleActive}>追隨者</button>
       </li>
       <li>
-        <button className={`${styles.btn} ${active.following && styles.active}`} onClick={handleActive}>正在跟隨</button>
+        <button className={`${styles.btn} ${active.following && styles.active}`} onClick={handleActive}>正在追隨</button>
       </li>
     </ul>
   </div>
