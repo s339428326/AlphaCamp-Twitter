@@ -56,6 +56,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
   const { avatar } = useAuth();
   const [comment, setComment] = useState("");
   const { setIsReplyTweetUpdate } = useTweetStatus();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const tweetId = data?.replyPageTweetId || data?.tweetId;
 
@@ -76,6 +77,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       console.log(tweetId);
       const postStatus = await postReply(tweetId, comment);
@@ -98,6 +100,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
         title: "回覆失敗！",
       });
     }
+    setIsSubmitting(false);
   };
   return (
     <>
@@ -192,11 +195,24 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                 {wordCount === 140 && <span>字數不可以超過140字</span>}
                 {wordCount < 140 && wordCount !== 0 && <span></span>}
                 <button
-                  className="btn btn-primary text-white rounded-pill"
-                  disabled={wordCount === 0 ? true : false}
+                  className={`btn btn-primary text-white rounded-pill ${
+                    isSubmitting ? "disabled" : ""
+                  }`}
+                  disabled={wordCount === 0 || isSubmitting}
                   onClick={handleSubmit}
                 >
-                  回覆
+                  {isSubmitting ? (
+                    <>
+                      <span
+                        className="spinner-grow spinner-grow-sm btn-primary rounded-pill"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Submitting...
+                    </>
+                  ) : (
+                    "回覆"
+                  )}
                 </button>
               </div>
             </form>
