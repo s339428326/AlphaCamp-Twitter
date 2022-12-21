@@ -104,7 +104,6 @@ const UserLikeTweet = ({ data }) => {
       <div>
         {data?.Tweet.User.id !== Number(userId) ? (
           <Link to={`/${data?.Tweet.User.id}/profile`}>
-            {/* {`${data?.Tweet.User.id} ${userId}`} */}
             <img
               className="rounded-circle"
               src={data?.Tweet.User.avatar}
