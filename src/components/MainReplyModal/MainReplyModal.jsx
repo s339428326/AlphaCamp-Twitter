@@ -83,7 +83,9 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
         setComment("");
         setShow(false);
         setIsReplyTweetUpdate(true);
-        setTweetReplyCount((prevValue) => prevValue + 1);
+        if (setTweetReplyCount) {
+          setTweetReplyCount((prevValue) => prevValue + 1);
+        }
         Toast.fire({
           icon: "success",
           title: "回覆成功！",
