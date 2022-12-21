@@ -6,9 +6,14 @@ import MainReplyModal from "../MainReplyModal/MainReplyModal";
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 
+
+//helper
+import momentFormat from "../../helpers/moment";
+
 //hook
 import useMoment from "../../hooks/useMoment";
 import { useAuth } from "../../contexts/AuthContext";
+
 
 //api
 import { postLike, postUnlike } from "../../apis/tweets";
@@ -132,7 +137,7 @@ const UserLikeTweet = ({ data }) => {
           <strong>{data?.Tweet.User.name || "無讀取資料"}</strong>
           <small className="text-light mb-0">
             @{data?.Tweet.User.account || "無讀取資料"}・
-            {useMoment(data?.createdAt) || "無讀取資料"}
+            {momentFormat(data?.createdAt) || "無讀取資料"}
           </small>
         </Link>
         <Link to={`/${data?.Tweet.User.id}/reply/${data?.TweetId}`}>
@@ -150,7 +155,7 @@ const UserLikeTweet = ({ data }) => {
                 account: data?.Tweet.User.account,
                 avatar: data?.Tweet.User.avatar,
                 description: data?.Tweet.description,
-                createdAt: useMoment(data?.createdAt),
+                createdAt: momentFormat(data?.createdAt),
               }}
             />
             <span className="font-monospace text-light me-4">

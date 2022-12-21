@@ -3,6 +3,7 @@ import styles from "./TopUserList.module.scss";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getTopUsers } from "../../apis/userData";
+import { useTweetStatus } from "../../contexts/TweetStatusContext";
 
 export const TopUser = ({ user }) => {
   const name = user.name;
@@ -44,17 +45,19 @@ export const TopUser = ({ user }) => {
 
 const TopUserList = () => {
   const [topUsers, setTopUsers] = useState();
+  const { isFollowingUpdate, setIsFollowingUpdate } = useTweetStatus();
   useEffect(() => {
     const topUsers = async () => {
       try {
         const { data } = await getTopUsers();
         setTopUsers(data);
+        setIsFollowingUpdate(false);
       } catch (error) {
         console.log(error);
       }
     };
     topUsers();
-  }, []);
+  }, [setIsFollowingUpdate, isFollowingUpdate]);
   return (
     <div className={styles.container}>
       <div className={styles.title}>推薦跟隨</div>
