@@ -110,11 +110,11 @@ const LikeList = () => {
 
   return (
     <ul className="list-unstyled ps-0">
-      {data.map((item) => (
-        <li key={`like-${item.TweetId}`}>
+      {data.map((item, index) => {
+        return ( <li key={`like-${item.TweetId}-${index}`}>
           <UserLikeTweet data={item} />
-        </li>
-      ))}
+        </li>)
+      })}
     </ul>
   );
 };
