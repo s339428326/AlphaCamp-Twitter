@@ -44,7 +44,7 @@
     font-style: normal;
     font-weight: 700;
     font-size: 19px;
-    line-height: 23px;
+    line-height: 28px;
     padding-right: 4px;
   }
   .countTitle {
@@ -56,15 +56,17 @@
   }
   .iconContainer {
     display: flex;
+    gap: 128px;
+    padding-top: 20px;
+    padding-bottom: 5px;
     margin-bottom: 0;
     button {
       border: none;
       background-color: transparent;
-      padding-top: 20px;
-    }
-
-    .msgIcon {
-      padding-right: 14%;
     }
   }
+}
+
+.spinner {
+  min-height: 40px;
 }

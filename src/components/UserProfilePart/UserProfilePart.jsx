@@ -427,7 +427,10 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                 </button>
 
                 {/* 是否開啟追隨 */}
-                <FollowButton userData={userData} isFollowed={userData.isFollowed} />
+                <FollowButton
+                  userData={userData}
+                  isFollowed={userData.isFollowed}
+                />
               </div>
             ) : (
               <div className="d-flex justify-content-end">
@@ -537,7 +540,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                         <input
                           onChange={handleAvatar}
                           type="file"
-                          accept="image/png,jpg,jpeg"
+                          accept="image/png,.jpg,.jpeg"
                           className="d-none"
                           name="avatar"
                           id="avatar"

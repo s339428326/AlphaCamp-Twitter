@@ -9,6 +9,9 @@ import { useLocation, Link } from "react-router-dom";
 //hook
 import useMoment from "../../hooks/useMoment";
 
+//api
+import { postLike, postUnlike } from "../../apis/tweets";
+
 export const HeartIcon = () => {
   return (
     <svg
@@ -70,20 +73,31 @@ const UserLikeTweet = ({ data }) => {
   // const userAvatar = localStorage.getItem("avatar");
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.Tweet.likeCount);
-  const [like, setLike] = useState(true);
-  const handleLike = () => {
-    if (like) {
-      setLikeCount((prevValue) => prevValue - 1);
-    } else {
-      setLikeCount((prevValue) => prevValue + 1);
-    }
+  const [like, setLike] = useState(data?.Tweet.isLiked);
+  const handleLike = async () => {
+    //渲染頁面
     setLike((prevValue) => !prevValue);
+    if (like) {
+      //post 取消Like
+      setLikeCount((prevValue) => {
+        postUnlike(data?.TweetId);
+        return prevValue - 1;
+      });
+    } else {
+      //post 新增Like
+      setLikeCount((prevValue) => {
+        postLike(data?.TweetId);
+        return prevValue + 1;
+      });
+    }
   };
   /*Like 暫時作法*/
 
   return (
     <section
-      className={`${styles["LikeTweet"]} border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
+      className={`${styles["LikeTweet"]} ${
+        like ? "" : "d-none"
+      } border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
     >
       <div>
         <Link to={`/${data?.Tweet.User.id}/profile`}>
@@ -130,7 +144,7 @@ const UserLikeTweet = ({ data }) => {
             </span>
           </div>
           {/* Like邏輯 */}
-          {userId !== Number(urlUserId) ? (
+          {userId !== urlUserId ? (
             <button className="d-flex gap-2 border-0 p-0 bg-transparent">
               <RedHeartIcon />
               <span className="font-monospace text-light">{likeCount}</span>

@@ -30,7 +30,7 @@ const TopUser = ({ user }) => {
         </div>
         <div className={styles.btn}>
           <Link>
-            <FollowButton />
+            <FollowButton className={styles.followBtn} userData={user} isFollowed={user.isFollowed}/>
           </Link>
         </div>
       </div>
