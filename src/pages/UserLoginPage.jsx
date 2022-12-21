@@ -5,14 +5,11 @@ import Logo from "../components/Logo/Logo";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
 //react
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 //context
 import { useAuth } from "../contexts/AuthContext";
-
 //plugin
 import Swal from "sweetalert2";
 

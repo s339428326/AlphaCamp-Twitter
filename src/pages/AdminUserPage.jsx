@@ -1,12 +1,13 @@
+import { useState, useEffect } from "react";
+//Component
 import AdminSidebar from "../components/AdminSidebar/AdminSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
+import AdminUserList from "../components/AdminUserList/AdminUserList";
+//Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import AdminUserList from "../components/AdminUserList/AdminUserList";
-
-import { useState, useEffect } from "react";
-
+//API
 import { getAllUsers } from "../apis/admin";
 
 const AdminUserPage = ({ user }) => {

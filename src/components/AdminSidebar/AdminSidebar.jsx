@@ -1,10 +1,12 @@
+//router
 import { Link, useLocation, useNavigate } from "react-router-dom";
+//context
 import { useAuth } from "../../contexts/AuthContext";
-
 //style
 import styles from "./AdminSidebar.module.scss";
 
 //icons
+
 //logo
 export const LogoIcon = ({ size }) => {
   return (

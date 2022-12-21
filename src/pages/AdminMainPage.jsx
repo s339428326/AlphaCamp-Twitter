@@ -1,13 +1,15 @@
+import { useState, useEffect } from "react";
+//Component
 import AdminSidebar from "../components/AdminSidebar/AdminSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import AdminTweetList from "../components/AdminTweetList/AdminTweetList";
+//react-bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
-import { useState, useEffect } from "react";
+//API
 import { getAllTweets, deleteTweet } from "../apis/admin";
-
+//plugin
 import Swal from "sweetalert2";
 
 const AdminMainPage = ({ user }) => {
