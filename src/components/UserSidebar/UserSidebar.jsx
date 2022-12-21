@@ -217,13 +217,13 @@ const UserSidebar = ({ userData }) => {
 
   return (
     <nav className={`${styles["nav"]} pt-3`}>
-      <div className="d-flex justify-content-center d-lg-none">
+      <div className="d-flex justify-content-center d-none d-md-block d-lg-none">
         <LogoIcon size={32} />
       </div>
       <div className="ps-2 d-none d-lg-block">
         <LogoIcon />
       </div>
-      <ul className="pt-3 d-flex flex-column list-unstyled align-items-center align-items-lg-start">
+      <ul className="pt-3 d-flex flex-row flex-md-column list-unstyled align-items-center align-items-lg-start">
         <li className={styles["list-item"]}>
           <Link to={`/${userId}`}>
             <div className="d-flex gap-3 fw-bold">

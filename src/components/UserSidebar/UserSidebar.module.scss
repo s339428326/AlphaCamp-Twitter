@@ -30,3 +30,15 @@ nav {
     margin-bottom: 0;
   }
 }
+
+@media screen and (max-width: 720px) {
+  nav {
+    border: 1px solid black;
+  }
+  .list-item {
+    flex-direction: row;
+  }
+  .logout {
+    all: unset;
+  }
+}
