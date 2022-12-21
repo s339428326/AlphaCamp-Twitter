@@ -437,7 +437,7 @@ $grid-breakpoints: (
   md: 768px,
   lg: 992px,
   xl: 1200px,
-  xxl: 1400px,
+  // xxl: 1400px,
 ) !default;
 // scss-docs-end grid-breakpoints
 
@@ -452,9 +452,9 @@ $grid-breakpoints: (
 $container-max-widths: (
   sm: 540px,
   md: 720px,
-  lg: 960px,
+  lg: 1080px,
   xl: 1140px,
-  xxl: 1320px,
+  // xxl: 1320px,
 ) !default;
 // scss-docs-end container-max-widths
 
@@ -1459,7 +1459,7 @@ $modal-footer-border-width: $modal-header-border-width !default;
 
 $modal-sm: 300px !default;
 $modal-md: 500px !default;
-$modal-lg: 800px !default;
+$modal-lg: 632px !default;
 $modal-xl: 1140px !default;
 
 $modal-fade-transform: translate(0, -50px) !default;
