@@ -206,14 +206,19 @@ export const LogOutIcon = () => {
 const UserSidebar = ({ userData }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const curMember = pathname.split("/")[1];
   const urlItem = pathname.split("/")[2];
-  //判斷是否為首頁
-  const isHome = urlItem !== "profile" && urlItem !== "setting";
   //logo out Context
-  const { logout } = useAuth();
+  const { logout, currentMember } = useAuth();
   //取得使用者id
   const token = localStorage.getItem("token");
   const userId = jwt_decode(token).id;
+  //Check current member
+  const checkCurrentMember = curMember === currentMember.id.toString();
+
+  console.log(currentMember.id);
+  console.log(curMember);
+  console.log(urlItem);
 
   return (
     <nav className={`${styles["nav"]} pt-3`}>
@@ -227,9 +232,17 @@ const UserSidebar = ({ userData }) => {
         <li className={styles["list-item"]}>
           <Link to={`/${userId}`}>
             <div className="d-flex gap-3 fw-bold">
-              {isHome ? <HomeActiveIcon /> : <HomeIcon />}
+              {checkCurrentMember && urlItem === undefined ? (
+                <HomeActiveIcon />
+              ) : (
+                <HomeIcon />
+              )}
 
-              <p className={`${isHome && "text-primary"} d-none d-lg-block`}>
+              <p
+                className={`${
+                  checkCurrentMember && urlItem === undefined && "text-primary"
+                } d-none d-lg-block`}
+              >
                 首頁
               </p>
             </div>
@@ -238,10 +251,16 @@ const UserSidebar = ({ userData }) => {
         <li className={styles["list-item"]}>
           <Link to={`/${userId}/profile`}>
             <div className="d-flex gap-3 fw-bold text-light">
-              {urlItem === "profile" ? <ProfileActiveIcon /> : <ProfileIcon />}
+              {checkCurrentMember && urlItem === "profile" ? (
+                <ProfileActiveIcon />
+              ) : (
+                <ProfileIcon />
+              )}
               <p
                 className={`${
-                  urlItem === "profile" ? "text-primary" : ""
+                  checkCurrentMember && urlItem === "profile"
+                    ? "text-primary"
+                    : ""
                 } d-none d-lg-block`}
               >
                 個人資料
@@ -252,7 +271,11 @@ const UserSidebar = ({ userData }) => {
         <li className={`${styles["list-item"]} mb-1`}>
           <Link to={`/${userId}/setting`}>
             <div className="d-flex gap-3 fw-bold text-light">
-              {urlItem === "setting" ? <SettingActiveIcon /> : <SettingIcon />}
+              {checkCurrentMember && urlItem === "setting" ? (
+                <SettingActiveIcon />
+              ) : (
+                <SettingIcon />
+              )}
               <p
                 className={`${
                   urlItem === "setting" ? "text-primary" : ""
