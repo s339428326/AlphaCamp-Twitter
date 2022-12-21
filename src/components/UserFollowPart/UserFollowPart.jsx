@@ -3,7 +3,7 @@ import FollowButton from "../FollowButton/FollowButton";
 import { getUserFollowers, getUserFollowings } from "../../apis/userData";
 import { useLocation, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {useTweetStatus } from "../../contexts/TweetStatusContext";
+import { useTweetStatus } from "../../contexts/TweetStatusContext";
 
 const FollowItem = ({ userData }) => {
   return (
@@ -52,7 +52,9 @@ const UserFollowPart = () => {
         setIsLoading(true);
         const userFollowers = await getUserFollowers(urlUserId);
         setFollowerData(userFollowers.data);
-        setIsFollowingUpdate(false);
+        if (isFollowingUpdate) {
+          setIsFollowingUpdate(false);
+        }
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -67,7 +69,9 @@ const UserFollowPart = () => {
         setIsLoading(true);
         const userFollowings = await getUserFollowings(urlUserId);
         setFollowingData(userFollowings.data);
-        setIsFollowingUpdate(false);
+        if (isFollowingUpdate) {
+          setIsFollowingUpdate(false);
+        }
         setIsLoading(false);
       } catch (error) {
         console.error(error);
