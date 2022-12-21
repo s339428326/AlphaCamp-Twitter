@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/AlphaCamp-Twitter/static/css/main.644ca847.css",
-    "main.js": "/AlphaCamp-Twitter/static/js/main.9c3b8dbd.js",
+    "main.js": "/AlphaCamp-Twitter/static/js/main.fb9a9a9b.js",
     "static/js/787.bca41c60.chunk.js": "/AlphaCamp-Twitter/static/js/787.bca41c60.chunk.js",
     "index.html": "/AlphaCamp-Twitter/index.html",
     "main.644ca847.css.map": "/AlphaCamp-Twitter/static/css/main.644ca847.css.map",
-    "main.9c3b8dbd.js.map": "/AlphaCamp-Twitter/static/js/main.9c3b8dbd.js.map",
+    "main.fb9a9a9b.js.map": "/AlphaCamp-Twitter/static/js/main.fb9a9a9b.js.map",
     "787.bca41c60.chunk.js.map": "/AlphaCamp-Twitter/static/js/787.bca41c60.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.644ca847.css",
-    "static/js/main.9c3b8dbd.js"
+    "static/js/main.fb9a9a9b.js"
   ]
 }
