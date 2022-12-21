@@ -40,7 +40,7 @@ const Tweets = ({ userId }) => {
   return (
     <ul className="list-unstyled ps-0">
       {allTweets.map((tweet) => (
-        <li key={tweet.id}>
+        <li key={`main-${tweet.id}`}>
           <Tweet data={tweet} />
         </li>
       ))}

@@ -10,9 +10,9 @@ export const TopUser = ({ user }) => {
   const shortName = name.substring(0, 6);
 
   return (
-    <Link to={`/${user.id}/profile`}>
-      <div className={styles.userContainer}>
-        <div>
+    <div className={styles.userContainer}>
+      <div>
+        <Link to={`/${user.id}/profile`}>
           <img
             src={
               user.avatar ||
@@ -22,24 +22,25 @@ export const TopUser = ({ user }) => {
             width={50}
             height={50}
             className={styles.avatar}
-          />
-        </div>
+          />{" "}
+        </Link>
+      </div>
+      <Link to={`/${user.id}/profile`}>
         <div className={styles.info}>
           <div className={styles.name}>{shortName}</div>
 
           <div className={styles.account}>@{user.account}</div>
         </div>
-        <div className={styles.btn}>
-          <Link>
-            <FollowButton
-              className={styles.followBtn}
-              userData={user}
-              isFollowed={user.isFollowed}
-            />
-          </Link>
-        </div>
+      </Link>
+
+      <div className={styles.btn}>
+        <FollowButton
+          className={styles.followBtn}
+          userData={user}
+          isFollowed={user.isFollowed}
+        />
       </div>
-    </Link>
+    </div>
   );
 };
 
@@ -63,7 +64,7 @@ const TopUserList = () => {
       <div className={styles.title}>推薦跟隨</div>
       <ul className="list-unstyled ps-0">
         {topUsers?.map((user) => (
-          <li key={user.id}>
+          <li key={`topuser-${user.id}`}>
             <TopUser user={user} />
           </li>
         ))}
