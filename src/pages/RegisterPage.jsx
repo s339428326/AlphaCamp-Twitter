@@ -118,7 +118,7 @@ const RegisterPage = () => {
               autoComplete="new-password"
               value={register.checkPassword}
               onChange={handleInput("checkPassword")}
-              placeholder="再次輸入密碼"
+              placeholder="請再次輸入密碼"
             />
             <div className="mb-3">
               <button
