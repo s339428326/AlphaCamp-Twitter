@@ -52,7 +52,9 @@ const TopUserList = () => {
       try {
         const { data } = await getTopUsers();
         setTopUsers(data);
-        setIsFollowingUpdate(false);
+        if (isFollowingUpdate) {
+          setIsFollowingUpdate(false);
+        }
       } catch (error) {
         console.log(error);
       }

@@ -18,11 +18,13 @@ import { useState, useEffect } from "react";
 //api
 import { getUserData } from "../apis/userData";
 import { useAuth } from "../contexts/AuthContext";
+import { useTweetStatus } from "../contexts/TweetStatusContext";
 
 const UserProfilePage = () => {
   ///////////update userData////////////
   //userData狀態
   const [userData, setUserData] = useState();
+  const { isFollowingUpdate, setIsFollowingUpdate } = useTweetStatus();
 
   const { currentMember } = useAuth();
 
@@ -45,12 +47,21 @@ const UserProfilePage = () => {
           ...data,
           isVisitOthers: currentMember.id !== Number(urlUserId),
         });
+        if (isFollowingUpdate) {
+          setIsFollowingUpdate(false);
+        }
       } catch (error) {
         console.log(error);
       }
     };
     userInfo();
-  }, [currentMember.id, urlUserId, navigate]);
+  }, [
+    currentMember.id,
+    urlUserId,
+    navigate,
+    isFollowingUpdate,
+    setIsFollowingUpdate,
+  ]);
 
   ///////////update userData////////////
   return (
