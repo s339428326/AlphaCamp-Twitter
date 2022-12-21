@@ -4,7 +4,6 @@ import FollowButton from "../FollowButton/FollowButton";
 import { Link } from "react-router-dom";
 
 const TopUser = ({ user }) => {
-  console.log(user);
   //const name = user.name
   const name = user.name;
   const shortName = name.substring(0, 6);
@@ -31,7 +30,7 @@ const TopUser = ({ user }) => {
         </div>
         <div className={styles.btn}>
           <Link>
-            <FollowButton className={styles.followBtn} />
+            <FollowButton className={styles.followBtn} userData={user} isFollowed={user.isFollowed}/>
           </Link>
         </div>
       </div>
