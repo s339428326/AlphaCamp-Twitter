@@ -16,6 +16,7 @@ const MainCreateTweet = ({ userData }) => {
                 className="rounded-circle"
                 src={
                   avatar ||
+                  userData?.avatar ||
                   localAvatar ||
                   "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                 }
