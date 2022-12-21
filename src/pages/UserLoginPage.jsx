@@ -5,14 +5,11 @@ import Logo from "../components/Logo/Logo";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
 //react
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 //context
 import { useAuth } from "../contexts/AuthContext";
-
 //plugin
 import Swal from "sweetalert2";
 
@@ -36,7 +33,17 @@ const UserLoginPage = () => {
     e.preventDefault();
     // console
     //空白阻擋
-    if (!(loginPage.account && loginPage.password)) return;
+    if (!(loginPage.account && loginPage.password)) {
+      Swal.fire({
+        position: "top",
+        title: "登入失敗！",
+        text: "請填妥所有欄位",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return;
+    }
     //請求Login api
     const success = await login({
       account: loginPage["account"],

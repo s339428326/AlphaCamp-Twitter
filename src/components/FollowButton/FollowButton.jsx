@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./FollowButton.module.scss";
 import { useAuth } from "../../contexts/AuthContext";
-import { Toast } from "../../helpers/Toast";
+import { Toast } from "../../helpers/sweetalert";
 import { deleteFollow, postFollow } from "../../apis/followship";
 //readyOnly(boolean) => 設定只能讀取不能點擊
 
@@ -17,9 +17,9 @@ const FollowButton = ({ userData, readyOnly, isFollowed }) => {
       Toast.fire({
         icon: "error",
         title: "不要這麼喜歡自己",
-        willClose: () => setDisabled(false)
-      });     
-       setDisabled(true)
+        willClose: () => setDisabled(false),
+      });
+      setDisabled(true);
       return;
     }
     try {
@@ -29,17 +29,17 @@ const FollowButton = ({ userData, readyOnly, isFollowed }) => {
         Toast.fire({
           icon: "error",
           title: "取消追隨",
-          willClose: () => setDisabled(false)
+          willClose: () => setDisabled(false),
         });
       } else {
         await postFollow(id);
         Toast.fire({
           icon: "success",
           title: "成功追隨",
-          willClose: () => setDisabled(false)
+          willClose: () => setDisabled(false),
         });
       }
-      setDisabled(true)
+      setDisabled(true);
       setFollow((currentValue) => !currentValue);
     } catch (error) {
       console.error("Error: ", error);
@@ -49,8 +49,7 @@ const FollowButton = ({ userData, readyOnly, isFollowed }) => {
   useEffect(() => {
     setFollow(isFollowed);
   }, [isFollowed]);
-  
- 
+
   return (
     <button
       disabled={disabled}

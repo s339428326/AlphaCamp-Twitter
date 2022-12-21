@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/CloseButton";
 import React, { useState } from "react";
 import { postTweet } from "../../apis/tweets";
-import { Toast } from "../../helpers/Toast";
+import { Toast } from "../../helpers/sweetalert";
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
 
 export const ArrowLeftIcon = () => {

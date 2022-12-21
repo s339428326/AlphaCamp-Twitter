@@ -4,12 +4,14 @@ import styles from "./Setting.module.scss";
 //React
 import { useState } from "react";
 import { putUserAccountSetting } from "../../apis/userData";
-
+//Router
 import { useLocation } from "react-router-dom";
-
+//Plug-in
 import Swal from "sweetalert2";
+//Regex
+import { validAccount, validEmail, validPassword } from "../../helpers/regex";
 
-export default function Setting({ onSave }) {
+export default function Setting() {
   const [setting, setSetting] = useState({
     account: "",
     name: "",
@@ -23,6 +25,55 @@ export default function Setting({ onSave }) {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    // block blank input
+    if (
+      !(
+        setting.account &&
+        setting.name &&
+        setting.email &&
+        setting.password &&
+        setting.checkPassword
+      )
+    ) {
+      Swal.fire({
+        position: "top",
+        title: "修改失敗！",
+        text: "不可有空白欄位",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return;
+    }
+    // Regex
+    if (
+      !(
+        setting.account.match(validAccount) &&
+        setting.password.match(validPassword)
+      )
+    ) {
+      Swal.fire({
+        position: "top",
+        title: "修改失敗！",
+        text: "帳號或密碼不可含有特殊字元",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return;
+    }
+    if (!setting.email.match(validEmail)) {
+      Swal.fire({
+        position: "top",
+        title: "修改失敗！",
+        text: "Email格式不正確",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return;
+    }
+    // API
     try {
       const success = await putUserAccountSetting({
         urlUserId,

@@ -1,8 +1,9 @@
-import React from "react";
+//react-bootstrap
 import CloseButton from "react-bootstrap/CloseButton";
-
-import styles from "./AdminTweetItem.module.scss";
+//hooks
 import useMoment from "../../hooks/useMoment";
+//css
+import styles from "./AdminTweetItem.module.scss";
 
 export default function AdminTweetItem({ tweet, onDelete }) {
   return (
