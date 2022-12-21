@@ -3,11 +3,13 @@ import styles from "./FollowButton.module.scss";
 import { useAuth } from "../../contexts/AuthContext";
 import { Toast } from "../../helpers/sweetalert";
 import { deleteFollow, postFollow } from "../../apis/followship";
+import { useTweetStatus } from "../../contexts/TweetStatusContext";
 //readyOnly(boolean) => 設定只能讀取不能點擊
 
 const FollowButton = ({ userData, readyOnly, isFollowed }) => {
   const [follow, setFollow] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const { setIsFollowingUpdate } = useTweetStatus();
 
   const { currentMember } = useAuth();
   const currentUserId = currentMember.id;
@@ -26,6 +28,7 @@ const FollowButton = ({ userData, readyOnly, isFollowed }) => {
       const { isFollowed, id } = userData;
       if (isFollowed) {
         await deleteFollow(id);
+        setIsFollowingUpdate(true);
         Toast.fire({
           icon: "error",
           title: "取消跟隨",
@@ -33,6 +36,7 @@ const FollowButton = ({ userData, readyOnly, isFollowed }) => {
         });
       } else {
         await postFollow(id);
+        setIsFollowingUpdate(true);
         Toast.fire({
           icon: "success",
           title: "成功跟隨",

@@ -3,6 +3,7 @@ import FollowButton from "../FollowButton/FollowButton";
 import { getUserFollowers, getUserFollowings } from "../../apis/userData";
 import { useLocation, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import {useTweetStatus } from "../../contexts/TweetStatusContext";
 
 const FollowItem = ({ userData }) => {
   return (
@@ -43,6 +44,7 @@ const UserFollowPart = () => {
   const [followerData, setFollowerData] = useState([]);
   const [followingData, setFollowingData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { isFollowingUpdate, setIsFollowingUpdate } = useTweetStatus();
 
   useEffect(() => {
     const getFollowers = async () => {
@@ -50,13 +52,14 @@ const UserFollowPart = () => {
         setIsLoading(true);
         const userFollowers = await getUserFollowers(urlUserId);
         setFollowerData(userFollowers.data);
+        setIsFollowingUpdate(false);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
     };
     getFollowers();
-  }, [urlUserId]);
+  }, [urlUserId, isFollowingUpdate, setIsFollowingUpdate]);
 
   useEffect(() => {
     const getFollowings = async () => {
@@ -64,13 +67,14 @@ const UserFollowPart = () => {
         setIsLoading(true);
         const userFollowings = await getUserFollowings(urlUserId);
         setFollowingData(userFollowings.data);
+        setIsFollowingUpdate(false);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
     };
     getFollowings();
-  }, [urlUserId]);
+  }, [urlUserId, isFollowingUpdate, setIsFollowingUpdate]);
 
   const location = useLocation();
   const followType = location.pathname.split("/")[3];
