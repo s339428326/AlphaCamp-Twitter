@@ -56,17 +56,17 @@ const UserProfilePage = () => {
   return (
     <Container>
       <Row>
-        <Col xs={1} lg={2}>
+        <Col xs={1} md={1} lg={2}>
           <div className="sticky-top">
             <UserSidebar userData={currentMember} />
           </div>
         </Col>
-        <Col xs={7}>
+        <Col xs={11} md={11} lg={7}>
           <UserProfilePart userData={userData} />
           <UserProfileTabs />
           <Outlet />
         </Col>
-        <Col xs={4} lg={3}>
+        <Col xs={0} md={0} lg={3}>
           <div className="sticky-top">
             <TopUserList />
           </div>

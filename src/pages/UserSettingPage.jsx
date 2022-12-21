@@ -17,7 +17,7 @@ const UserSettingPage = ({ userData }) => {
             <UserSidebar userData={userData} />
           </div>
         </Col>
-        <Col xs={7}>
+        <Col xs={11} lg={7}>
           <div className="sticky-top">
             <PageTitle title={"帳戶設定"} />
           </div>
