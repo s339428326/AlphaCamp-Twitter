@@ -74,7 +74,8 @@ const UserLikeTweet = ({ data }) => {
   const urlUserId = pathname.split("/")[1];
   const userId = localStorage.getItem("id");
   const localAvatar = localStorage.getItem("avatar");
-  const { avatar } = useAuth();
+  const localName = localStorage.getItem("name");
+  const { avatar, userName } = useAuth();
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.Tweet.likeCount);
   const [like, setLike] = useState(data?.Tweet.isLiked);
@@ -131,7 +132,13 @@ const UserLikeTweet = ({ data }) => {
           className={`${styles["tweet-header"]} d-flex align-items-center gap-2`}
           to={`/${data?.Tweet.User.id}/profile`}
         >
-          <strong>{data?.Tweet.User.name || "無讀取資料"}</strong>
+          {Number(userId) !== data?.Tweet.User.id ? (
+            <strong>{data?.Tweet.User.name || "無讀取資料"}</strong>
+          ) : (
+            <strong>
+              {userName || localName || data?.Tweet.User.name || "無讀取資料"}
+            </strong>
+          )}
           <small className="text-light mb-0">
             @{data?.Tweet.User.account || "無讀取資料"}・
             {momentFormat(data?.createdAt) || "無讀取資料"}
