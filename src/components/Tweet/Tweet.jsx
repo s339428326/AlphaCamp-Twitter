@@ -5,7 +5,7 @@ import MainReplyModal from "../MainReplyModal/MainReplyModal";
 //react
 import { useState } from "react";
 //hook
-import useMoment from "../../hooks/useMoment";
+import momentFormat from "../../helpers/moment";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
@@ -137,7 +137,7 @@ const Tweet = ({ data }) => {
 
           <small className="text-light mb-0">
             @{data?.User.account || "無讀取資料"}・
-            {useMoment(data?.createdAt) || "無讀取資料"}
+            {momentFormat(data?.createdAt) || "無讀取資料"}
           </small>
         </Link>
         <Link to={`/${userId}/reply/${data?.id}`}>
@@ -156,7 +156,7 @@ const Tweet = ({ data }) => {
                 account: data?.User.account,
                 avatar: data?.User.avatar,
                 description: data?.description,
-                createdAt: useMoment(data?.createdAt),
+                createdAt: momentFormat(data?.createdAt),
               }}
               setTweetReplyCount={setTweetReplyCount}
             />

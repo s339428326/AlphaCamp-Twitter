@@ -1,7 +1,7 @@
 import styles from "./MainReplyTweet.module.scss";
 import MainReplyModal from "../MainReplyModal/MainReplyModal";
 import { useEffect, useState } from "react";
-import useMoment from "../../hooks/useMoment";
+import momentFormat from "../../helpers/moment";
 //api
 import { postLike, postUnlike } from "../../apis/tweets";
 
@@ -134,7 +134,7 @@ const MainReplyTweet = ({ data }) => {
               account: data?.User.account,
               avatar: data?.User.avatar,
               description: data?.description,
-              createdAt: useMoment(data?.createdAt),
+              createdAt: momentFormat(data?.createdAt),
               replyPageTweetId: data?.id,
             }}
           />

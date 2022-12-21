@@ -2,7 +2,7 @@ import moment from "moment";
 //https://github.com/derekprior/momentjs-rails/blob/main/vendor/assets/javascripts/moment/zh-tw.js
 //http://momentjs.cn/docs/displaying/fromnow.html
 
-const useMoment = (createdAt) => {
+const momentFormat = (createdAt) => {
   moment.updateLocale("zh-tw", {
     longDateFormat: {
       LL: "M月D日",
@@ -28,4 +28,4 @@ const useMoment = (createdAt) => {
   return outcome;
 };
 
-export default useMoment;
+export default momentFormat;

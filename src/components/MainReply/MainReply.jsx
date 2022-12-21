@@ -1,5 +1,5 @@
 import styles from "./MainReply.module.scss";
-import useMoment from "../../hooks/useMoment";
+import momentFormat from "../../helpers/moment";
 
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -49,7 +49,7 @@ const MainReply = ({ data }) => {
               className={styles.infoTopSec}
             >{`@${data?.User.account}`}</span>
           </Link>
-          <span className={styles.infoTopSec}>{`．${useMoment(
+          <span className={styles.infoTopSec}>{`．${momentFormat(
             data?.createdAt
           )}`}</span>
         </div>
