@@ -3,8 +3,7 @@ import FollowButton from "../FollowButton/FollowButton";
 
 import { Link } from "react-router-dom";
 
-const TopUser = ({ user, userData }) => {
-  console.log(user);
+const TopUser = ({ user }) => {
   //const name = user.name
   const name = user.name;
   const shortName = name.substring(0, 6);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./FollowButton.module.scss";
 import { useAuth } from "../../contexts/AuthContext";
-import { Toast } from "../../helpers/toast";
+import { Toast } from "../../helpers/sweetalert";
 import { deleteFollow, postFollow } from "../../apis/followship";
 //readyOnly(boolean) => 設定只能讀取不能點擊
 

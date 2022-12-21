@@ -8,7 +8,7 @@ import React, { useState } from "react";
 
 import { postReply } from "../../apis/tweets";
 
-import { Toast } from "../../helpers/toast";
+import { Toast } from "../../helpers/sweetalert";
 
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
 
