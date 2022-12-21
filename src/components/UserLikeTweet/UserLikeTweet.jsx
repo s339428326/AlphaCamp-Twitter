@@ -8,6 +8,7 @@ import { useLocation, Link } from "react-router-dom";
 
 //hook
 import useMoment from "../../hooks/useMoment";
+import { useAuth } from "../../contexts/AuthContext";
 
 //api
 import { postLike, postUnlike } from "../../apis/tweets";
@@ -70,7 +71,8 @@ const UserLikeTweet = ({ data }) => {
   const { pathname } = useLocation();
   const urlUserId = pathname.split("/")[1];
   const userId = localStorage.getItem("id");
-  // const userAvatar = localStorage.getItem("avatar");
+  const localAvatar = localStorage.getItem("avatar");
+  const { avatar } = useAuth();
   /*Like 暫時作法*/
   const [likeCount, setLikeCount] = useState(data?.Tweet.likeCount);
   const [like, setLike] = useState(data?.Tweet.isLiked);
@@ -100,15 +102,28 @@ const UserLikeTweet = ({ data }) => {
       } border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
     >
       <div>
-        <Link to={`/${data?.Tweet.User.id}/profile`}>
-          <img
-            className="rounded-circle"
-            src={data?.Tweet.User.avatar}
-            alt="user-avatar"
-            width={50}
-            height={50}
-          />
-        </Link>
+        {data?.Tweet.User.id !== Number(userId) ? (
+          <Link to={`/${data?.Tweet.User.id}/profile`}>
+            {/* {`${data?.Tweet.User.id} ${userId}`} */}
+            <img
+              className="rounded-circle"
+              src={data?.Tweet.User.avatar}
+              alt="user-avatar"
+              width={50}
+              height={50}
+            />
+          </Link>
+        ) : (
+          <Link to={`/${data?.Tweet.User.id}/profile`}>
+            <img
+              className="rounded-circle"
+              src={avatar || localAvatar || data?.Tweet.User.avatar}
+              alt="user-avatar"
+              width={50}
+              height={50}
+            />
+          </Link>
+        )}
       </div>
       <div>
         <Link
