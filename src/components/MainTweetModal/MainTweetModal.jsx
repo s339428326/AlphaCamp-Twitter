@@ -136,7 +136,7 @@ const MainTweetModal = ({ userData, element }) => {
                   {isSubmitting ? (
                     <>
                       <span
-                        className="spinner-grow spinner-grow-sm"
+                        className="spinner-grow spinner-grow-sm btn-primary rounded-pill"
                         role="status"
                         aria-hidden="true"
                       ></span>
