@@ -6,14 +6,11 @@ import MainReplyModal from "../MainReplyModal/MainReplyModal";
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 
-
 //helper
 import momentFormat from "../../helpers/moment";
 
 //hook
-import useMoment from "../../hooks/useMoment";
 import { useAuth } from "../../contexts/AuthContext";
-
 
 //api
 import { postLike, postUnlike } from "../../apis/tweets";
