@@ -39,13 +39,13 @@ const AdminMainPage = ({ user }) => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#555",
+        cancelButtonText: "取消",
         confirmButtonText: "確認",
       }).then((result) => {
         if (result.isConfirmed) {
           setAllTweets((prevTweets) =>
             prevTweets.filter((tweet) => tweet.id !== id)
           );
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
         }
       });
     } catch (error) {
