@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 
 import { useAuth } from "../contexts/AuthContext";
 
-import { validAccount, validPassword, validEmail } from "../helper/regex";
+import { validAccount, validPassword, validEmail } from "../helpers/regex";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -46,8 +46,17 @@ const RegisterPage = () => {
         registerPage.password &&
         registerPage.checkPassword
       )
-    )
+    ) {
+      Swal.fire({
+        position: "top",
+        title: "註冊失敗！",
+        text: "請填妥所有欄位",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
       return;
+    }
 
     if (
       !(

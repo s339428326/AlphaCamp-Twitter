@@ -33,7 +33,17 @@ const UserLoginPage = () => {
     e.preventDefault();
     // console
     //空白阻擋
-    if (!(loginPage.account && loginPage.password)) return;
+    if (!(loginPage.account && loginPage.password)) {
+      Swal.fire({
+        position: "top",
+        title: "登入失敗！",
+        text: "請填妥所有欄位",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return;
+    }
     //請求Login api
     const success = await login({
       account: loginPage["account"],
