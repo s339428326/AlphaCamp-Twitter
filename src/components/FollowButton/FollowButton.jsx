@@ -16,7 +16,7 @@ const FollowButton = ({ userData, readyOnly, isFollowed }) => {
     if (currentUserId === userData.id) {
       Toast.fire({
         icon: "error",
-        title: "不要這麼喜歡自己",
+        title: "您不可以跟隨自己",
         willClose: () => setDisabled(false),
       });
       setDisabled(true);
@@ -28,14 +28,14 @@ const FollowButton = ({ userData, readyOnly, isFollowed }) => {
         await deleteFollow(id);
         Toast.fire({
           icon: "error",
-          title: "取消追隨",
+          title: "取消跟隨",
           willClose: () => setDisabled(false),
         });
       } else {
         await postFollow(id);
         Toast.fire({
           icon: "success",
-          title: "成功追隨",
+          title: "成功跟隨",
           willClose: () => setDisabled(false),
         });
       }
