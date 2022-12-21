@@ -2,6 +2,7 @@ import UserSidebar from "../components/UserSidebar/UserSidebar";
 import PageTitle from "../components/PageTitle/PageTitle";
 import MainReply from "../components/MainReply/MainReply";
 import MainReplyTweet from "../components/MainReplyTweet/MainReplyTweet";
+import TopUserList from "../components/TopUserList/TopUserList";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -9,26 +10,24 @@ import Col from "react-bootstrap/Col";
 
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useTweetStatus } from "../contexts/TweetStatusContext";
 import { getOneTweet, getTweetReplies } from "../apis/tweets";
 import { getTopUsers } from "../apis/userData";
-import { useTweetStatus } from "../contexts/TweetStatusContext";
-import TopUserList from "../components/TopUserList/TopUserList";
 
 const UserMainReplyPage = ({ user }) => {
-  const [topUsers, setTopUsers] = useState([]);
   const { pathname } = useLocation();
+  const { isReplyTweetUpdate, setIsReplyTweetUpdate } = useTweetStatus();
   const tweetId = pathname.split("/")[3];
+  const userId = localStorage.getItem("id");
+  const [topUsers, setTopUsers] = useState([]);
   const [replyData, setReplyData] = useState();
   const [replyList, setReplyList] = useState();
-  const userId = localStorage.getItem("id");
-  const { isReplyTweetUpdate, setIsReplyTweetUpdate } = useTweetStatus();
 
   useEffect(() => {
     const getData = async () => {
       try {
         const res = await getOneTweet(tweetId);
         setReplyData({ ...res });
-        console.log("getOneTweet", res);
       } catch (error) {
         console.error(error);
       }
@@ -41,7 +40,6 @@ const UserMainReplyPage = ({ user }) => {
       try {
         const res = await getTweetReplies(tweetId);
         setReplyList([...res]);
-        console.log("getTweetReplies", res);
         setIsReplyTweetUpdate(false);
       } catch (error) {
         console.error(error);

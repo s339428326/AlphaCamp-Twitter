@@ -48,7 +48,7 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainReplyModal = ({ width, height, data }) => {
+const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
   const localAvatar = localStorage.getItem("avatar");
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
@@ -83,6 +83,7 @@ const MainReplyModal = ({ width, height, data }) => {
         setComment("");
         setShow(false);
         setIsReplyTweetUpdate(true);
+        setTweetReplyCount((prevValue) => prevValue + 1);
         Toast.fire({
           icon: "success",
           title: "回覆成功！",

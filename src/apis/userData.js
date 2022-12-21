@@ -31,12 +31,11 @@ axiosInstance.interceptors.request.use(
 //GET /api/users/:id
 export const getUserData = async (userId) => {
   if (!userId) {
-    console.log("[使用getUserData錯誤]：請帶入使用者id");
+    console.error("[使用getUserData錯誤]：請帶入使用者id");
     return;
   }
   try {
     const res = await axiosInstance.get(BASE_URL + userId);
-    console.log("[取得使用者資料成功]", res.data);
     return res.data;
   } catch (error) {
     console.error("[取得使用者資料失敗]", error);
@@ -47,15 +46,14 @@ export const getUserData = async (userId) => {
 //PUT /api/users/:id
 export const putUserProfile = async (userId, data) => {
   if (!userId) {
-    console.log("[使用putUserProfile錯誤]：請帶入使用者id");
+    console.error("[使用putUserProfile錯誤]：請帶入使用者id");
     return;
   }
   if (!data) {
-    console.log("[使用putUserProfile錯誤]：請帶入form-data");
+    console.error("[使用putUserProfile錯誤]：請帶入form-data");
     return;
   }
   try {
-    // console.log("[使用putUserProfile成功]", res);
     const res = await axiosInstance.put(BASE_URL + userId, data);
     return res;
   } catch (error) {
@@ -68,9 +66,7 @@ export const putUserProfile = async (userId, data) => {
 export const getRepliedTweets = async (userId) => {
   if (!userId) return console.error("[repliedTweets 錯誤]:請帶入使用者id");
   try {
-    console.log(`${BASE_URL}${userId}/replied_tweets`);
     const res = await axiosInstance.get(BASE_URL + userId + "/replied_tweets");
-    console.log("[getRepliedTweets 成功]:", res);
     return res.data;
   } catch (error) {
     console.error(error);
@@ -82,9 +78,7 @@ export const getRepliedTweets = async (userId) => {
 export const getUserTweets = async (userId) => {
   if (!userId) return console.error("[getUserTweets 錯誤]:請帶入使用者id");
   try {
-    console.log(`${BASE_URL}${userId}/tweets`);
     const res = await axiosInstance.get(BASE_URL + userId + "/tweets");
-    console.log("[getUserTweets 成功]:", res);
     return res.data;
   } catch (error) {
     console.error(error);
@@ -96,9 +90,7 @@ export const getUserTweets = async (userId) => {
 export const getUserLikes = async (userId) => {
   if (!userId) return console.error("[getUserLikes錯誤]:請帶入使用者id");
   try {
-    console.log(`${BASE_URL}${userId}/likes`);
     const res = await axiosInstance.get(BASE_URL + userId + "/likes");
-    console.log("[getUserLikes 成功]:", res);
     return res.data;
   } catch (error) {
     console.error(error);
@@ -156,7 +148,6 @@ export const putUserAccountSetting = async ({
         checkPassword,
       }
     );
-
     console.log(data);
     return data;
   } catch (error) {
