@@ -30,19 +30,24 @@ const UserFollowPage = () => {
   }, [navigate, isAuthenticated]);
 
   useEffect(() => {
-    const userData = async () => {
-      try {
-        const data = await getUserData(currentMember.id);
-        if (data === undefined) navigate(`/${currentMember.id}`);
-        setUserData({
-          ...data,
-        });
-      } catch (error) {
-        console.error(error);
+  const userData = async () => {
+    try {
+      let data;
+      if (currentMember.id === urlUserId) {
+        data = await getUserData(currentMember.id);
+      } else {
+        data = await getUserData(urlUserId);
       }
-    };
-    userData();
-  }, [currentMember.id, navigate]);
+      if (data === undefined) navigate(`/${currentMember.id}`);
+      setUserData({
+        ...data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  userData();
+}, [currentMember.id, urlUserId, navigate]);
 
   return (
     <Container>
