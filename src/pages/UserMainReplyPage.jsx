@@ -12,14 +12,12 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTweetStatus } from "../contexts/TweetStatusContext";
 import { getOneTweet, getTweetReplies } from "../apis/tweets";
-import { getTopUsers } from "../apis/userData";
 
 const UserMainReplyPage = ({ user }) => {
   const { pathname } = useLocation();
   const { isReplyTweetUpdate, setIsReplyTweetUpdate } = useTweetStatus();
   const tweetId = pathname.split("/")[3];
   const userId = localStorage.getItem("id");
-  const [topUsers, setTopUsers] = useState([]);
   const [replyData, setReplyData] = useState();
   const [replyList, setReplyList] = useState();
 
@@ -50,18 +48,6 @@ const UserMainReplyPage = ({ user }) => {
     }
   }, [tweetId, isReplyTweetUpdate, pathname, userId, setIsReplyTweetUpdate]);
 
-  useEffect(() => {
-    const topUsers = async () => {
-      try {
-        const { data } = await getTopUsers();
-        setTopUsers([...data]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    topUsers();
-  }, []);
-
   return (
     <Container>
       <Row>
@@ -87,7 +73,7 @@ const UserMainReplyPage = ({ user }) => {
         </Col>
         <Col xs={4} md={3}>
           <div className="sticky-top">
-            <TopUserList topUsers={topUsers} />
+            <TopUserList />
           </div>
         </Col>
       </Row>
