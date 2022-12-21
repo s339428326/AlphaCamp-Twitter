@@ -114,6 +114,9 @@ export default function Setting() {
         autoComplete="username"
         onChange={handleInput("account")}
         placeholder="請輸入帳號"
+        error={
+          setting.account.match(validAccount) ? "" : "帳號不可含有特殊字元"
+        }
       />
       <AuthInput
         label="名稱"
@@ -128,6 +131,7 @@ export default function Setting() {
         autoComplete="on"
         onChange={handleInput("email")}
         placeholder="請輸入信箱"
+        error={setting.email.match(validEmail) ? "" : "email格式不正確"}
       />
       <AuthInput
         label="密碼"
@@ -136,6 +140,9 @@ export default function Setting() {
         value={setting.password}
         onChange={handleInput("password")}
         placeholder="請輸入密碼"
+        error={
+          setting.password.match(validPassword) ? "" : "密碼不可含有特殊字元"
+        }
       />
       <AuthInput
         label="密碼確認"
@@ -144,6 +151,11 @@ export default function Setting() {
         value={setting.checkPassword}
         onChange={handleInput("checkPassword")}
         placeholder="請再次輸入密碼"
+        error={
+          setting.checkPassword.match(validPassword)
+            ? ""
+            : "密碼不可含有特殊字元"
+        }
       />
       <div className="mt-3 d-flex justify-content-end">
         <button
