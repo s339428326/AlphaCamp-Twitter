@@ -216,10 +216,6 @@ const UserSidebar = ({ userData }) => {
   //Check current member
   const checkCurrentMember = curMember === currentMember.id.toString();
 
-  console.log(currentMember.id);
-  console.log(curMember);
-  console.log(urlItem);
-
   return (
     <nav className={`${styles["nav"]} pt-3`}>
       <div className="d-flex justify-content-center d-lg-none">
