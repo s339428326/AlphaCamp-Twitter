@@ -66,7 +66,7 @@ const UserProfilePage = () => {
           <UserProfileTabs />
           <Outlet />
         </Col>
-        <Col xs={3}>
+        <Col xs={4} lg={3}>
           <div className="sticky-top">
             <TopUserList />
           </div>
