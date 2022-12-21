@@ -12,6 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 //plugin
 import Swal from "sweetalert2";
+//regex
+import { validAccount, validPassword } from "../helpers/regex";
 
 const UserLoginPage = () => {
   const navigate = useNavigate();
@@ -90,6 +92,11 @@ const UserLoginPage = () => {
               autoComplete="username"
               onChange={handleInput("account")}
               placeholder="請輸入帳號"
+              error={
+                loginPage.account.match(validAccount)
+                  ? ""
+                  : "帳號不可含有特殊字元"
+              }
             />
             <AuthInput
               label="密碼"
@@ -98,6 +105,11 @@ const UserLoginPage = () => {
               value={login.password}
               onChange={handleInput("password")}
               placeholder="請輸入密碼"
+              error={
+                loginPage.password.match(validPassword)
+                  ? ""
+                  : "密碼不可含有特殊字元"
+              }
             />
             <div className="mb-3">
               <button

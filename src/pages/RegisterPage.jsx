@@ -34,6 +34,10 @@ const RegisterPage = () => {
     });
   };
 
+  // const handleErrorMessage = () => {
+  //   if (!register.account) return "帳號不可為空白";
+  // };
+
   const handleClick = async (e) => {
     e.preventDefault();
 
@@ -131,6 +135,11 @@ const RegisterPage = () => {
               value={register.account}
               onChange={handleInput("account")}
               placeholder="請輸入帳號"
+              error={
+                registerPage.account.match(validAccount)
+                  ? ""
+                  : "帳號不可含有特殊字元"
+              }
             />
             <AuthInput
               label="名稱"
@@ -144,6 +153,9 @@ const RegisterPage = () => {
               value={register.email}
               onChange={handleInput("email")}
               placeholder="請輸入Email"
+              error={
+                registerPage.email.match(validEmail) ? "" : "email格式不正確"
+              }
             />
             <AuthInput
               label="密碼"
@@ -152,6 +164,11 @@ const RegisterPage = () => {
               value={register.password}
               onChange={handleInput("password")}
               placeholder="請輸入密碼"
+              error={
+                registerPage.password.match(validPassword)
+                  ? ""
+                  : "密碼不可含有特殊字元"
+              }
             />
             <AuthInput
               label="密碼確認"
@@ -160,6 +177,11 @@ const RegisterPage = () => {
               value={register.checkPassword}
               onChange={handleInput("checkPassword")}
               placeholder="請再次輸入密碼"
+              error={
+                registerPage.checkPassword.match(validPassword)
+                  ? ""
+                  : "密碼不可含有特殊字元"
+              }
             />
             <div className="mb-3">
               <button
