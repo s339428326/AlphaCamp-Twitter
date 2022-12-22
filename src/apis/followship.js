@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
 export const postFollow = async (id) => {
   try {
     const res = await axiosInstance.post(`${FOLLOW_URL}`, { id });
-    return res;
+    return res.data.status;
   } catch (error) {
     console.error("[Follow Failed]: ", error);
   }
@@ -30,7 +30,7 @@ export const postFollow = async (id) => {
 export const deleteFollow = async (id) => {
   try {
     const res = await axiosInstance.delete(`${FOLLOW_URL}/${id}`, { id });
-    return res;
+    return res.data.status;
   } catch (error) {
     console.error("[Unfollow Failed]: ", error);
   }
