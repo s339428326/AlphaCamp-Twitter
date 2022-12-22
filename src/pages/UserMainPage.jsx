@@ -57,6 +57,10 @@ const UserMainPage = () => {
     if (!isAuthenticated) {
       navigate("/login");
     }
+    if (localStorage.getItem("name") === "Admin") {
+      localStorage.clear();
+      navigate("./login");
+    }
   }, [navigate, isAuthenticated]);
 
   useEffect(() => {

@@ -76,6 +76,9 @@ const UserLoginPage = () => {
 
   useEffect(() => {
     console.log("[LoginPage useEffect] isAuthenticated:", isAuthenticated);
+    if (localStorage.getItem("name") === "Admin") {
+      localStorage.clear();
+    }
     if (isAuthenticated === true) {
       navigate(`/${currentMember.id}`);
     }
