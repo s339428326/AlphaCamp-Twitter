@@ -40,12 +40,12 @@ const AdminUserPage = ({ user }) => {
   return (
     <Container>
       <Row>
-        <Col xs={1} md={2}>
+        <Col xs={1} md={2} lg={2}>
           <div className="sticky-top">
             <AdminSidebar />
           </div>
         </Col>
-        <Col xs md={10}>
+        <Col xs={11} md={10} lg={10}>
           <div className="sticky-top">
             <PageTitle title={"使用者列表"} tweetQuantity={user} />
           </div>
