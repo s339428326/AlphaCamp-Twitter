@@ -178,7 +178,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                 </div>
                 {/* 這裡沒有label 留下id作用 */}
                 <textarea
-                  maxLength="140"
+                  maxLength="141"
                   rows={4}
                   cols={10}
                   id="tweetContent"
@@ -193,13 +193,13 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                 className={`${styles.inputWarning} d-flex align-items-center justify-content-end gap-4`}
               >
                 {wordCount === 0 && <span>內容不可空白</span>}
-                {wordCount === 140 && <span>字數不可以超過140字</span>}
-                {wordCount < 140 && wordCount !== 0 && <span></span>}
+                {wordCount === 141 && <span>字數不可以超過140字</span>}
+                {wordCount < 141 && wordCount !== 0 && <span></span>}
                 <button
                   className={`btn btn-primary text-white rounded-pill ${
                     isSubmitting ? "disabled" : ""
                   }`}
-                  disabled={wordCount === 0 || isSubmitting}
+                  disabled={wordCount === 0 || wordCount === 141 || isSubmitting}
                   onClick={handleSubmit}
                 >
                   {isSubmitting ? (
