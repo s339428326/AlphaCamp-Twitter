@@ -100,9 +100,7 @@ const UserLikeTweet = ({ data }) => {
 
   return (
     <section
-      className={`${styles["LikeTweet"]} ${
-        like ? "" : "d-none"
-      } border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
+      className={`${styles["LikeTweet"]}  border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
     >
       <div>
         {data?.Tweet.User.id !== Number(userId) ? (
