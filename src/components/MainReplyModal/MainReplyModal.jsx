@@ -165,6 +165,8 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                   <img
                     className="rounded-circle"
                     src={
+                      (localAvatar === "undefined" &&
+                        "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
                       avatar ||
                       localAvatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
