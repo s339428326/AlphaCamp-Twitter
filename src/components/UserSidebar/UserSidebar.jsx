@@ -225,9 +225,9 @@ const UserSidebar = ({ userData }) => {
         <LogoIcon />
       </div>
       <ul className="pt-3 d-flex flex-column list-unstyled align-items-center align-items-lg-start">
-        <li className={styles["list-item"]}>
-          <Link to={`/${userId}`}>
-            <div className="d-flex gap-3 fw-bold">
+        <Link to={`/${userId}`}>
+          <li className={styles["list-item"]}>
+            <div className={`${styles["list-content"]} d-flex gap-3 fw-bold`}>
               {checkCurrentMember && urlItem === undefined ? (
                 <HomeActiveIcon />
               ) : (
@@ -242,11 +242,11 @@ const UserSidebar = ({ userData }) => {
                 首頁
               </p>
             </div>
-          </Link>
-        </li>
-        <li className={styles["list-item"]}>
-          <Link to={`/${userId}/profile`}>
-            <div className="d-flex gap-3 fw-bold text-light">
+          </li>
+        </Link>
+        <Link to={`/${userId}/profile`}>
+          <li className={styles["list-item"]}>
+            <div className={`${styles["list-content"]} d-flex gap-3 fw-bold`}>
               {checkCurrentMember && urlItem === "profile" ? (
                 <ProfileActiveIcon />
               ) : (
@@ -262,11 +262,11 @@ const UserSidebar = ({ userData }) => {
                 個人資料
               </p>
             </div>
-          </Link>
-        </li>
-        <li className={`${styles["list-item"]} mb-1`}>
-          <Link to={`/${userId}/setting`}>
-            <div className="d-flex gap-3 fw-bold text-light">
+          </li>
+        </Link>
+        <Link to={`/${userId}/setting`}>
+          <li className={`${styles["list-item"]} mb-1`}>
+            <div className={`${styles["list-content"]} d-flex gap-3 fw-bold`}>
               {checkCurrentMember && urlItem === "setting" ? (
                 <SettingActiveIcon />
               ) : (
@@ -280,8 +280,8 @@ const UserSidebar = ({ userData }) => {
                 設定
               </p>
             </div>
-          </Link>
-        </li>
+          </li>
+        </Link>
         <li className="w-100">
           <MainTweetModal
             userData={userData}

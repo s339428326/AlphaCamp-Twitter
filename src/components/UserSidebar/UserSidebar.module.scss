@@ -1,3 +1,7 @@
+ul a {
+  text-decoration: none;
+}
+
 nav {
   position: relative;
   height: 100vh;
@@ -7,14 +11,27 @@ nav {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 16px;
-  a {
-    text-decoration: none;
+  width: 166px;
+  &:hover {
+    .list-content {
+      background-color: rgba(240, 240, 240);
+    }
+  }
+  &:focus {
+    outline: 0 !important;
   }
   p {
     color: #44444f;
     margin-bottom: 0;
   }
+}
+
+.list-content {
+  border-radius: 9999px;
+  padding: 16px;
+  // &:hover {
+  //   background-color: rgba(240, 240, 240);
+  // }
 }
 
 .logout {
