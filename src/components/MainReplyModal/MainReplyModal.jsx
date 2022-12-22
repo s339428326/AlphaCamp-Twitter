@@ -79,7 +79,6 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      console.log(tweetId);
       const postStatus = await postReply(tweetId, comment);
       if (postStatus && postStatus.status === 200) {
         setComment("");
