@@ -342,7 +342,7 @@ const UserProfilePart = ({ userData, isNotin }) => {
       return (
         <img
           className={`${styles["bg"]}`}
-          src={view?.cover || "https://fakeimg.pl/639x200/"}
+          src={view?.cover || "https://i.imgur.com/VRFJUe1.png"}
           alt="use-background"
         />
       );
@@ -532,10 +532,10 @@ const UserProfilePart = ({ userData, isNotin }) => {
                           className={`${styles["bg"]}`}
                           src={
                             (formData?.cover === null &&
-                              "https://fakeimg.pl/639x200/") ||
+                              "https://i.imgur.com/VRFJUe1.png") ||
                             modalView?.cover ||
                             formData?.cover ||
-                            "https://fakeimg.pl/639x200/"
+                            "https://i.imgur.com/VRFJUe1.png"
                           }
                           alt="user-edit-bg"
                         />

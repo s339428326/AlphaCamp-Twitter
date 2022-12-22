@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
             setAvatar(tempPayload.avatar);
           }
           if (tempPayload.cover === null) {
-            localStorage.setItem("cover", "https://fakeimg.pl/639x200/");
+            localStorage.setItem("cover", "https://i.imgur.com/VRFJUe1.png");
           } else {
             localStorage.setItem("cover", tempPayload.cover);
           }
