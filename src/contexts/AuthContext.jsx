@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
       }
       //checkPermission
       const isValid = await checkPermission(token);
-      //   console.log("Token驗證", Boolean(isValid));
       if (isValid) {
         setIsAuthenticated(true);
         const tempPayload = jwt_decode(token);
@@ -82,6 +81,7 @@ export const AuthProvider = ({ children }) => {
         setUserName,
         avatar,
         setAvatar,
+        setIsAuthenticated,
         currentMember: payload && {
           //   id: payload.id,
           //   name: payload.name,

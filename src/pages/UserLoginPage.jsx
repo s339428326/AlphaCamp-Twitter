@@ -17,7 +17,8 @@ import { validAccount, validPassword } from "../helpers/regex";
 
 const UserLoginPage = () => {
   const navigate = useNavigate();
-  const { login, isAuthenticated, currentMember } = useAuth();
+  const { login, isAuthenticated, currentMember, setIsAuthenticated } =
+    useAuth();
 
   const [loginPage, setLoginPage] = useState({
     account: "",
@@ -33,6 +34,7 @@ const UserLoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     // console
     //空白阻擋
     if (!(loginPage.account && loginPage.password)) {
@@ -76,13 +78,17 @@ const UserLoginPage = () => {
 
   useEffect(() => {
     console.log("[LoginPage useEffect] isAuthenticated:", isAuthenticated);
-    if (localStorage.getItem("name") === "Admin") {
+
+    if (localStorage.getItem("id") === "4") {
       localStorage.clear();
+      setIsAuthenticated(false);
+      navigate("/login");
+    } else {
+      if (isAuthenticated === true) {
+        navigate(`/${currentMember.id}`);
+      }
     }
-    if (isAuthenticated === true) {
-      navigate(`/${currentMember.id}`);
-    }
-  }, [navigate, isAuthenticated, currentMember]);
+  }, [navigate, isAuthenticated, currentMember, setIsAuthenticated]);
 
   return (
     <Container>
