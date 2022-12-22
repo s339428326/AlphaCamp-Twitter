@@ -11,25 +11,25 @@
 ![](https://i.imgur.com/kcNQ4SP.png)
 
 [**使用者**首頁]
-![](https://i.imgur.com/rZjNqug.png)
+![](https://i.imgur.com/6R4ti15.png)
 
 [**使用者**個人資料頁面]
-![](https://i.imgur.com/qMSjoIf.png)
+![](https://i.imgur.com/ettKJZA.png)
 
 [**使用者**設定頁面]
 ![](https://i.imgur.com/Os8rqRz.png)
 
 [**使用者**追隨頁面]
-![](https://i.imgur.com/PqjSCbq.png)
+![](https://i.imgur.com/Y5BpMIG.png)
 
 [**使用者**特定推文頁面]
-![](https://i.imgur.com/qZCaPj1.png)
+![](https://i.imgur.com/LtzsyE1.png)
 
 [**使用者**推文視窗]
-![](https://i.imgur.com/w8q3VhC.png)
+![](https://i.imgur.com/ofSycAW.png)
 
 [**使用者**回覆視窗]
-![](https://i.imgur.com/IfqQeFJ.png)
+![](https://i.imgur.com/NMnrko5.png)
 
 [**管理者**管理推文頁面]
 ![](https://i.imgur.com/38OzJxJ.png)
@@ -131,9 +131,9 @@
 # 開發者
 
 
-[@s339428326]
+<a href="https://github.com/s339428326">Stanley Wong</a>
 
-[@LucySoCute]
+<a href="https://github.com/LucySoCute">Lucy Su</a>
 
-[@evanyang0612]
+<a href="https://github.com/evanyang0612">Evan Yang</a>
 
