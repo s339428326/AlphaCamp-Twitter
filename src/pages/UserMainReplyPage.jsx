@@ -64,7 +64,7 @@ const UserMainReplyPage = ({ user }) => {
           {replyList && (
             <ul className="list-unstyled ps-0">
               {replyList.map((item) => (
-                <li key={`mainreply-${item.id}`}>
+                <li key={item?.id}>
                   <MainReply data={item} />
                 </li>
               ))}
