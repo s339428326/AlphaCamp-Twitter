@@ -1,9 +1,13 @@
+import { useState, useEffect } from "react";
 import FollowButton from "../FollowButton/FollowButton";
 import styles from "./TopUserList.module.scss";
-import { useState, useEffect } from "react";
+//Router
 import { Link } from "react-router-dom";
+//API
 import { getTopUsers } from "../../apis/userData";
+//Context
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const TopUser = ({ user }) => {
   const name = user.name;
@@ -47,6 +51,7 @@ export const TopUser = ({ user }) => {
 const TopUserList = () => {
   const [topUsers, setTopUsers] = useState();
   const { isFollowingUpdate, setIsFollowingUpdate } = useTweetStatus();
+  const { currentMember } = useAuth();
   useEffect(() => {
     const topUsers = async () => {
       try {
@@ -65,11 +70,14 @@ const TopUserList = () => {
     <div className={styles.container}>
       <div className={styles.title}>推薦跟隨</div>
       <ul className="list-unstyled ps-0">
-        {topUsers?.map((user) => (
-          <li key={`topuser-${user.id}`}>
-            <TopUser user={user} />
-          </li>
-        ))}
+        {topUsers
+          ?.filter((user) => user.id !== currentMember.id)
+          .slice(0, 10)
+          .map((user) => (
+            <li key={`topuser-${user.id}`}>
+              <TopUser user={user} />
+            </li>
+          ))}
       </ul>
     </div>
   );
