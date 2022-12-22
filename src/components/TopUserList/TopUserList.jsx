@@ -10,9 +10,14 @@ import { useTweetStatus } from "../../contexts/TweetStatusContext";
 import { useAuth } from "../../contexts/AuthContext";
 
 export const TopUser = ({ user }) => {
-  const name = user.name;
-  const shortName = name.substring(0, 6);
-
+  // const name = user.name;
+  // const shortName = name.substring(0, 6);
+  const shortName =
+    user.name.length > 10 ? `${user.name.substring(0, 6)} ...` : user.name;
+  const shortAccount =
+    user.account.length > 10
+      ? `${user.account.substring(0, 7)} ...`
+      : user.account;
   return (
     <div className={styles.userContainer}>
       <div>
@@ -33,7 +38,7 @@ export const TopUser = ({ user }) => {
         <div className={styles.info}>
           <div className={styles.name}>{shortName}</div>
 
-          <div className={styles.account}>@{user.account}</div>
+          <div className={styles.account}>@{shortAccount}</div>
         </div>
       </Link>
 
