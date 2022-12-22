@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { postTweet } from "../../apis/tweets";
 import { Toast } from "../../helpers/sweetalert";
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const ArrowLeftIcon = () => {
   return (
@@ -23,10 +24,12 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainTweetModal = ({ userData, element }) => {
+const MainTweetModal = ({ element }) => {
+  const localAvatar = localStorage.getItem("avatar");
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
+  const { avatar } = useAuth();
   const [description, setDescription] = useState("");
   const { setIsGlobalTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -99,7 +102,8 @@ const MainTweetModal = ({ userData, element }) => {
                   <img
                     className="rounded-circle"
                     src={
-                      userData?.avatar ||
+                      avatar ||
+                      localAvatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"

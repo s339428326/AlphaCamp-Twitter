@@ -8,13 +8,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import React from "react";
 
-const UserSettingPage = ({ userData }) => {
+const UserSettingPage = () => {
+  
   return (
     <Container>
       <Row>
         <Col xs={1} lg={2}>
           <div className="sticky-top">
-            <UserSidebar userData={userData} />
+            <UserSidebar />
           </div>
         </Col>
         <Col xs={11} lg={7}>

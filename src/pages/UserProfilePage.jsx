@@ -69,7 +69,7 @@ const UserProfilePage = () => {
       <Row>
         <Col xs={1} md={1} lg={2}>
           <div className="sticky-top">
-            <UserSidebar userData={currentMember} />
+            <UserSidebar />
           </div>
         </Col>
         <Col xs={11} md={11} lg={7}>
