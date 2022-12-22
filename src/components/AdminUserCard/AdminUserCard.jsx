@@ -37,7 +37,7 @@ export const TweetIcon = () => {
 
 export default function AdminUserCard({ user }) {
   return (
-    <>
+    <div className={`${styles["card-list"]}`}>
       <li className={`${styles["card-container"]} mb-0 list-unstyled`}>
         <div className={`${styles["card"]}`}>
           <div className={`${styles["card-header"]}`}>
@@ -86,6 +86,6 @@ export default function AdminUserCard({ user }) {
           </div>
         </div>
       </li>
-    </>
+    </div>
   );
 }
