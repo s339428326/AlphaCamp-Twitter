@@ -531,6 +531,8 @@ const UserProfilePart = ({ userData, isNotin }) => {
                         <img
                           className={`${styles["bg"]}`}
                           src={
+                            (formData?.cover === null &&
+                              "https://fakeimg.pl/639x200/") ||
                             modalView?.cover ||
                             formData?.cover ||
                             "https://fakeimg.pl/639x200/"
@@ -565,6 +567,8 @@ const UserProfilePart = ({ userData, isNotin }) => {
                         <img
                           className={`${styles["avatar"]}`}
                           src={
+                            (formData?.avatar === null &&
+                              "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
                             modalView?.avatar ||
                             formData?.avatar ||
                             "https://cdn-icons-png.flaticon.com/512/149/149071.png"
