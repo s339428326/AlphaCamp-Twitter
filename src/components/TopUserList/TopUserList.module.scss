@@ -22,6 +22,10 @@
   display: flex;
   padding: 8px 16px;
   border-bottom: 1px solid #e6ecf0;
+  transition: all 0.3s;
+  &:hover {
+    background-color: rgba(240, 240, 240);
+  }
 }
 .info {
   padding-left: 8px;

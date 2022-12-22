@@ -1,9 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .card-container {
-  max-width: 256px;
+  min-width: 200px;
+  @media screen and (max-width: 1100px) {
+    min-width: 180px;
+  }
+  @media screen and (max-width: 992px) {
+    min-width: 160px;
+  }
   @media screen and (max-width: 768px) {
-    max-width: 100%;
+    min-width: 210px;
   }
 }
 
