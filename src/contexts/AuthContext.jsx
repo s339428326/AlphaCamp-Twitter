@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
       }
       //checkPermission
       const isValid = await checkPermission(token);
-      //   console.log("Token驗證", Boolean(isValid));
       if (isValid) {
         setIsAuthenticated(true);
         const tempPayload = jwt_decode(token);
@@ -58,7 +57,7 @@ export const AuthProvider = ({ children }) => {
             setAvatar(tempPayload.avatar);
           }
           if (tempPayload.cover === null) {
-            localStorage.setItem("cover", "https://fakeimg.pl/639x200/");
+            localStorage.setItem("cover", "https://i.imgur.com/VRFJUe1.png");
           } else {
             localStorage.setItem("cover", tempPayload.cover);
           }
@@ -82,6 +81,7 @@ export const AuthProvider = ({ children }) => {
         setUserName,
         avatar,
         setAvatar,
+        setIsAuthenticated,
         currentMember: payload && {
           //   id: payload.id,
           //   name: payload.name,

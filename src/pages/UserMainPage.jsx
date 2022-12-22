@@ -7,13 +7,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
 import { getUserData } from "../apis/userData";
 import { getAllTweets } from "../apis/tweets";
 import { useTweetStatus } from "../contexts/TweetStatusContext";
-import { useLocation } from "react-router-dom";
 import TopUserList from "../components/TopUserList/TopUserList";
 
 const Tweets = ({ userId }) => {
@@ -50,8 +49,9 @@ const Tweets = ({ userId }) => {
 const UserMainPage = () => {
   // check permission
   const navigate = useNavigate();
-  const { isAuthenticated, currentMember } = useAuth();
+  const { isAuthenticated, currentMember, setIsAuthenticated } = useAuth();
   const [userData, setUserData] = useState();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -72,7 +72,12 @@ const UserMainPage = () => {
       }
     };
     userData();
-  }, [currentMember.id, navigate]);
+
+    if (pathname.split("/")[1] === "4" || localStorage.getItem("id") === "4") {
+      setIsAuthenticated(false);
+      navigate("/login");
+    }
+  }, [currentMember?.id, navigate, pathname, setIsAuthenticated]);
 
   return (
     <Container>
@@ -87,7 +92,7 @@ const UserMainPage = () => {
             <PageTitle title={"首頁"} />
           </div>
           <MainCreateTweet userData={userData} />
-          <Tweets userId={currentMember.id} />
+          <Tweets userId={currentMember?.id} />
         </Col>
         <Col xs={0} md={0} lg={3}>
           <div className="sticky-top ">

@@ -107,7 +107,11 @@ const UserLikeTweet = ({ data }) => {
           <Link to={`/${data?.Tweet.User.id}/profile`}>
             <img
               className="rounded-circle"
-              src={data?.Tweet.User.avatar}
+              src={
+                (data?.Tweet.User.avatar === null &&
+                  "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
+                data?.Tweet.User.avatar
+              }
               alt="user-avatar"
               width={50}
               height={50}
