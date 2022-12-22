@@ -1,10 +1,12 @@
+import { useState, useEffect } from "react";
 import FollowButton from "../FollowButton/FollowButton";
 import styles from "./TopUserList.module.scss";
-import { useState, useEffect } from "react";
+//Router
 import { Link } from "react-router-dom";
+//API
 import { getTopUsers } from "../../apis/userData";
+//Context
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
-
 import { useAuth } from "../../contexts/AuthContext";
 
 export const TopUser = ({ user }) => {
@@ -50,7 +52,6 @@ const TopUserList = () => {
   const [topUsers, setTopUsers] = useState();
   const { isFollowingUpdate, setIsFollowingUpdate } = useTweetStatus();
   const { currentMember } = useAuth();
-  console.log(currentMember);
   useEffect(() => {
     const topUsers = async () => {
       try {
