@@ -10,8 +10,6 @@ import { useTweetStatus } from "../../contexts/TweetStatusContext";
 import { useAuth } from "../../contexts/AuthContext";
 
 export const TopUser = ({ user }) => {
-  // const name = user.name;
-  // const shortName = name.substring(0, 6);
   const shortName =
     user.name.length > 10 ? `${user.name.substring(0, 6)} ...` : user.name;
   const shortAccount =
