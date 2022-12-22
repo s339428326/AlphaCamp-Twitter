@@ -15,6 +15,8 @@ const MainCreateTweet = ({ userData }) => {
               <img
                 className="rounded-circle"
                 src={
+                  (userData?.avatar === null &&
+                    "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
                   avatar ||
                   userData?.avatar ||
                   localAvatar ||
