@@ -7,13 +7,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 
 import { getUserData } from "../apis/userData";
 import { getAllTweets } from "../apis/tweets";
 import { useTweetStatus } from "../contexts/TweetStatusContext";
-import { useLocation } from "react-router-dom";
 import TopUserList from "../components/TopUserList/TopUserList";
 
 const Tweets = ({ userId }) => {
@@ -36,9 +35,8 @@ const Tweets = ({ userId }) => {
       updateAllTweets();
     }
   }, [pathname, isGlobalTweetUpdate, setIsGlobalTweetUpdate, userId]);
-  // console.log('check', allTweets)
   return (
-    <ul className="list-unstyled ps-0">
+    <ul className="list-unstyled ps-0 mb-5 mb-md-0">
       {allTweets.map((tweet) => (
         <li key={`main-${tweet.id}`}>
           <Tweet data={tweet} />
@@ -52,7 +50,9 @@ const UserMainPage = () => {
   // check permission
   const navigate = useNavigate();
   const { currentMember } = useAuth();
+  const { isAuthenticated, currentMember, setIsAuthenticated } = useAuth();
   const [userData, setUserData] = useState();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const userData = async () => {
@@ -67,30 +67,40 @@ const UserMainPage = () => {
       }
     };
     userData();
-  }, [currentMember.id, navigate]);
+
+    if (pathname.split("/")[1] === "4" || localStorage.getItem("id") === "4") {
+      setIsAuthenticated(false);
+      navigate("/login");
+    }
+  }, [currentMember?.id, navigate, pathname, setIsAuthenticated]);
 
   return (
-    <Container>
-      <Row>
-        <Col xs={1} md={1} lg={2}>
-          <div className="sticky-top">
-            <UserSidebar userData={userData} />
-          </div>
-        </Col>
-        <Col xs={11} md={11} lg={7}>
-          <div className="sticky-top">
-            <PageTitle title={"首頁"} />
-          </div>
-          <MainCreateTweet userData={userData} />
-          <Tweets userId={currentMember.id} />
-        </Col>
-        <Col xs={0} md={0} lg={3}>
-          <div className="sticky-top ">
-            <TopUserList />
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <div className="d-block d-md-none position-fixed bottom-0 w-100 bg-white border border-top">
+        <UserSidebar />
+      </div>
+      <Container>
+        <Row>
+          <Col xs={0} md={1} lg={2}>
+            <div className="d-none d-md-block sticky-top">
+              <UserSidebar />
+            </div>
+          </Col>
+          <Col className="px-0 px-sm-12" xs={12} md={11} lg={7}>
+            <div className="sticky-top">
+              <PageTitle title={"首頁"} />
+            </div>
+            <MainCreateTweet userData={userData} />
+            <Tweets userId={currentMember?.id} />
+          </Col>
+          <Col xs={0} md={0} lg={3}>
+            <div className="sticky-top d-none d-md-block">
+              <TopUserList />
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

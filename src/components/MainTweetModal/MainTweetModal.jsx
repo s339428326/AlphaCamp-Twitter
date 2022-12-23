@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { postTweet } from "../../apis/tweets";
 import { Toast } from "../../helpers/sweetalert";
 import { useTweetStatus } from "../../contexts/TweetStatusContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const ArrowLeftIcon = () => {
   return (
@@ -23,10 +24,12 @@ export const ArrowLeftIcon = () => {
   );
 };
 
-const MainTweetModal = ({ userData, element }) => {
+const MainTweetModal = ({ element }) => {
+  const localAvatar = localStorage.getItem("avatar");
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [wordCount, setWordCount] = useState(0);
+  const { avatar } = useAuth();
   const [description, setDescription] = useState("");
   const { setIsGlobalTweetUpdate, setIsUserTweetUpdate } = useTweetStatus();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,7 +51,7 @@ const MainTweetModal = ({ userData, element }) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const postStatus = await postTweet(description);
+      const postStatus = await postTweet(description.trim());
       if (postStatus && postStatus === "success") {
         setDescription("");
         setShow(false);
@@ -57,6 +60,11 @@ const MainTweetModal = ({ userData, element }) => {
         Toast.fire({
           icon: "success",
           title: "推文發送成功！",
+        });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "推文發送失敗！",
         });
       }
     } catch (error) {
@@ -90,6 +98,37 @@ const MainTweetModal = ({ userData, element }) => {
               onClick={handleClick}
               aria-label="Close"
             />
+            <div className={`${styles.inputWarning} d-flex d-sm-none ms-auto`}>
+              {(wordCount === 0 || description.trim().length === 0) && (
+                <span>內容不可空白</span>
+              )}
+              {wordCount === 141 && <span>字數不可以超過140字</span>}
+              <button
+                className={`btn btn-primary text-white rounded-pill ${
+                  isSubmitting ? "disabled" : ""
+                }`}
+                disabled={
+                  wordCount === 0 ||
+                  wordCount === 141 ||
+                  isSubmitting ||
+                  description.trim().length === 0
+                }
+                onClick={handleSubmit}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span
+                      className="spinner-grow spinner-grow-sm btn-primary rounded-pill"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Submitting...
+                  </>
+                ) : (
+                  "推文"
+                )}
+              </button>
+            </div>
           </Modal.Header>
           <Modal.Body className={styles.body}>
             {/* 新增推文 */}
@@ -99,7 +138,10 @@ const MainTweetModal = ({ userData, element }) => {
                   <img
                     className="rounded-circle"
                     src={
-                      userData?.avatar ||
+                      (localAvatar === "undefined" &&
+                        "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
+                      avatar ||
+                      localAvatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
                     }
                     alt="user-avatar"
@@ -109,7 +151,7 @@ const MainTweetModal = ({ userData, element }) => {
                 </div>
                 {/* 這裡沒有label 留下id作用 */}
                 <textarea
-                  maxLength="140"
+                  maxLength="141"
                   rows={4}
                   cols={10}
                   id="tweetContent"
@@ -120,17 +162,21 @@ const MainTweetModal = ({ userData, element }) => {
                   placeholder="有什麼新鮮事？"
                 ></textarea>
               </div>
-              <div
-                className={`${styles.inputWarning} d-flex align-items-center justify-content-end gap-4`}
-              >
-                {wordCount === 0 && <span>內容不可空白</span>}
-                {wordCount === 140 && <span>字數不可以超過140字</span>}
-                {wordCount < 140 && wordCount !== 0 && <span></span>}
+              <div className={`${styles.inputWarning} d-none d-sm-flex`}>
+                {(wordCount === 0 || description.trim().length === 0) && (
+                  <span>內容不可空白</span>
+                )}
+                {wordCount === 141 && <span>字數不可以超過140字</span>}
                 <button
                   className={`btn btn-primary text-white rounded-pill ${
                     isSubmitting ? "disabled" : ""
                   }`}
-                  disabled={wordCount === 0 || isSubmitting}
+                  disabled={
+                    wordCount === 0 ||
+                    wordCount === 141 ||
+                    isSubmitting ||
+                    description.trim().length === 0
+                  }
                   onClick={handleSubmit}
                 >
                   {isSubmitting ? (

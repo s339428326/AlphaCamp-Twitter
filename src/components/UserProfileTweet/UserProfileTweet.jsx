@@ -56,7 +56,7 @@ const Tweets = () => {
   ]);
 
   return (
-    <ul className="list-unstyled ps-0">
+    <ul className="list-unstyled ps-0 mb-5 mb-md-0">
       {data.map((item) => (
         <li key={`tweet-${item.id}`}>
           <Tweet data={item} />
@@ -82,7 +82,7 @@ const ReplyList = () => {
     getData();
   }, [urlUserId]);
   return (
-    <ul className="list-unstyled ps-0">
+    <ul className="list-unstyled ps-0 mb-5 mb-md-0">
       {data.map((item) => (
         <li key={`reply-${item.id}`}>
           <MainReply data={item} />
@@ -109,11 +109,13 @@ const LikeList = () => {
   }, [urlUserId]);
 
   return (
-    <ul className="list-unstyled ps-0">
+    <ul className="list-unstyled ps-0 mb-5 mb-md-0">
       {data.map((item, index) => {
-        return ( <li key={`like-${item.TweetId}-${index}`}>
-          <UserLikeTweet data={item} />
-        </li>)
+        return (
+          <li key={`like-${item.TweetId}-${index}`}>
+            <UserLikeTweet data={item} />
+          </li>
+        );
       })}
     </ul>
   );
