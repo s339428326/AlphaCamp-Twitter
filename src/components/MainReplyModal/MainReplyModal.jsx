@@ -210,7 +210,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                     wordCount === 0 ||
                     wordCount === 141 ||
                     isSubmitting ||
-                    comment.trim().length === 0git
+                    comment.trim().length === 0
                   }
                   onClick={handleSubmit}
                 >
