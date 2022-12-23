@@ -10,13 +10,8 @@ import Col from "react-bootstrap/Col";
 //API
 import { getAllUsers } from "../apis/admin";
 
-import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router";
-
 const AdminUserPage = ({ user }) => {
   const [allUsers, setAllUsers] = useState([]);
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const getAllUsersAsync = async () => {
@@ -30,12 +25,6 @@ const AdminUserPage = ({ user }) => {
     };
     getAllUsersAsync();
   }, []);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/admin");
-    }
-  }, [navigate, isAuthenticated]);
 
   return (
     <Container>

@@ -1,7 +1,8 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { login, checkPermission, adminLogin, register } from "../apis/auth";
 import jwt_decode from "jwt-decode";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Alert } from "../helpers/sweetalert";
 
 const defaultAuthContext = {
   isAuthenticated: false,
@@ -25,6 +26,8 @@ export const AuthProvider = ({ children }) => {
   const [avatar, setAvatar] = useState(null);
   const [userName, setUserName] = useState(null);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const checkTokenIsValid = async () => {
       const token = localStorage.getItem("token");
@@ -32,6 +35,15 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
         setPayload(null);
         setIsLoading(false);
+        if (pathname !== "/register" && pathname !== "/admin")
+          navigate("/login");
+        if (
+          pathname === "/login" ||
+          pathname === "/register" ||
+          pathname === "/admin"
+        )
+          return;
+        Alert.fire({ title: "請重新登入", icon: "error" });
         return;
       }
       //checkPermission
@@ -68,11 +80,13 @@ export const AuthProvider = ({ children }) => {
       } else {
         setIsAuthenticated(false);
         setPayload(null);
+        navigate("/login");
+        Alert.fire({ title: "請重新登入", icon: "error" });
       }
       setIsLoading(false);
     };
     checkTokenIsValid();
-  }, [pathname, userName]);
+  }, [pathname, userName, navigate]);
 
   return (
     <AuthContext.Provider

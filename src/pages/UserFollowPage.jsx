@@ -17,37 +17,32 @@ import Col from "react-bootstrap/Col";
 const UserFollowPage = () => {
   const [userData, setUserData] = useState();
   const navigate = useNavigate();
-  const { isAuthenticated, currentMember } = useAuth();
+  const { currentMember } = useAuth();
 
   const url = useLocation().pathname.split("/");
   const urlUserId = url[1];
   // const token = localStorage.getItem("token");
   // const decodeData = jwt_decode(token);
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [navigate, isAuthenticated]);
 
   useEffect(() => {
-  const userData = async () => {
-    try {
-      let data;
-      if (currentMember.id === urlUserId) {
-        data = await getUserData(currentMember.id);
-      } else {
-        data = await getUserData(urlUserId);
+    const userData = async () => {
+      try {
+        let data;
+        if (currentMember.id === urlUserId) {
+          data = await getUserData(currentMember.id);
+        } else {
+          data = await getUserData(urlUserId);
+        }
+        if (data === undefined) navigate(`/${currentMember.id}`);
+        setUserData({
+          ...data,
+        });
+      } catch (error) {
+        console.error(error);
       }
-      if (data === undefined) navigate(`/${currentMember.id}`);
-      setUserData({
-        ...data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  userData();
-}, [currentMember.id, urlUserId, navigate]);
+    };
+    userData();
+  }, [currentMember.id, urlUserId, navigate]);
 
   return (
     <Container>

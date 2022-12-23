@@ -33,8 +33,6 @@ const UserProfilePage = () => {
   const url = useLocation().pathname.split("/");
   const urlUserId = url[1];
 
-  // const userId = localStorage.getItem("id");
-
   useEffect(() => {
     const userInfo = async () => {
       //decodeData.id
