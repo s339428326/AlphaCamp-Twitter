@@ -225,7 +225,7 @@ const UserSidebar = ({ userData }) => {
         <LogoIcon />
       </div>
       <ul className={`${styles["list"]}`}>
-        <li className={styles["list-item"]}>
+        <li className={`${styles["list-item"]}`}>
           <Link to={`/${userId}`}>
             <div className={`${styles["list-content"]} d-flex gap-3 fw-bold`}>
               {checkCurrentMember && urlItem === undefined ? (
@@ -244,7 +244,7 @@ const UserSidebar = ({ userData }) => {
             </div>
           </Link>
         </li>
-        <li className={styles["list-item"]}>
+        <li className={`${styles["list-item"]} order-1 order-md-0`}>
           <Link to={`/${userId}/profile`}>
             <div className={`${styles["list-content"]} d-flex gap-3 fw-bold`}>
               {checkCurrentMember && urlItem === "profile" ? (
@@ -264,7 +264,7 @@ const UserSidebar = ({ userData }) => {
             </div>
           </Link>
         </li>
-        <li className={`${styles["list-item"]}`}>
+        <li className={`${styles["list-item"]} order-2 order-md-0`}>
           <Link to={`/${userId}/setting`}>
             <div className={`${styles["list-content"]} d-flex gap-3 fw-bold`}>
               {checkCurrentMember && urlItem === "setting" ? (
@@ -282,7 +282,7 @@ const UserSidebar = ({ userData }) => {
             </div>
           </Link>
         </li>
-        <li>
+        <li className="">
           <MainTweetModal
             userData={userData}
             element={
