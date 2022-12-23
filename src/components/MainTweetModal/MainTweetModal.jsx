@@ -51,7 +51,7 @@ const MainTweetModal = ({ element }) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const postStatus = await postTweet(description);
+      const postStatus = await postTweet(description.trim());
       if (postStatus && postStatus === "success") {
         setDescription("");
         setShow(false);
@@ -60,6 +60,11 @@ const MainTweetModal = ({ element }) => {
         Toast.fire({
           icon: "success",
           title: "推文發送成功！",
+        });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "推文發送失敗！",
         });
       }
     } catch (error) {
@@ -129,14 +134,20 @@ const MainTweetModal = ({ element }) => {
               <div
                 className={`${styles.inputWarning} d-flex align-items-center justify-content-end gap-4`}
               >
-                {wordCount === 0 && <span>內容不可空白</span>}
+                {(wordCount === 0 || description.trim().length === 0) && (
+                  <span>內容不可空白</span>
+                )}
                 {wordCount === 141 && <span>字數不可以超過140字</span>}
-                {wordCount < 141 && wordCount !== 0 && <span></span>}
                 <button
                   className={`btn btn-primary text-white rounded-pill ${
                     isSubmitting ? "disabled" : ""
                   }`}
-                  disabled={wordCount === 0 || wordCount === 141 || isSubmitting}
+                  disabled={
+                    wordCount === 0 ||
+                    wordCount === 141 ||
+                    isSubmitting ||
+                    description.trim().length === 0
+                  }
                   onClick={handleSubmit}
                 >
                   {isSubmitting ? (
