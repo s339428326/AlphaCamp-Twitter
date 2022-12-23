@@ -115,6 +115,7 @@ export default function Setting() {
       className={`${styles["vh-100"]} p-4 border-start border-end`}
     >
       <AuthInput
+        defaultCount={currentMember.account.length}
         defaultValue={currentMember.account}
         value={setting.account}
         autoComplete="username"
@@ -125,6 +126,7 @@ export default function Setting() {
         }
       />
       <AuthInput
+        defaultCount={currentMember.name.length}
         defaultValue={currentMember.name}
         label="名稱"
         value={setting.name}
@@ -133,6 +135,7 @@ export default function Setting() {
         placeholder="請輸入名稱"
       />
       <AuthInput
+        defaultCount={currentMember.email.length}
         defaultValue={currentMember.email}
         label="Email"
         value={setting.email}

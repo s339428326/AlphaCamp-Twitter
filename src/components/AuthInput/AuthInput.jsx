@@ -51,9 +51,10 @@ const AuthInput = ({
   maxChar,
   autoComplete,
   error,
+  defaultCount = 0,
 }) => {
-  const [textCount, setTextCount] = useState(0);
-
+  const [textCount, setTextCount] = useState(defaultCount);
+  console.log(defaultCount);
   return (
     <div className={`${styles["area"]} ${error ? styles["error"] : ""}`}>
       <div className={`${styles["AuthInput"]}`}>
