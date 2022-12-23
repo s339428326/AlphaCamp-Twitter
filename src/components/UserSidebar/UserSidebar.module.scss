@@ -1,5 +1,6 @@
 ul a {
   text-decoration: none;
+  // width: 0;
 }
 
 nav {
@@ -17,21 +18,20 @@ nav {
       background-color: rgba(245, 245, 245);
     }
   }
-  &:focus {
-    outline: 0 !important;
-  }
+
   p {
     color: #44444f;
     margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 992px) {
+    width: auto;
   }
 }
 
 .list-content {
   border-radius: 9999px;
   padding: 16px;
-  // &:hover {
-  //   background-color: rgba(240, 240, 240);
-  // }
 }
 
 .logout {

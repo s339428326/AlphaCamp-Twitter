@@ -5,17 +5,21 @@ import styles from "./Setting.module.scss";
 import { useState } from "react";
 import { putUserAccountSetting } from "../../apis/userData";
 //Router
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 //Plug-in
 import Swal from "sweetalert2";
 //Regex
 import { validAccount, validEmail, validPassword } from "../../helpers/regex";
+//Context
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Setting() {
+  const { currentMember } = useAuth();
+  const navigate = useNavigate();
   const [setting, setSetting] = useState({
-    account: "",
-    name: "",
-    email: "",
+    account: `${currentMember.account}`,
+    name: `${currentMember.name}`,
+    email: `${currentMember.email}`,
     password: "",
     checkPassword: "",
   });
@@ -92,6 +96,7 @@ export default function Setting() {
           showConfirmButton: false,
         });
       }
+      navigate(`/${currentMember.id}/profile`);
     } catch (error) {
       console.error(error.response.data.message);
     }
@@ -110,6 +115,8 @@ export default function Setting() {
       className={`${styles["vh-100"]} p-4 border-start border-end`}
     >
       <AuthInput
+        defaultCount={currentMember.account.length}
+        defaultValue={currentMember.account}
         value={setting.account}
         autoComplete="username"
         onChange={handleInput("account")}
@@ -119,6 +126,8 @@ export default function Setting() {
         }
       />
       <AuthInput
+        defaultCount={currentMember.name.length}
+        defaultValue={currentMember.name}
         label="名稱"
         value={setting.name}
         autoComplete="off"
@@ -126,11 +135,13 @@ export default function Setting() {
         placeholder="請輸入名稱"
       />
       <AuthInput
+        defaultCount={currentMember.email.length}
+        defaultValue={currentMember.email}
         label="Email"
         value={setting.email}
         autoComplete="on"
         onChange={handleInput("email")}
-        placeholder="請輸入信箱"
+        placeholder="請輸入email"
         error={setting.email.match(validEmail) ? "" : "email格式不正確"}
       />
       <AuthInput

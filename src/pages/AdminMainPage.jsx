@@ -11,6 +11,7 @@ import Col from "react-bootstrap/Col";
 import { getAllTweets, deleteTweet } from "../apis/admin";
 //plugin
 import Swal from "sweetalert2";
+import { Toast } from "../helpers/sweetalert";
 
 const AdminMainPage = ({ user }) => {
   const [allTweets, setAllTweets] = useState([]);
@@ -46,6 +47,10 @@ const AdminMainPage = ({ user }) => {
           setAllTweets((prevTweets) =>
             prevTweets.filter((tweet) => tweet.id !== id)
           );
+          Toast.fire({
+            icon: "success",
+            title: "貼文已刪除",
+          });
         }
       });
     } catch (error) {
