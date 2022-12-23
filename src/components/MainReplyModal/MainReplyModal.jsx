@@ -79,7 +79,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const postStatus = await postReply(tweetId, comment);
+      const postStatus = await postReply(tweetId, comment.trim());
       if (postStatus && postStatus.status === 200) {
         setComment("");
         setShow(false);
@@ -91,6 +91,11 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
           icon: "success",
           title: "回覆成功！",
         });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "推文發送失敗！",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -99,6 +104,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
         title: "回覆失敗！",
       });
     }
+
     setIsSubmitting(false);
   };
   return (
@@ -178,7 +184,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                 </div>
                 {/* 這裡沒有label 留下id作用 */}
                 <textarea
-                  maxLength="140"
+                  maxLength="141"
                   rows={4}
                   cols={10}
                   id="tweetContent"
@@ -192,14 +198,20 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
               <div
                 className={`${styles.inputWarning} d-flex align-items-center justify-content-end gap-4`}
               >
-                {wordCount === 0 && <span>內容不可空白</span>}
-                {wordCount === 140 && <span>字數不可以超過140字</span>}
-                {wordCount < 140 && wordCount !== 0 && <span></span>}
+                {(wordCount === 0 || comment.trim().length === 0) && (
+                  <span>內容不可空白</span>
+                )}
+                {wordCount === 141 && <span>字數不可以超過140字</span>}
                 <button
                   className={`btn btn-primary text-white rounded-pill ${
                     isSubmitting ? "disabled" : ""
                   }`}
-                  disabled={wordCount === 0 || isSubmitting}
+                  disabled={
+                    wordCount === 0 ||
+                    wordCount === 141 ||
+                    isSubmitting ||
+                    comment.trim().length
+                  }
                   onClick={handleSubmit}
                 >
                   {isSubmitting ? (
