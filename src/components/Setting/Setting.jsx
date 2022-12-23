@@ -192,7 +192,7 @@ export default function Setting() {
       <div className="mt-3 d-flex justify-content-end gap-4">
         <button
           onClick={() => logout()}
-          className="btn d-flex align-items-center gap-2"
+          className="btn d-flex align-items-center gap-2 d-block d-md-none"
         >
           <LogOutIcon />
           <span>登出</span>
