@@ -80,27 +80,32 @@ const UserMainPage = () => {
   }, [currentMember?.id, navigate, pathname, setIsAuthenticated]);
 
   return (
-    <Container>
-      <Row>
-        <Col xs={1} md={1} lg={2}>
-          <div className="sticky-top">
-            <UserSidebar />
-          </div>
-        </Col>
-        <Col xs={11} md={11} lg={7}>
-          <div className="sticky-top">
-            <PageTitle title={"首頁"} />
-          </div>
-          <MainCreateTweet userData={userData} />
-          <Tweets userId={currentMember?.id} />
-        </Col>
-        <Col xs={0} md={0} lg={3}>
-          <div className="sticky-top ">
-            <TopUserList />
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <div className="d-block d-md-none position-fixed bottom-0 w-100 bg-white border border-top">
+        <UserSidebar />
+      </div>
+      <Container>
+        <Row>
+          <Col xs={0} md={1} lg={2}>
+            <div className="d-none d-md-block sticky-top">
+              <UserSidebar />
+            </div>
+          </Col>
+          <Col className="px-0 px-sm-12" xs={12} md={11} lg={7}>
+            <div className="sticky-top">
+              <PageTitle title={"首頁"} />
+            </div>
+            <MainCreateTweet userData={userData} />
+            <Tweets userId={currentMember?.id} />
+          </Col>
+          <Col xs={0} md={0} lg={3}>
+            <div className="sticky-top d-none d-md-block">
+              <TopUserList />
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

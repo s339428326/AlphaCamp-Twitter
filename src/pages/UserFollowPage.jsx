@@ -30,32 +30,31 @@ const UserFollowPage = () => {
   }, [navigate, isAuthenticated]);
 
   useEffect(() => {
-  const userData = async () => {
-    try {
-      let data;
-      if (currentMember.id === urlUserId) {
-        data = await getUserData(currentMember.id);
-      } else {
-        data = await getUserData(urlUserId);
+    const userData = async () => {
+      try {
+        let data;
+        if (currentMember.id === urlUserId) {
+          data = await getUserData(currentMember.id);
+        } else {
+          data = await getUserData(urlUserId);
+        }
+        if (data === undefined) navigate(`/${currentMember.id}`);
+        setUserData({
+          ...data,
+        });
+      } catch (error) {
+        console.error(error);
       }
-      if (data === undefined) navigate(`/${currentMember.id}`);
-      setUserData({
-        ...data,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  userData();
-}, [currentMember.id, urlUserId, navigate]);
+    };
+    userData();
+  }, [currentMember.id, urlUserId, navigate]);
 
   return (
     <Container>
       <Row>
         <Col xs={1} md={2}>
-          <div className="sticky-top">
-            {" "}
-            <UserSidebar  />
+          <div className="d-none d-md-block sticky-top">
+            <UserSidebar />
           </div>
         </Col>
         <Col xs md={7}>

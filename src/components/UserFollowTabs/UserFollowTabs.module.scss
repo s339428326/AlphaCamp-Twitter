@@ -1,4 +1,4 @@
-ul {
+.ul {
   margin: 0 auto;
 }
 .btn {
@@ -12,8 +12,7 @@ ul {
   font-size: 15px;
 
   &.active {
-    border-bottom: 2px solid #FF6600;
-    color: #FF6600;
+    border-bottom: 2px solid #ff6600;
+    color: #ff6600;
   }
 }
-

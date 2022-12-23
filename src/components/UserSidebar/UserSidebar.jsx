@@ -218,15 +218,15 @@ const UserSidebar = ({ userData }) => {
 
   return (
     <nav className={`${styles["nav"]} pt-3`}>
-      <div className="d-flex justify-content-center d-lg-none">
+      <div className="d-none d-md-flex d-lg-none justify-content-center">
         <LogoIcon size={32} />
       </div>
       <div className="ps-2 d-none d-lg-block">
         <LogoIcon />
       </div>
-      <ul className="pt-3 d-flex flex-column list-unstyled align-items-center align-items-lg-start">
-        <Link to={`/${userId}`}>
-          <li className={styles["list-item"]}>
+      <ul className={`${styles["list"]}`}>
+        <li className={styles["list-item"]}>
+          <Link to={`/${userId}`}>
             <div className={`${styles["list-content"]} d-flex gap-3 fw-bold`}>
               {checkCurrentMember && urlItem === undefined ? (
                 <HomeActiveIcon />
@@ -242,10 +242,10 @@ const UserSidebar = ({ userData }) => {
                 首頁
               </p>
             </div>
-          </li>
-        </Link>
-        <Link to={`/${userId}/profile`}>
-          <li className={styles["list-item"]}>
+          </Link>
+        </li>
+        <li className={styles["list-item"]}>
+          <Link to={`/${userId}/profile`}>
             <div className={`${styles["list-content"]} d-flex gap-3 fw-bold`}>
               {checkCurrentMember && urlItem === "profile" ? (
                 <ProfileActiveIcon />
@@ -262,10 +262,10 @@ const UserSidebar = ({ userData }) => {
                 個人資料
               </p>
             </div>
-          </li>
-        </Link>
-        <Link to={`/${userId}/setting`}>
-          <li className={`${styles["list-item"]} mb-1`}>
+          </Link>
+        </li>
+        <li className={`${styles["list-item"]}`}>
+          <Link to={`/${userId}/setting`}>
             <div className={`${styles["list-content"]} d-flex gap-3 fw-bold`}>
               {checkCurrentMember && urlItem === "setting" ? (
                 <SettingActiveIcon />
@@ -280,14 +280,16 @@ const UserSidebar = ({ userData }) => {
                 設定
               </p>
             </div>
-          </li>
-        </Link>
-        <li className="w-100">
+          </Link>
+        </li>
+        <li>
           <MainTweetModal
             userData={userData}
             element={
-              <div className="d-flex flex-column align-items-center">
-                <button className="d-none d-lg-block btn btn-primary text-white rounded-pill w-100 text-center">
+              <div className={`${styles["tweet-button"]}`}>
+                <button
+                  className={`${styles["text-button"]} d-none d-lg-block btn btn-primary text-white rounded-pill`}
+                >
                   推文
                 </button>
                 <button className="d-flex d-lg-none btn btn-primary rounded-circle p-1">
@@ -302,7 +304,7 @@ const UserSidebar = ({ userData }) => {
             logout();
             navigate("/login");
           }}
-          className={`${styles["logout"]}`}
+          className={`${styles["logout"]} d-none d-md-block`}
         >
           <div className="d-flex gap-2 align-items-center pb-3">
             <div className="d-flex justify-content-center">
