@@ -5,13 +5,17 @@ import styles from "./Setting.module.scss";
 import { useState } from "react";
 import { putUserAccountSetting } from "../../apis/userData";
 //Router
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 //Plug-in
 import Swal from "sweetalert2";
 //Regex
 import { validAccount, validEmail, validPassword } from "../../helpers/regex";
+//Context
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Setting() {
+  const { currentMember } = useAuth();
+  const navigate = useNavigate();
   const [setting, setSetting] = useState({
     account: "",
     name: "",
@@ -92,6 +96,7 @@ export default function Setting() {
           showConfirmButton: false,
         });
       }
+      navigate(`/${currentMember.id}/profile`);
     } catch (error) {
       console.error(error.response.data.message);
     }
