@@ -47,11 +47,11 @@ const AdminMainPage = ({ user }) => {
           setAllTweets((prevTweets) =>
             prevTweets.filter((tweet) => tweet.id !== id)
           );
+          Toast.fire({
+            icon: "success",
+            title: "貼文已刪除",
+          });
         }
-        Toast.fire({
-          icon: "success",
-          title: "貼文已刪除",
-        });
       });
     } catch (error) {
       console.error(error);
