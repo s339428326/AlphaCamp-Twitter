@@ -1,5 +1,5 @@
 .replyModalContainer {
-
+  position: relative;
   .inputContainer {
     padding: 16px 24px 24px 16px;
     display: flex;
@@ -13,8 +13,11 @@
       padding-top: 12px;
     }
   }
-
   .inputWarning {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
     color: #fc5a5a;
     font-size: 15px;
   }

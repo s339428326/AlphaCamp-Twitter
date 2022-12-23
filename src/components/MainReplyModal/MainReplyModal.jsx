@@ -130,6 +130,39 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
               onClick={handleClick}
               aria-label="Close"
             />
+            <div
+              className={`${styles.inputWarning} d-flex d-sm-none align-items-center justify-content-end gap-4 ms-auto`}
+            >
+              {(wordCount === 0 || comment.trim().length === 0) && (
+                <span>內容不可空白</span>
+              )}
+              {wordCount === 141 && <span>字數不可以超過140字</span>}
+              <button
+                className={`btn btn-primary text-white rounded-pill ${
+                  isSubmitting ? "disabled" : ""
+                }`}
+                disabled={
+                  wordCount === 0 ||
+                  wordCount === 141 ||
+                  isSubmitting ||
+                  comment.trim().length
+                }
+                onClick={handleSubmit}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span
+                      className="spinner-grow spinner-grow-sm btn-primary rounded-pill"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Submitting...
+                  </>
+                ) : (
+                  "回覆"
+                )}
+              </button>
+            </div>
           </Modal.Header>
           <Modal.Body className={styles.body}>
             {/* 推文 */}
@@ -196,7 +229,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                 ></textarea>
               </div>
               <div
-                className={`${styles.inputWarning} d-flex align-items-center justify-content-end gap-4`}
+                className={`${styles.inputWarning} d-none d-sm-flex align-items-center justify-content-end gap-4 `}
               >
                 {(wordCount === 0 || comment.trim().length === 0) && (
                   <span>內容不可空白</span>
