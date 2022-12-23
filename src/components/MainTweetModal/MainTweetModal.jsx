@@ -98,6 +98,37 @@ const MainTweetModal = ({ element }) => {
               onClick={handleClick}
               aria-label="Close"
             />
+            <div className={`${styles.inputWarning} d-flex d-sm-none ms-auto`}>
+              {(wordCount === 0 || description.trim().length === 0) && (
+                <span>內容不可空白</span>
+              )}
+              {wordCount === 141 && <span>字數不可以超過140字</span>}
+              <button
+                className={`btn btn-primary text-white rounded-pill ${
+                  isSubmitting ? "disabled" : ""
+                }`}
+                disabled={
+                  wordCount === 0 ||
+                  wordCount === 141 ||
+                  isSubmitting ||
+                  description.trim().length === 0
+                }
+                onClick={handleSubmit}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span
+                      className="spinner-grow spinner-grow-sm btn-primary rounded-pill"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Submitting...
+                  </>
+                ) : (
+                  "推文"
+                )}
+              </button>
+            </div>
           </Modal.Header>
           <Modal.Body className={styles.body}>
             {/* 新增推文 */}
@@ -131,9 +162,7 @@ const MainTweetModal = ({ element }) => {
                   placeholder="有什麼新鮮事？"
                 ></textarea>
               </div>
-              <div
-                className={`${styles.inputWarning} d-flex align-items-center justify-content-end gap-4`}
-              >
+              <div className={`${styles.inputWarning} d-none d-sm-flex`}>
                 {(wordCount === 0 || description.trim().length === 0) && (
                   <span>內容不可空白</span>
                 )}

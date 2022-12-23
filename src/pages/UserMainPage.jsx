@@ -36,7 +36,7 @@ const Tweets = ({ userId }) => {
     }
   }, [pathname, isGlobalTweetUpdate, setIsGlobalTweetUpdate, userId]);
   return (
-    <ul className="list-unstyled ps-0">
+    <ul className="list-unstyled ps-0 mb-5 mb-md-0">
       {allTweets.map((tweet) => (
         <li key={`main-${tweet.id}`}>
           <Tweet data={tweet} />
