@@ -57,6 +57,7 @@ const AdminMainPage = ({ user }) => {
       console.error(error);
     }
   };
+
   return (
     <Container>
       <Row>

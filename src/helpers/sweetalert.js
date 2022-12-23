@@ -8,3 +8,9 @@ export const Toast = Swal.mixin({
   timer: 2500,
   timerProgressBar: true,
 });
+
+export const Alert = Swal.mixin({
+  position: "top",
+  timer: 1000,
+  showConfirmButton: false,
+});

@@ -17,17 +17,12 @@ import Col from "react-bootstrap/Col";
 const UserFollowPage = () => {
   const [userData, setUserData] = useState();
   const navigate = useNavigate();
-  const { isAuthenticated, currentMember } = useAuth();
+  const { currentMember } = useAuth();
 
   const url = useLocation().pathname.split("/");
   const urlUserId = url[1];
   // const token = localStorage.getItem("token");
   // const decodeData = jwt_decode(token);
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [navigate, isAuthenticated]);
 
   useEffect(() => {
     const userData = async () => {

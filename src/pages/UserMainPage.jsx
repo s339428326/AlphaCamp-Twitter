@@ -49,15 +49,9 @@ const Tweets = ({ userId }) => {
 const UserMainPage = () => {
   // check permission
   const navigate = useNavigate();
-  const { isAuthenticated, currentMember, setIsAuthenticated } = useAuth();
+  const { currentMember, setIsAuthenticated } = useAuth();
   const [userData, setUserData] = useState();
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [navigate, isAuthenticated]);
 
   useEffect(() => {
     const userData = async () => {
