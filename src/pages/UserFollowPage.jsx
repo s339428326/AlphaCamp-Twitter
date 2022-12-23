@@ -48,9 +48,8 @@ const UserFollowPage = () => {
     <Container>
       <Row>
         <Col xs={1} md={2}>
-          <div className="sticky-top">
-            {" "}
-            <UserSidebar userData={userData} />
+          <div className="d-none d-md-block sticky-top">
+            <UserSidebar />
           </div>
         </Col>
         <Col xs md={7}>

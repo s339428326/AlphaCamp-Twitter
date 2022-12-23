@@ -1,37 +1,48 @@
-ul a {
-  text-decoration: none;
-  // width: 0;
-}
-
-nav {
-  position: relative;
+.nav {
   height: 100vh;
-}
-
-.list-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 166px;
-  &:hover {
-    .list-content {
-      background-color: rgba(245, 245, 245);
+  a {
+    width: 100%;
+    text-decoration: none;
+  }
+  li {
+    align-items: center;
+    width: inherit;
+    padding: 8px;
+    p {
+      color: #44444f;
+      margin-bottom: 0;
     }
   }
-
-  p {
-    color: #44444f;
-    margin-bottom: 0;
-  }
-
-  @media screen and (max-width: 992px) {
-    width: auto;
+  .list-item {
+    &:hover {
+      transition: all 0.2s ease-in;
+      background-color: rgb(240, 240, 240);
+      border-radius: 14px;
+    }
   }
 }
 
-.list-content {
-  border-radius: 9999px;
-  padding: 16px;
+.list {
+  padding-top: 24px;
+  margin-bottom: 8px;
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  @media screen and (max-width: 768) {
+    align-items: center;
+  }
+}
+
+.tweet-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .text-button {
+    width: 100%;
+  }
 }
 
 .logout {
@@ -42,8 +53,39 @@ nav {
   left: 0;
   p {
     color: #44444f;
-
     font-weight: bold;
     margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  nav {
+    all: unset;
+    ul.list {
+      all: unset;
+      display: flex;
+
+      list-style: none;
+      justify-content: space-around;
+      padding-top: 0;
+      margin-bottom: 0;
+      li {
+        all: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+      }
+    }
+  }
+
+  .tweet-button {
+    all: unset;
+    .text-button {
+      all: unset;
+    }
+  }
+  .logout {
+    all: unset;
   }
 }

@@ -79,8 +79,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      console.log(tweetId);
-      const postStatus = await postReply(tweetId, comment);
+      const postStatus = await postReply(tweetId, comment.trim());
       if (postStatus && postStatus.status === 200) {
         setComment("");
         setShow(false);
@@ -92,6 +91,11 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
           icon: "success",
           title: "回覆成功！",
         });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "推文發送失敗！",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -100,6 +104,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
         title: "回覆失敗！",
       });
     }
+
     setIsSubmitting(false);
   };
   return (
@@ -125,6 +130,39 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
               onClick={handleClick}
               aria-label="Close"
             />
+            <div
+              className={`${styles.inputWarning} d-flex d-sm-none align-items-center justify-content-end gap-4 ms-auto`}
+            >
+              {(wordCount === 0 || comment.trim().length === 0) && (
+                <span>內容不可空白</span>
+              )}
+              {wordCount === 141 && <span>字數不可以超過140字</span>}
+              <button
+                className={`btn btn-primary text-white rounded-pill ${
+                  isSubmitting ? "disabled" : ""
+                }`}
+                disabled={
+                  wordCount === 0 ||
+                  wordCount === 141 ||
+                  isSubmitting ||
+                  comment.trim().length
+                }
+                onClick={handleSubmit}
+              >
+                {isSubmitting ? (
+                  <>
+                    <span
+                      className="spinner-grow spinner-grow-sm btn-primary rounded-pill"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Submitting...
+                  </>
+                ) : (
+                  "回覆"
+                )}
+              </button>
+            </div>
           </Modal.Header>
           <Modal.Body className={styles.body}>
             {/* 推文 */}
@@ -166,6 +204,8 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                   <img
                     className="rounded-circle"
                     src={
+                      (localAvatar === "undefined" &&
+                        "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
                       avatar ||
                       localAvatar ||
                       "https://cdn-icons-png.flaticon.com/512/149/149071.png"
@@ -177,7 +217,7 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                 </div>
                 {/* 這裡沒有label 留下id作用 */}
                 <textarea
-                  maxLength="140"
+                  maxLength="141"
                   rows={4}
                   cols={10}
                   id="tweetContent"
@@ -189,16 +229,22 @@ const MainReplyModal = ({ width, height, data, setTweetReplyCount }) => {
                 ></textarea>
               </div>
               <div
-                className={`${styles.inputWarning} d-flex align-items-center justify-content-end gap-4`}
+                className={`${styles.inputWarning} d-none d-sm-flex align-items-center justify-content-end gap-4 `}
               >
-                {wordCount === 0 && <span>內容不可空白</span>}
-                {wordCount === 140 && <span>字數不可以超過140字</span>}
-                {wordCount < 140 && wordCount !== 0 && <span></span>}
+                {(wordCount === 0 || comment.trim().length === 0) && (
+                  <span>內容不可空白</span>
+                )}
+                {wordCount === 141 && <span>字數不可以超過140字</span>}
                 <button
                   className={`btn btn-primary text-white rounded-pill ${
                     isSubmitting ? "disabled" : ""
                   }`}
-                  disabled={wordCount === 0 || isSubmitting}
+                  disabled={
+                    wordCount === 0 ||
+                    wordCount === 141 ||
+                    isSubmitting ||
+                    comment.trim().length === 0
+                  }
                   onClick={handleSubmit}
                 >
                   {isSubmitting ? (

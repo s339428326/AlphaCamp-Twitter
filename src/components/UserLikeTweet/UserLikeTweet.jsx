@@ -100,16 +100,18 @@ const UserLikeTweet = ({ data }) => {
 
   return (
     <section
-      className={`${styles["LikeTweet"]} ${
-        like ? "" : "d-none"
-      } border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
+      className={`${styles["LikeTweet"]}  border-start border-end border-bottom px-4 py-3 d-flex gap-2`}
     >
       <div>
         {data?.Tweet.User.id !== Number(userId) ? (
           <Link to={`/${data?.Tweet.User.id}/profile`}>
             <img
               className="rounded-circle"
-              src={data?.Tweet.User.avatar}
+              src={
+                (data?.Tweet.User.avatar === null &&
+                  "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
+                data?.Tweet.User.avatar
+              }
               alt="user-avatar"
               width={50}
               height={50}

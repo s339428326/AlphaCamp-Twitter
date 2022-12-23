@@ -142,10 +142,9 @@ export const ArrowLeftIcon = () => {
 }
 */
 
-const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
+const UserProfilePart = ({ userData, isNotin }) => {
   const { setAvatar, setUserName } = useAuth();
 
-  //分析使用者路由是否存在
   useEffect(() => {
     setFormData({
       name: userData?.name,
@@ -173,8 +172,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
 
-  const handleClose = async () => {
-    // const data = await getUserData(userData?.id);
+  const handleClose = () => {
     // 復歸FromData
     setFormData({
       ...formData,
@@ -183,11 +181,17 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       name: localStorage.getItem("name"),
       introduction: localStorage.getItem("introduction"),
     });
-    setErrorMassage({ ...errorMessage, userName: "", introduction: "" });
+    setErrorMassage({
+      ...errorMessage,
+      userName: "",
+      introduction: "",
+      cover: "",
+      avatar: "",
+    });
     setShow(false);
   };
 
-  const handleShow = async () => {
+  const handleShow = () => {
     setModalView({
       ...modalView,
       cover: localStorage.getItem("cover"),
@@ -199,10 +203,12 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
 
   /*Modal Setting*/
 
-  //////AuthInput嘗試實作錯誤訊息//////////
+  //AuthInput錯誤訊息
   const [errorMessage, setErrorMassage] = useState({
     userName: "",
     introduction: "",
+    cover: "",
+    avatar: "",
   });
 
   const handleName = (value) => {
@@ -217,7 +223,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       setErrorMassage({ ...errorMessage, userName: "已達字數最大上限" });
     }
   };
-  //////AuthInput嘗試實作錯誤訊息//////////
+
   const [count, setCount] = useState(
     userData?.introduction ? userData?.introduction.length : 0
   );
@@ -236,8 +242,11 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
 
   const handleCover = (e) => {
     const file = e.target.files[0];
-    if (e.target.files[0].size >= 1048576) {
+    if (e.target.files[0].size >= 10485760) {
+      setErrorMassage({ ...errorMessage, cover: "上傳檔案請勿超過10MB" });
       return;
+    } else {
+      setErrorMassage({ ...errorMessage, cover: "" });
     }
     const reader = new FileReader();
     if (file) reader.readAsDataURL(file);
@@ -255,15 +264,17 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
   };
 
   const handleAvatar = (e) => {
+    console.log(123);
     const file = e.target.files[0];
-    if (e.target.files[0].size >= 1048576) {
-      // Swal.fire({
-      //   position: "top",
-      //   icon: "error",
-      //   title: "上傳檔案錯誤",
-      //   text: "圖片大小請勿超過10MB!",
-      // });
+    if (e.target.files[0].size >= 10485760) {
+      console.log(123);
+      setErrorMassage({
+        ...errorMessage,
+        avatar: "上傳檔案請勿超過10MB",
+      });
       return;
+    } else {
+      setErrorMassage({ ...errorMessage, avatar: "" });
     }
     // 建置使用者imageView ,非上傳圖片。
     const reader = new FileReader();
@@ -275,14 +286,12 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       },
       false
     );
-
-    //
     setFormData({ ...formData, avatar: file });
   };
 
+  //上傳圖片
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("[傳送進確認的樣子]", formData);
     if (formData?.name === "") {
       return;
     }
@@ -295,11 +304,9 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
     if (typeof formData.cover !== "string") {
       form.append("cover", formData.cover);
     }
-    //查看form 傳送資料
-    console.log([...form]);
     //確認上傳
     setIsUpload(true);
-    const upadate = await putUserProfile(userData?.id, form);
+    await putUserProfile(userData?.id, form);
     const newData = await getUserData(userData?.id);
     setFormData({
       name: newData?.name,
@@ -317,14 +324,17 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       cover: newData?.cover,
       avatar: newData?.avatar,
     });
-    console.log("[更新資料]", formData);
-    console.log("[上傳成功]", upadate);
-    setIsUpload(false);
     //確認已完成上傳
+    setErrorMassage({
+      ...errorMessage,
+      userName: "",
+      introduction: "",
+      cover: "",
+      avatar: "",
+    });
+    setIsUpload(false);
     setShow(false);
   };
-
-  //////上傳使用者圖片//////
 
   //User Cover 顯示邏輯
   const UserCover = () => {
@@ -332,7 +342,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
       return (
         <img
           className={`${styles["bg"]}`}
-          src={view?.cover || "https://fakeimg.pl/639x200/"}
+          src={view?.cover || "https://i.imgur.com/VRFJUe1.png"}
           alt="use-background"
         />
       );
@@ -414,7 +424,6 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
           <UserAvatar />
           <div className="mb-3">
             {/* 是否為本人樣式切換 */}
-            {/* <ButtonView /> */}
             {userData?.isVisitOthers === undefined ? (
               <div className="d-flex align-items-center text-secondary">
                 <div
@@ -465,7 +474,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                   backdrop="static"
                 >
                   <form action="" onSubmit={handleSubmit}>
-                    <Modal.Header bsPrefix={`${styles["modal-header"]}`}>
+                    <Modal.Header bsPrefix={`${styles["modal-header"]} `}>
                       <button
                         className="btn me-3 d-sm-none"
                         onClick={handleClose}
@@ -495,15 +504,26 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                           Loading...
                         </button>
                       ) : (
-                        <input
-                          type="submit"
-                          className={`${
-                            errorMessage.userName === "請勿空白"
-                              ? "disabled"
-                              : ""
-                          } btn btn-primary text-white rounded-pill ms-auto`}
-                          value="儲存"
-                        />
+                        <div className="d-flex ms-auto align-items-center gap-3">
+                          {errorMessage.cover.length > 0 ||
+                          errorMessage.avatar.length > 0 ? (
+                            <p className="mb-0 text-danger">
+                              上傳檔案大小請勿超過10MB
+                            </p>
+                          ) : null}
+                          <input
+                            type="submit"
+                            className={`${
+                              errorMessage.userName === "請勿空白" ||
+                              errorMessage.cover ===
+                                "上傳檔案大小請勿超過10MB" ||
+                              errorMessage.avatar === "上傳檔案大小請勿超過10MB"
+                                ? "disabled"
+                                : ""
+                            } btn btn-primary text-white rounded-pill ms-auto`}
+                            value="儲存"
+                          />
+                        </div>
                       )}
                     </Modal.Header>
                     <Modal.Body className={`${styles["modal-body"]}`}>
@@ -511,9 +531,11 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                         <img
                           className={`${styles["bg"]}`}
                           src={
+                            (formData?.cover === null &&
+                              "https://i.imgur.com/VRFJUe1.png") ||
                             modalView?.cover ||
                             formData?.cover ||
-                            "https://fakeimg.pl/639x200/"
+                            "https://i.imgur.com/VRFJUe1.png"
                           }
                           alt="user-edit-bg"
                         />
@@ -526,7 +548,7 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                             onChange={handleCover}
                             className="d-none"
                             type="file"
-                            accept="image/png,jpg,jpeg"
+                            accept="image/png,.jpg,.jpeg"
                             name="bg-edit"
                             id="bg-edit"
                           />
@@ -545,6 +567,8 @@ const UserProfilePart = ({ userData, isOtherUser, isNotin }) => {
                         <img
                           className={`${styles["avatar"]}`}
                           src={
+                            (formData?.avatar === null &&
+                              "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
                             modalView?.avatar ||
                             formData?.avatar ||
                             "https://cdn-icons-png.flaticon.com/512/149/149071.png"

@@ -6,6 +6,9 @@
   color: #657786;
   font-weight: bold;
   min-width: 130px;
+  @media screen and (max-width: 768px) {
+    min-width: 90px;
+  }
 }
 
 .active {

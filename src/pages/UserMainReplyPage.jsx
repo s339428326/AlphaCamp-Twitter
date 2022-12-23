@@ -49,35 +49,40 @@ const UserMainReplyPage = ({ user }) => {
   }, [tweetId, isReplyTweetUpdate, pathname, userId, setIsReplyTweetUpdate]);
 
   return (
-    <Container>
-      <Row>
-        <Col xs={1} md={2}>
-          <div className="sticky-top">
-            <UserSidebar />
-          </div>
-        </Col>
-        <Col xs md={7}>
-          <div className="sticky-top">
-            <PageTitle title={"推文"} tweetQuantity={user} />
-          </div>
-          <MainReplyTweet data={replyData} />
-          {replyList && (
-            <ul className="list-unstyled ps-0">
-              {replyList.map((item) => (
-                <li key={`mainreply-${item.id}`}>
-                  <MainReply data={item} />
-                </li>
-              ))}
-            </ul>
-          )}
-        </Col>
-        <Col xs={4} md={3}>
-          <div className="sticky-top">
-            <TopUserList />
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <div className="d-block d-md-none position-fixed bottom-0 w-100 bg-white border">
+        <UserSidebar />
+      </div>
+      <Container>
+        <Row>
+          <Col xs={0} md={1} lg={2}>
+            <div className="d-none d-md-block sticky-top">
+              <UserSidebar />
+            </div>
+          </Col>
+          <Col className="px-0 px-sm-12" xs={12} md={11} lg={7}>
+            <div className="sticky-top">
+              <PageTitle title={"推文"} tweetQuantity={user} />
+            </div>
+            <MainReplyTweet data={replyData} />
+            {replyList && (
+              <ul className="list-unstyled ps-0">
+                {replyList.map((item) => (
+                  <li key={item?.id}>
+                    <MainReply data={item} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Col>
+          <Col xs={0} md={0} lg={3}>
+            <div className="sticky-top d-none d-md-block">
+              <TopUserList />
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 
