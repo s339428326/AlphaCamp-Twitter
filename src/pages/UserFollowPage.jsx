@@ -50,32 +50,37 @@ const UserFollowPage = () => {
   }, [currentMember.id, urlUserId, navigate]);
 
   return (
-    <Container>
-      <Row>
-        <Col xs={1} md={2}>
-          <div className="d-none d-md-block sticky-top">
-            <UserSidebar />
-          </div>
-        </Col>
-        <Col xs md={7}>
-          <div>
-            <div className="sticky-top">
-              <PageTitle
-                title={userData?.name || "讀取中..."}
-                tweetQuantity={userData?.tweetCount}
-              />
+    <>
+      <div className="d-block d-md-none position-fixed bottom-0 w-100 bg-white border">
+        <UserSidebar />
+      </div>
+      <Container>
+        <Row>
+          <Col xs={0} md={1} lg={2}>
+            <div className="d-none d-md-block sticky-top">
+              <UserSidebar />
             </div>
-            <UserFollowTabs navigate={navigate} userId={urlUserId} />
-            <Outlet />
-          </div>
-        </Col>
-        <Col xs={4} md={3}>
-          <div className="sticky-top">
-            <TopUserList />
-          </div>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+          <Col className="px-0 px-sm-12" xs={12} md={11} lg={7}>
+            <div>
+              <div className="sticky-top">
+                <PageTitle
+                  title={userData?.name || "讀取中..."}
+                  tweetQuantity={userData?.tweetCount}
+                />
+              </div>
+              <UserFollowTabs navigate={navigate} userId={urlUserId} />
+              <Outlet />
+            </div>
+          </Col>
+          <Col xs={0} md={0} lg={3}>
+            <div className="sticky-top d-none d-md-block">
+              <TopUserList />
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 
