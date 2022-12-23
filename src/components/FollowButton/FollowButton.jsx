@@ -22,6 +22,7 @@ const FollowButton = ({ userData, readyOnly, isFollowed }) => {
         icon: "error",
         title: "您不可以跟隨自己",
       });
+      setDisabled(false)
       return;
     }
     try {
