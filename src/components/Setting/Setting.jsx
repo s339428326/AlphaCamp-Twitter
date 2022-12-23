@@ -17,9 +17,9 @@ export default function Setting() {
   const { currentMember } = useAuth();
   const navigate = useNavigate();
   const [setting, setSetting] = useState({
-    account: "",
-    name: "",
-    email: "",
+    account: `${currentMember.account}`,
+    name: `${currentMember.name}`,
+    email: `${currentMember.email}`,
     password: "",
     checkPassword: "",
   });
@@ -115,6 +115,7 @@ export default function Setting() {
       className={`${styles["vh-100"]} p-4 border-start border-end`}
     >
       <AuthInput
+        defaultValue={currentMember.account}
         value={setting.account}
         autoComplete="username"
         onChange={handleInput("account")}
@@ -124,6 +125,7 @@ export default function Setting() {
         }
       />
       <AuthInput
+        defaultValue={currentMember.name}
         label="名稱"
         value={setting.name}
         autoComplete="off"
@@ -131,11 +133,12 @@ export default function Setting() {
         placeholder="請輸入名稱"
       />
       <AuthInput
+        defaultValue={currentMember.email}
         label="Email"
         value={setting.email}
         autoComplete="on"
         onChange={handleInput("email")}
-        placeholder="請輸入信箱"
+        placeholder="請輸入email"
         error={setting.email.match(validEmail) ? "" : "email格式不正確"}
       />
       <AuthInput
