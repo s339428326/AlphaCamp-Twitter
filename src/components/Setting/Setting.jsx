@@ -35,7 +35,7 @@ export const LogOutIcon = () => {
 };
 
 export default function Setting() {
-  const { currentMember, logout } = useAuth();
+  const { currentMember, logout, setUserName } = useAuth();
   const navigate = useNavigate();
   const [setting, setSetting] = useState({
     account: `${currentMember.account}`,
@@ -117,6 +117,9 @@ export default function Setting() {
           showConfirmButton: false,
         });
       }
+      //fix
+      setUserName(setting["name"]);
+      localStorage.getItem("name", setting["name"]);
       navigate(`/${currentMember.id}/profile`);
     } catch (error) {
       console.error(error.response.data.message);
