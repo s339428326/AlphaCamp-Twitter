@@ -130,7 +130,7 @@ const UserLoginPage = () => {
             </div>
           </form>
           <div className="d-flex justify-content-end">
-            <Link to="/register">註冊 Alphitter</Link>
+            <Link to="/register">註冊</Link>
             <span className="text-blue">·</span>
             <Link to="/admin">後台登入</Link>
           </div>
