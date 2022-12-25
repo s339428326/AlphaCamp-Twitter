@@ -35,15 +35,15 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
         setPayload(null);
         setIsLoading(false);
-        if (pathname !== "/register" && pathname !== "/admin")
-          navigate("/login");
         if (
-          pathname === "/login" ||
-          pathname === "/register" ||
-          pathname === "/admin"
-        )
-          return;
-        Alert.fire({ title: "請重新登入", icon: "error" });
+          pathname !== "/register" &&
+          pathname !== "/admin" &&
+          pathname !== "/login" &&
+          pathname !== "/"
+        ) {
+          navigate("/login");
+          Alert.fire({ title: "請重新登入", icon: "error" });
+        }
         return;
       }
       //checkPermission
@@ -80,7 +80,6 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
         setPayload(null);
         navigate("/login");
-        Alert.fire({ title: "請重新登入", icon: "error" });
       }
       setIsLoading(false);
     };
