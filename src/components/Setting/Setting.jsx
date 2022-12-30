@@ -116,8 +116,8 @@ export default function Setting() {
           icon: "success",
           showConfirmButton: false,
         });
+        navigate(`/${currentMember.id}/profile`);
       }
-      navigate(`/${currentMember.id}/profile`);
     } catch (error) {
       console.error(error.response.data.message);
     }
