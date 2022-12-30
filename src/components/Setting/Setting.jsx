@@ -116,11 +116,14 @@ export default function Setting() {
           icon: "success",
           showConfirmButton: false,
         });
+        navigate(`/${currentMember.id}/profile`);
       }
+
       //fix
       setUserName(setting["name"]);
       localStorage.getItem("name", setting["name"]);
       navigate(`/${currentMember.id}/profile`);
+
     } catch (error) {
       console.error(error.response.data.message);
     }
