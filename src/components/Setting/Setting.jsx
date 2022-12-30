@@ -35,7 +35,7 @@ export const LogOutIcon = () => {
 };
 
 export default function Setting() {
-  const { currentMember, logout } = useAuth();
+  const { currentMember, logout, setUserName } = useAuth();
   const navigate = useNavigate();
   const [setting, setSetting] = useState({
     account: `${currentMember.account}`,
@@ -118,6 +118,12 @@ export default function Setting() {
         });
         navigate(`/${currentMember.id}/profile`);
       }
+
+      //fix
+      setUserName(setting["name"]);
+      localStorage.getItem("name", setting["name"]);
+      navigate(`/${currentMember.id}/profile`);
+
     } catch (error) {
       console.error(error.response.data.message);
     }
@@ -191,7 +197,10 @@ export default function Setting() {
       />
       <div className="mt-3 d-flex justify-content-end gap-4">
         <button
-          onClick={() => logout()}
+          onClick={() => {
+            logout();
+            navigate("/login");
+          }}
           className="btn d-flex align-items-center gap-2 d-block d-md-none"
         >
           <LogOutIcon />

@@ -26,7 +26,15 @@ const MainReply = ({ data }) => {
           ) : (
             <img
               className="rounded-circle"
-              src={avatar || localAvatar || data?.User.name}
+              src={
+                (localAvatar === "undefined" &&
+                  "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
+                (localAvatar === "null" &&
+                  "https://cdn-icons-png.flaticon.com/512/149/149071.png") ||
+                avatar ||
+                localAvatar ||
+                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              }
               alt="user-avatar"
               width={50}
               height={50}
